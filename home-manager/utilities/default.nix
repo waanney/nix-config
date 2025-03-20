@@ -7,5 +7,8 @@
       gcc # c++ compiler
       yt-dlp # youtube downloader
       exfat
+      zip
+      unzip
+      nodejs
     ];
   }

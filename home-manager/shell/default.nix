@@ -2,11 +2,9 @@
 {
   #packages for lsp, linter - nvim
   home.packages = with pkgs; [
-    clang-tools
-    lua-language-server
-    stylua
-    pyright
-    nil
+    wl-clipboard
+    xclip
+    gh
   ];
 
   programs.git = {
@@ -20,14 +18,16 @@
 
   programs.neovim = {
     enable = true;
-    viAlias = true;
+    viAlias =  true;
     vimAlias = true;
     vimdiffAlias = true;
-
-    plugins = with pkgs.vimPlugins; [
-      nvim-treesitter.withAllGrammars
-    ];
+    plugins = [ pkgs.vimPlugins.nvim-treesitter ];
   };
+
+  programs.kitty ={
+    enable = true;
+  };
+
   programs.starship = {
     enable = true;
   };
