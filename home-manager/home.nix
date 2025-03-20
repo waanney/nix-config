@@ -1,16 +1,14 @@
 { config, pkgs, ... }:
 {
+  imports = [
+   ./shell
+   ./desktop
+   ./utilities
+ ];
   home.username = "waanne";
   home.homeDirectory = "/home/waanne";
 
-  programs.git = {
-    enable = true;
-    userName = "waanney";
-    userEmail = "work.buiminhquan@gmail.com";
-    extraConfig = {
-      init.defaultBranch = "main";
-    };
-  };
+
 
   home.stateVersion = "24.11";
   home.packages = [];
