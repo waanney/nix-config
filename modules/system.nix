@@ -42,6 +42,8 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     zed-editor
+    hyprland
+    git
     ];
   };
 

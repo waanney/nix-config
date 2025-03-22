@@ -18,10 +18,6 @@
 
   programs.neovim = {
     enable = true;
-    viAlias =  true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    plugins = [ pkgs.vimPlugins.nvim-treesitter ];
   };
 
   programs.kitty ={
@@ -34,10 +30,6 @@
   home.file = {
     ".config/kitty" = {
       source = ./.kitty;
-      recursive = true;
-    };
-    ".config/nvim" = {
-      source = ./.nvim;
       recursive = true;
     };
     ".zshrc" = {

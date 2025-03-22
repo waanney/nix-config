@@ -10,5 +10,6 @@
       zip
       unzip
       nodejs
+      logisim-evolution
     ];
   }

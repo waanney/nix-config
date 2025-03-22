@@ -7,12 +7,7 @@
  ];
   home.username = "waanne";
   home.homeDirectory = "/home/waanne";
-
-
-
   home.stateVersion = "24.11";
-  home.packages = [];
-  home.file = {};
-  home.sessionVariables = {};
+  home.file={};
   programs.home-manager.enable = true;
 }
