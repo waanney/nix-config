@@ -18,7 +18,7 @@
             echo "Welcome to default nix development"
           '';
         };
-    python-dev =
+    ai-dev =
       pkgs.mkShell
         {
           nativeBuildInputs = with pkgs; [
@@ -29,7 +29,7 @@
             echo "Welcome to nix python development"
           '';
         };
-    node-dev =
+    web-dev =
       pkgs.mkShell
         {
           nativeBuildInputs = with pkgs; [

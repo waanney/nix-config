@@ -3,6 +3,19 @@
   fonts.packages = with pkgs; [
     fira-code
   ];
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+  # Enable the Flakes feature and the accompanying new nix command-line tool
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # setup default shell
   programs.zsh = {
     enable = true;
