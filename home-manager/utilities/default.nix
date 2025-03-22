@@ -9,7 +9,6 @@
       exfat
       zip
       unzip
-      nodejs
       logisim-evolution
     ];
   }

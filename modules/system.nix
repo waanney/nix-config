@@ -1,5 +1,16 @@
 {config, pkgs, lib, ...}:
 {
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.waanne = {
+    isNormalUser = true;
+    description = "waanne";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+    zed-editor
+    hyprland
+    git
+    ];
+  };
   fonts.packages = with pkgs; [
     fira-code
   ];
@@ -46,18 +57,6 @@
      kdePackages.fcitx5-qt
 	    fcitx5-unikey
    ];
-  };
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.waanne = {
-    isNormalUser = true;
-    description = "waanne";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    zed-editor
-    hyprland
-    git
-    ];
   };
 
   #allow unfree

@@ -1,10 +1,9 @@
 { config, pkgs, ... }:
 {
-  #packages for lsp, linter - nvim
+  imports = [
+   ./nvim.nix
+ ];
   home.packages = with pkgs; [
-    wl-clipboard
-    xclip
-    gh
   ];
 
   programs.git = {
