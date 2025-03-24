@@ -22,12 +22,22 @@
     enable = true;
   };
   home.file = {
+    ".config/waybar" = {
+      source = ../../dotfiles/waybar;
+    };
     
+    ".config/rofi" = {
+      source = ../../dotfiles/rofi;
+    };
+
     ".config/hypr" = {
       source = ../../dotfiles/hyprland;
     };
     ".zshrc" = {
       source = ./.zshrc;
+    };
+    ".config/starship.toml"={
+      source = ../../dotfiles/starship.toml;
     };
   };
 }

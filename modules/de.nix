@@ -9,6 +9,8 @@
   environment.systemPackages = with pkgs; [
     hyprpaper
     kitty
+    rofi-wayland
+    waybar
   ];
 
 }
