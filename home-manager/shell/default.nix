@@ -1,9 +1,12 @@
 { config, pkgs, ... }:
 {
   imports = [
-   ./nvim.nix
+    ./neovim.nix
+    ./kitty.nix
+
  ];
   home.packages = with pkgs; [
+    gh
   ];
 
   programs.git = {
@@ -15,21 +18,13 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-  };
-
-  programs.kitty ={
-    enable = true;
-  };
-
   programs.starship = {
     enable = true;
   };
   home.file = {
-    ".config/kitty" = {
-      source = ./.kitty;
-      recursive = true;
+    
+    ".config/hypr" = {
+      source = ../../dotfiles/hyprland;
     };
     ".zshrc" = {
       source = ./.zshrc;

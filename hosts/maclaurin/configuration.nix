@@ -5,7 +5,7 @@
     [
       ./hardware-configuration.nix
       ../../modules/system.nix
-      ../../modules/gnome.nix
+      ../../modules/de.nix
     ];
 
   # Bootloader.
@@ -14,10 +14,6 @@
 
    # Define your hostname.
   networking.hostName = "maclaurin";
-
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
 
 
 

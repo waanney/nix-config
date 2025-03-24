@@ -1,53 +1,34 @@
 {config, pkgs, lib, ...}:
 {
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. .
   users.users.waanne = {
     isNormalUser = true;
     description = "waanne";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    zed-editor
     hyprland
     git
     ];
   };
+
+  #Fonts
   fonts.packages = with pkgs; [
     fira-code
   ];
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-  # Enable the Flakes feature and the accompanying new nix command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  # setup default shell
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-  };
-  users.defaultUserShell = pkgs.zsh;
-
-  # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  # Inputs and Outputs.
+  services.printing.enable = true;                                  #print CUP
+  services.xserver.xkb = { layout = "us"; variant = ""; };          #keyboard layout
+  services.pulseaudio.enable = false;                               #Audio
+  security.rtkit.enable = true;                                     #real time kit
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-
   };
-  # Install fcitx5 and unikey to type vietnamese language
-  i18n.inputMethod = {
+
+  i18n.inputMethod = {                                              # Install fcitx5 and unikey to type vietnamese language
     enable = true;
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
@@ -59,14 +40,21 @@
    ];
   };
 
-  #allow unfree
-  nixpkgs.config.allowUnfree = true;
-  # Set your time zone.
+  # Enable networking
+  networking.networkmanager.enable = true;
+  nixpkgs.config.allowUnfree = true;                                #allow unfree
+  # setup default shell
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+  };
+  users.defaultUserShell = pkgs.zsh;
+
+  # Location/ time
   time.timeZone = "Asia/Ho_Chi_Minh";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "vi_VN";
     LC_IDENTIFICATION = "vi_VN";
@@ -78,7 +66,15 @@
     LC_TELEPHONE = "vi_VN";
     LC_TIME = "vi_VN";
   };
+  #Nixos requirement
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];  # Enable the Flakes feature and the accompanying new nix command-line tool
 
 
-
+  #Optimise!!!!!!
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 1w";
+  };
 }
