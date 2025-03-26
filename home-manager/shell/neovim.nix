@@ -9,6 +9,7 @@
     wget
     nodejs
     ripgrep # Thêm rigrep
+    gcc
     #LSP
     clang-tools
     lua-language-server

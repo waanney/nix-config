@@ -18,6 +18,7 @@
     };
   };
 
+
   programs.starship = {
     enable = true;
   };

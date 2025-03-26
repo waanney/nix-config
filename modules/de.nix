@@ -12,6 +12,7 @@
     waybar
     htop
     nautilus
+    neofetch
   ];
 
 

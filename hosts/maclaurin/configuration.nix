@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs,system ,config, pkgs, ... }:
 
 {
   imports =
@@ -6,15 +6,22 @@
       ./hardware-configuration.nix
       ../../modules/system.nix
       ../../modules/de.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-   # Define your hostname.
   networking.hostName = "maclaurin";
+  
+  home-manager = {
+    extraSpecialArgs = { inherit inputs system;};
+    users = {
+      waanne = import ../../home-manager/home.nix;
+    };
 
+  };
 
 
 

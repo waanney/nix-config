@@ -10,21 +10,14 @@
     };
   };
 
-  outputs = {nixpkgs, home-manager, zen-browser, ... } @inputs : {
-    nixosConfigurations.maclaurin = nixpkgs.lib.nixosSystem {
+  outputs = {nixpkgs, home-manager, zen-browser, ... } @inputs :
+    let
       system = "x86_64-linux";
-      specialArgs = { inherit inputs;};
-      modules = [
-        ./hosts/maclaurin/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.users.waanne = import ./home-manager/home.nix;
-          home-manager.backupFileExtension = "backup";
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; system = "x86_64-linux";};
-        }
-      ];
+    in
+      {
+    nixosConfigurations.maclaurin = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs system;};
+      modules = [ ./hosts/maclaurin/configuration.nix];
     };
   };
 }

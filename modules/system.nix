@@ -55,6 +55,7 @@
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
   };
+
   users.defaultUserShell = pkgs.zsh;
 
   # Location/ time
