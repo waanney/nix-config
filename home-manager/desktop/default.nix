@@ -1,7 +1,5 @@
-{pkgs, ...}: {
-  imports = [
-    ./browser.nix
-  ];
+{pkgs, inputs, ...}: {
   home.packages = with pkgs; [
+    hyprshot
   ];
 }

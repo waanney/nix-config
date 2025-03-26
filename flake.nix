@@ -2,7 +2,7 @@
   description = "A simple NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    zen-browser.url = "https://flakehub.com/f/kbwhodat/zen-browser/0.1.149";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -13,7 +13,7 @@
   in {
     nixosConfigurations.maclaurin = nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit home-manager; };
+      specialArgs = { inherit home-manager;};
       modules = [
         ./hosts/maclaurin/configuration.nix
         home-manager.nixosModules.home-manager
