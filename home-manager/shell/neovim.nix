@@ -13,6 +13,7 @@
     clang-tools
     lua-language-server
     stylua
+    nil
   ];
 
   programs.neovim = {

@@ -22,14 +22,18 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 0,
-        "narHash": "sha256-G5n+FOXLXcRx+3hCJ6Rt6ZQyF1zqQ0DL0sWAMn2Nk0w=",
-        "path": "/nix/store/fnc4632ncr5k5la19gp2gb255dx8pi9x-source",
-        "type": "path"
+        "lastModified": 1742889210,
+        "narHash": "sha256-hw63HnwnqU3ZQfsMclLhMvOezpM7RSB0dMAtD5/sOiw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "698214a32beb4f4c8e3942372c694f40848b360d",
+        "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
@@ -60,16 +64,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1742620247,
-        "narHash": "sha256-DZAFN5vArWvoKZYgRQcbATsEmTaO2+P/VC/P0/ziNN8=",
-        "rev": "3627ba79e7a55ae034807e1ea02d096b76439434",
-        "revCount": 149,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/kbwhodat/zen-browser/0.1.149%2Brev-3627ba79e7a55ae034807e1ea02d096b76439434/0195bc43-6767-7f66-9660-9009c18c7285/source.tar.gz"
+        "lastModified": 1742973471,
+        "narHash": "sha256-nneE0lIst5IDINF6+dW6Xgp8KNmsC12pb05Ws+wXkVQ=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "bae854c6767fb5c004cd7a4049a77be9da1b16db",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/kbwhodat/zen-browser/0.1.149"
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "type": "github"
       }
     }
   },
