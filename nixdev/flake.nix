@@ -22,10 +22,12 @@
           neovim
           zsh
           starship
+            neofetch
         ];
         shellHook = ''
           export SHELL=$(which zsh)
           echo "Welcome to the web development environment"
+          exec $SHELL
         '';
       };
 
@@ -34,6 +36,8 @@
       pkgs.mkShell {
         nativeBuildInputs = with pkgs; [
           neovim
+          zsh
+          starship
           python312
           python312Packages.numpy
           python312Packages.pandas
@@ -41,7 +45,9 @@
           python312Packages.tensorflow
         ];
         shellHook = ''
+          export SHELL=$(which zsh)
           echo "Welcome to the AI development environment"
+          exec $SHELL
         '';
       };
   };
