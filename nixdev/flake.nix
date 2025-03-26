@@ -20,8 +20,11 @@
           nodejs
           yarn
           neovim
+          zsh
+          starship
         ];
         shellHook = ''
+          export SHELL=$(which zsh)
           echo "Welcome to the web development environment"
         '';
       };

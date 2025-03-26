@@ -1,8 +1,7 @@
 { config, lib, pkgs, ...}:
 {
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.sddm.enable = true;
   programs.hyprland.enable = true;
     # Enable the X11 windowing system.
   services.xserver.enable = true; 
@@ -11,6 +10,8 @@
     kitty
     rofi-wayland
     waybar
+    htop
+    nautilus
   ];
 
 
