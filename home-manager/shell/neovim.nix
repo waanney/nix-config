@@ -5,7 +5,6 @@
     wl-clipboard
     gh
     fd
-    python3
     wget
     nodejs
     ripgrep # Thêm rigrep
@@ -15,6 +14,7 @@
     lua-language-server
     stylua
     nil
+    pyright
   ];
 
   programs.neovim = {

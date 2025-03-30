@@ -22,7 +22,6 @@
           neovim
           zsh
           starship
-            neofetch
         ];
         shellHook = ''
           export SHELL=$(which zsh)
@@ -38,11 +37,11 @@
           neovim
           zsh
           starship
+          python312Packages.pandas
           python312
           python312Packages.numpy
-          python312Packages.pandas
-          python312Packages.scikit-learn
-          python312Packages.tensorflow
+          python312Packages.z3-solver
+          python312Packages.jupyterlab
         ];
         shellHook = ''
           export SHELL=$(which zsh)
