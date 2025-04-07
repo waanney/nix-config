@@ -15,6 +15,7 @@
     stylua
     nil
     pyright
+    typescript-language-server
   ];
 
   programs.neovim = {
@@ -24,13 +25,10 @@
     vimdiffAlias = true;
     plugins = [
       pkgs.vimPlugins.nvim-treesitter # treesitter
-    ];
+      pkgs.vimPlugins.nvim-autopairs # autoclose tag
+      pkgs.vimPlugins.nvim-ts-autotag
+      ] ;
 
-    # extraPackages không cần thiết ở đây, các gói đã được thêm vào home.packages.
-    # extraPackages = [
-    #   pkgs.nodePackages_latest.vscode-json-languageserver
-    #   pkgs.ripgrep
-    # ];
   };
 
   home.file = {

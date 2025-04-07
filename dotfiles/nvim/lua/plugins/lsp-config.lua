@@ -8,6 +8,7 @@ return {
 			lsp_config.lua_ls.setup({ capabilities = capabilities })
       lsp_config.pyright.setup({ capabilities = capabilities})
       lsp_config.nil_ls.setup({ capabilities = capabilities })
+      lsp_config.ts_ls.setup({capabilities = capabilities})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
