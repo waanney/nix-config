@@ -10,12 +10,21 @@
     git
     ];
   };
+  
 
+  virtualisation.docker.enable = true;
   #Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.droid-sans-mono
   ];
+
+
+  services.redis = {
+    enable = true;
+    bind = "127.0.0.1"; # Địa chỉ IP mà Redis sẽ lắng nghe
+    port = 6379;        # Cổng mặc định
+  };
 
   # Inputs and Outputs.
   services.printing.enable = true;                                  #print CUP
@@ -49,6 +58,8 @@
   networking.networkmanager.enable = true;
   nixpkgs.config.allowUnfree = true;                                #allow unfree
   # setup default shell
+
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -74,8 +85,6 @@
   };
   #Nixos requirement
   nix.settings.experimental-features = [ "nix-command" "flakes" ];  # Enable the Flakes feature and the accompanying new nix command-line tool
-
-
   #Optimise!!!!!!
   nix.settings.auto-optimise-store = true;
   nix.gc = {

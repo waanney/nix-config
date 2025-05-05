@@ -12,7 +12,6 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "maclaurin";
   
   home-manager = {
@@ -25,6 +24,16 @@
 
   };
 
+  environment = {
+    variables = {
+      EDITOR = "nvim";
+      SYSTEMD_EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+    sessionVariables = {
+      LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+    };
+  };
 
   system.stateVersion = "24.11"; # Did you read the comment?
 

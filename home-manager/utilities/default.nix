@@ -9,5 +9,7 @@
       zip
       unzip
       logisim-evolution
+      postman
+      redis
     ];
   }

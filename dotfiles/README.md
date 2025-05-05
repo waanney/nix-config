@@ -28,7 +28,6 @@ git clone https://github.com/waanney/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 stow nvim
 stow hyprland
-stow kitty
 stow starship
 stow waybar
 stow rofi
