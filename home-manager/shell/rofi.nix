@@ -1,4 +1,9 @@
 
+
+{ config, pkgs, ... }:
+{
+
+  home.file.".config/rofi/config.rasi".text =''
 /* ROUNDED THEME FOR ROFI */
 
 
@@ -110,3 +115,8 @@ element-text {
 element selected {
     text-color: @bg1;
 }
+  '';
+
+
+}
+

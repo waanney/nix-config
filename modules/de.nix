@@ -9,7 +9,6 @@
     rofi-wayland
     waybar
     btop
-    nautilus
     neofetch
     brightnessctl
   ];

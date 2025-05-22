@@ -21,9 +21,9 @@
 
 
   services.redis = {
-    enable = true;
-    bind = "127.0.0.1"; # Địa chỉ IP mà Redis sẽ lắng nghe
-    port = 6379;        # Cổng mặc định
+    servers."main".enable = true;
+    servers."main".bind = "127.0.0.1"; # Địa chỉ IP mà Redis sẽ lắng nghe
+    servers."main".port = 6379;        # Cổng mặc định
   };
 
   # Inputs and Outputs.
@@ -90,6 +90,6 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 1w";
+    options = "--delete-older-than 7d";
   };
 }

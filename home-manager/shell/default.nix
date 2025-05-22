@@ -13,14 +13,9 @@
     vscode
   ];
 
-
   home.file = {
     ".config/waybar" = {
       source = ../../dotfiles/waybar;
-    };
-    
-    ".config/rofi" = {
-      source = ../../dotfiles/rofi;
     };
   };
 }
