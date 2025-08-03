@@ -10,7 +10,6 @@
     ./layout.nix
     ./misc.nix
     ./monitors.nix
-    ./windowrules.nix
     ./windows.nix
   ];
 }

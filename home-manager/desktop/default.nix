@@ -6,7 +6,8 @@
 
   home.packages = with pkgs; [
     hyprshot
-    inputs.zen-browser.packages."${system}".twilight-official
     obs-studio
+    firefox
+    inputs.zen-browser.packages."${system}".default
   ];
 }

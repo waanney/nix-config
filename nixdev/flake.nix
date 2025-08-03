@@ -19,6 +19,7 @@
         nativeBuildInputs = with pkgs; [
           nodejs
           yarn
+          pnpm
           neovim
           zsh
           starship
@@ -41,17 +42,19 @@
           zsh
           starship
           gcc
+          python312Packages.tkinter
           python312Packages.pandas
           python312Packages.stdenv
           python312
+          python312Packages.pip
           python312Packages.flake8
           python312Packages.black
           python312Packages.numpy
           python312Packages.z3-solver
           python312Packages.jupyterlab
-          python312Packages.google-generativeai
           python312Packages.python-dotenv
           python312Packages.uv
+          python312Packages.google-genai
         ];
         shellHook = ''
           cd ~/Documents/python/

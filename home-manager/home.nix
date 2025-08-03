@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     home-manager
   ];
+
   home.username = "waanne";
   home.homeDirectory = "/home/waanne";
   home.stateVersion = "24.11";

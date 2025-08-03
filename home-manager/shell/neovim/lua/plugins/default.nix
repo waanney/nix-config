@@ -12,6 +12,7 @@
     ./none-ls.nix
     ./telescope.nix
     ./treesitter.nix
+    ./animations.nix
 
   ];
 }

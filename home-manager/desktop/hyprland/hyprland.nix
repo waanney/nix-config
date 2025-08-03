@@ -35,7 +35,6 @@ source = ~/.config/hypr/config/misc.conf
 source = ~/.config/hypr/config/monitors.conf
 
 #window rules
-source = ~/.config/hypr/config/windowrules.conf
 
 # Windows layour
 source = ~/.config/hypr/config/windows.conf

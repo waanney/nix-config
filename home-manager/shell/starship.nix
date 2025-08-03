@@ -4,10 +4,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      format = ''
-
-  [](blue)$os[](bg:blue fg:blue)$username[](bg:blue fg:blue)$directory[ ](fg:blue) $git_branch $git_status $all $character
-      '';
+      format = '' [](blue)$os[](bg:blue fg:blue)$username[](bg:blue fg:blue)$directory[ ](fg:blue) $git_branch $git_status $all $character '';
 
       username = {
         show_always = true;

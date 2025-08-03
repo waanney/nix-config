@@ -19,7 +19,12 @@
     nerd-fonts.droid-sans-mono
   ];
 
+  hardware.graphics ={
+    enable = true;
+    enable32Bit = true;
 
+  };
+  services.udev.extraRules = builtins.readFile ./50-qmk.rules;
   services.redis = {
     servers."main".enable = true;
     servers."main".bind = "127.0.0.1"; # Địa chỉ IP mà Redis sẽ lắng nghe

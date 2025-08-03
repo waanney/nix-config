@@ -12,7 +12,6 @@
     fd
     wget
     nodejs
-    yazi
     ripgrep # Thêm rigrep
     gcc
     python312
@@ -34,9 +33,11 @@
     vimAlias = true;
     vimdiffAlias = true;
     plugins = with pkgs.vimPlugins; [
+      render-markdown-nvim
       nvim-treesitter # treesitter
       nvim-autopairs # autoclose tag
       nvim-ts-autotag
+      smear-cursor-nvim
       comment-nvim
     ];
 

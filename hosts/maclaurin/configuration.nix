@@ -24,6 +24,21 @@
 
   };
 
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+  nixpkgs.config.packageOverrides = pkgs: {
+    steam = pkgs.steam.override {
+      extraPkgs = pkgs:
+        with pkgs; [
+          pango
+          libthai
+          harfbuzz
+        ];
+    };
+  };
   environment = {
     variables = {
       EDITOR = "nvim";
