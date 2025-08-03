@@ -17,7 +17,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs system;};
     users = {
-      waanne = import ../../home-manager/home.nix;
+      waanne = import ../../home/home.nix;
     };
     useUserPackages = true;
     useGlobalPkgs = true;
