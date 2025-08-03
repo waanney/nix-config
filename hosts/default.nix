@@ -28,7 +28,7 @@
           "${mod}/core/lanzaboote.nix"
           {
             home-manager = {
-              users.linuxmobile.imports =
+              users.waanne.imports =
                 homeImports."waanne@maclaurin";
               extraSpecialArgs = specialArgs;
             };

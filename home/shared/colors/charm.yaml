@@ -1,5 +1,5 @@
 scheme: "charm"
-author: "linuxmobile"
+author: "waanne"
 accent: "F780E2" # B66467 - Updated to Charm's fuchsia, as a main accent.
 
 base00: "151515" # default background

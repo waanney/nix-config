@@ -3,7 +3,7 @@
   services.greetd = let
     session = {
       command = "${pkgs.niri}/bin/niri-session";
-      user = "linuxmobile";
+      user = "waanne";
     };
   in {
     enable = true;
@@ -18,5 +18,5 @@
   security.pam.services.greetd.enableGnomeKeyring = true;
 
   services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "linuxmobile";
+  services.displayManager.autoLogin.user = "waanne";
 }
