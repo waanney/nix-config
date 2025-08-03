@@ -7,19 +7,17 @@
     ../programs/nushell.nix
   ];
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "es_AR.UTF-8";
-      LC_IDENTIFICATION = "es_AR.UTF-8";
-      LC_MEASUREMENT = "es_AR.UTF-8";
-      LC_MONETARY = "es_AR.UTF-8";
-      LC_NAME = "es_AR.UTF-8";
-      LC_NUMERIC = "es_AR.UTF-8";
-      LC_PAPER = "es_AR.UTF-8";
-      LC_TELEPHONE = "es_AR.UTF-8";
-      LC_TIME = "es_AR.UTF-8";
-    };
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "vi_VN";
+    LC_IDENTIFICATION = "vi_VN";
+    LC_MEASUREMENT = "vi_VN";
+    LC_MONETARY = "vi_VN";
+    LC_NAME = "vi_VN";
+    LC_NUMERIC = "vi_VN";
+    LC_PAPER = "vi_VN";
+    LC_TELEPHONE = "vi_VN";
+    LC_TIME = "vi_VN";
   };
 
   console.keyMap = "la-latin1";
@@ -31,9 +29,8 @@
     rebuild.enableNg = true;
   };
 
-  time.timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
   time.hardwareClockInLocalTime = lib.mkDefault true;
-
+  time.timeZone = "Asia/Ho_Chi_Minh";
   # compresses half the ram for use as swap
   zramSwap = {
     enable = true;
