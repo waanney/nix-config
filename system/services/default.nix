@@ -3,6 +3,7 @@ _: {
     printing.enable = true;
 
     dbus.implementation = "broker";
+    blueman.enable = true;
 
     # profile-sync-daemon
     psd = {
@@ -11,6 +12,7 @@ _: {
     };
     irqbalance.enable = true;
   };
+  programs.dconf.enable = true;
 
   # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
   # it to complete

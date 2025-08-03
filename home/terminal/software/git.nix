@@ -7,8 +7,8 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "Braian A. Diez";
-    userEmail = "bdiez19@gmail.com";
+    userName = "waanne";
+    userEmail = "work.buiminhquan@gmail.com";
     signing = {
       key = "481EFFCF2C7B8C7B";
       signByDefault = true;

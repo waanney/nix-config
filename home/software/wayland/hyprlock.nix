@@ -1,4 +1,6 @@
-_: {
+
+{self, ...}:
+ {
   programs.hyprlock = {
     enable = true;
 
@@ -12,7 +14,7 @@ _: {
       background = [
         {
           monitor = "";
-          path = "~/Downloads/WALLPAPERS/wallhaven-5ylrm9.jpg";
+          path = "${self}/assets/wallpapers/tree.jpg";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";

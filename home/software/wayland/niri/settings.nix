@@ -24,12 +24,12 @@ in {
       };
       spawn-at-startup = [
         (makeCommand "hyprlock")
-        (makeCommand "swww-daemon")
+        (makeCommand "swww-daemon && swww img wallpapers/tree.jpg")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
       ];
       input = {
-        keyboard.xkb.layout = "latam";
+        keyboard.xkb.layout = "us";
 
         touchpad = {
           click-method = "button-areas";
