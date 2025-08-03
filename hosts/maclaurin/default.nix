@@ -26,6 +26,10 @@
       "i8042.nopnp"
       "i8042.noloop"
       "psmouse.synaptics_intertouch=1"
+      "quiet"
+      "systemd.show_status=auto"
+      "rd.udev.log_level=3"
+      "plymouth.use-simpledrm"
     ];
     kernel.sysctl = {
       "vm.swappiness" = 10;
