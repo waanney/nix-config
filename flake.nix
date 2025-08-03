@@ -1,11 +1,15 @@
 {
-  description = "LinuDev Configuration NixOs.";
+  description = "Waanne Configuration NixOs.";
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
 
-      imports = [./home/profiles ./hosts ./pkgs];
+      imports = [
+        ./home/profiles
+        ./hosts 
+        ./pkgs
+      ];
 
       perSystem = {
         config,

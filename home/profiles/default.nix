@@ -21,7 +21,7 @@ in {
 
   flake = {
     homeConfiguration = {
-      "linuxmobile_aesthetic" = homeManagerConfiguration {
+      "waanne_maclaurin" = homeManagerConfiguration {
         modules = homeImports."waanne@maclaurin";
         inherit pkgs extraSpecialArgs;
       };
