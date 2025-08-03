@@ -16,7 +16,7 @@ in {
 
     XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
 
-    EDITOR = "hx";
+    EDITOR = "nvim";
     DIRENV_LOG_FORMAT = "";
 
     # auto-run programs using nix-index-database

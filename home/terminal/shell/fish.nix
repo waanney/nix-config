@@ -5,8 +5,8 @@
     shellInit = ''
       set -gx NIXPKGS_ALLOW_UNFREE 1
       set -gx NIXPKGS_ALLOW_INSECURE 1
-      set -gx EDITOR hx
-      set -gx VISUAL hx
+      set -gx EDITOR nvim
+      set -gx VISUAL nvim
 
       set -g fish_greeting
     '';
