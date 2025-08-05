@@ -19,17 +19,17 @@
     "XF86AudioRaiseVolume".action = set-volume "5%+";
     "XF86AudioLowerVolume".action = set-volume "5%-";
 
-    "XF86MonBrightnessUp".action = brillo "-A" "5";
-    "XF86MonBrightnessDown".action = brillo "-U" "5";
+    "XF86MonBrightnessUp".action = brillo "-A" "20%"; #error: cannot use
+    "XF86MonBrightnessDown".action = brillo "-U" "20%"; #error: cannot use
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";
     "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
-    "Ctrl+Alt+L".action = spawn "sh -c pgrep hyprlock || hyprlock";
+    "Ctrl+Alt+L".action = spawn "sh -c 'pgrep hyprlock || hyprlock'";
 
-    "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
+    "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome ${pkgs.gnome-control-center}/bin/gnome-control-center";
 
     "Mod+Q".action = close-window;
     "Mod+S".action = switch-preset-column-width;

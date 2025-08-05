@@ -9,10 +9,12 @@
     lfs.enable = true;
     userName = "waanne";
     userEmail = "work.buiminhquan@gmail.com";
-    signing = {
-      key = "481EFFCF2C7B8C7B";
-      signByDefault = true;
-    };
+    # signing = {
+    #   key = "481EFFCF2C7B8C7B";
+    #   signByDefault = true;
+    # };
+
+
 
     delta = {
       enable = true;
@@ -39,6 +41,9 @@
     };
 
     extraConfig = {
+      credential = {
+        helper = "!gh auth git-credential";
+      };
       init.defaultBranch = "main";
       diff.colorMoved = "default";
       merge.conflictstyle = "diff3";

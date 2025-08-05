@@ -7,7 +7,6 @@ in {
     ./shell/starship.nix
     # ./shell/fish.nix
     ./shell/nushell.nix
-    ./emulators/wezterm.nix
   ];
 
   home.sessionVariables = {
