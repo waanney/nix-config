@@ -17,15 +17,6 @@
   };
 
 
-home.activation.removeConflictingFiles = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
-  rm -f ~/.local/share/applications/mimeapps.list
-  rm -f ~/.config/mimeapps.list
-  rm -f ~/.config/niri/config.kdl
-  rm -f ~/.config/user-dirs.dirs
-  rm -f ~/.config/nushell/env.nu
-  rm -f ~/.config/gtk-4.0/settings.ini
-  rm -f ~/.config/gtk-3.0/settings.ini
-'';
   # disable manuals as nmd fails to build often
   manual = {
     html.enable = false;

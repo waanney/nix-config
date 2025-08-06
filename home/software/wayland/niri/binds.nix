@@ -29,7 +29,7 @@
     "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
     "Ctrl+Alt+L".action = spawn "sh -c 'pgrep hyprlock || hyprlock'";
 
-    "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome ${pkgs.gnome-control-center}/bin/gnome-control-center";
+    "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
 
     "Mod+Q".action = close-window;
     "Mod+S".action = switch-preset-column-width;

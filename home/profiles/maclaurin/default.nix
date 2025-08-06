@@ -15,7 +15,8 @@
     ../../services/system/polkit-agent.nix
     ../../services/system/power-monitor.nix
     ../../services/system/syncthing.nix
-
+    # quickshell
+    ../../services/quickshell/default.nix
     # software
     ../../software
     ../../software/wayland

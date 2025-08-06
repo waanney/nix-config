@@ -4,10 +4,10 @@
 }: {
   imports = [
     ./anyrun
-    ./browsers/chromium.nix
-    ./browsers/edge.nix
-    # ./browsers/qutebrowser.nix
-    ./browsers/zen.nix
+    # ./browsers/chromium.nix
+    # ./browsers/edge.nix
+    ./browsers/firefox.nix
+    # ./browsers/zen.nix
     ./gtk.nix
     ./media
   ];
@@ -31,6 +31,7 @@
 
     fastfetch
 
+    wpsoffice
     # gnome
     amberol
     cavalier

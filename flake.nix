@@ -44,6 +44,10 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # rest of inputs, alphabetical order
@@ -64,6 +68,11 @@
     };
 
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
+
+    # quickshell = {
+    #   url = "github:ryan4yin/quickshell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -88,8 +97,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    zen-browser = {
-      url = "github:pfaj/zen-browser-flake";
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

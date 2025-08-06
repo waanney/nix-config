@@ -159,6 +159,28 @@
         "type": "github"
       }
     },
+    "firefox-addons": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "pkgs/firefox-addons",
+        "lastModified": 1754138575,
+        "narHash": "sha256-6foT7Sflve4XuLnBKkgN9b9IP4FvdoBA2XQ2IyXmbog=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "27c945a6450d42c62f7e41019d7931b426bb786f",
+        "type": "gitlab"
+      },
+      "original": {
+        "dir": "pkgs/firefox-addons",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "type": "gitlab"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -663,11 +685,32 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753595452,
+        "narHash": "sha256-vqkSDvh7hWhPvNjMjEDV4KbSCv2jyl2Arh73ZXe274k=",
+        "ref": "refs/heads/master",
+        "rev": "a5431dd02dc23d9ef1680e67777fed00fe5f7cda",
+        "revCount": 665,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
         "anyrun": "anyrun",
         "chaotic": "chaotic",
+        "firefox-addons": "firefox-addons",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts_2",
         "flake-utils": "flake-utils",
@@ -677,9 +720,9 @@
         "nix-gaming": "nix-gaming",
         "nix-index-db": "nix-index-db",
         "nixpkgs": "nixpkgs_4",
+        "quickshell": "quickshell",
         "stylix": "stylix",
-        "systems": "systems_3",
-        "zen-browser": "zen-browser"
+        "systems": "systems_3"
       }
     },
     "rust-overlay": {
@@ -893,26 +936,6 @@
       "original": {
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
-        "type": "github"
-      }
-    },
-    "zen-browser": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1753623330,
-        "narHash": "sha256-0HLRX2uLJSbCkcMaY5L5Qk7JKx3pNxdcJlYax6uS05w=",
-        "owner": "pfaj",
-        "repo": "zen-browser-flake",
-        "rev": "28af045a7da93e82722749297561519190a69a1e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pfaj",
-        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

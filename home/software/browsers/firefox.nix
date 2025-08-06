@@ -91,10 +91,10 @@
           urls = [{template = "https://github.com/NixOS/nixpkgs/issues?q=is%3Aissue+{searchTerms}";}];
           definedAliases = ["@npi"];
         };
-        Bing.metaData.hidden = true;
-        "Amazon.com".metaData.hidden = true;
-        "Wikipedia (en)".metaData.hidden = true;
-        "Google".metaData.alias = "@g";
+        bing.metaData.hidden = true;
+        "amazondotcom-us".metaData.hidden = true;
+        "wikipedia".metaData.hidden = true;
+        "google".metaData.alias = "@g";
       };
       settings = {
         # GENERAL
@@ -277,7 +277,7 @@
         "findbar.highlightAll" = true;
         "layout.word_select.eat_space_to_next_word" = false;
 
-        "intl.accept_languages" = "es-AR, es, en-US, en";
+        "intl.accept_languages" = "en-US, en, vi";
 
         "dom.battery,enabled" = false;
         "browser.urlbar.speculativeConnect.enabled" = false;

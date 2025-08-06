@@ -24,7 +24,7 @@ in {
       };
       spawn-at-startup = [
         (makeCommand "hyprlock")
-        (makeCommand "swww-daemon && swww img wallpapers/tree.jpg")
+        (makeCommand "swww-daemon")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
       ];
