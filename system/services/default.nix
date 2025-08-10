@@ -16,6 +16,8 @@ _: {
 
   # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
   # it to complete
+
+  services.ntp.enable = true;
   powerManagement = {
     enable = true;
     powerDownCommands = ''

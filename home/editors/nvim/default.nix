@@ -1,5 +1,3 @@
-
-
 { config, pkgs, ... }:
 {
   imports = [
@@ -19,7 +17,7 @@
     #LSP
     clang-tools
     lua-language-server
-   stylua
+    stylua
     nil
     pyright
     typescript-language-server

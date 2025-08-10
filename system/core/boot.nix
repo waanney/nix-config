@@ -5,6 +5,7 @@
 }: {
   boot = {
     bootspec.enable = true;
+    
 
     initrd = {
       systemd.enable = true;

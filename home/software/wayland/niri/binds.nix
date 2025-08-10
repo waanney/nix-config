@@ -25,7 +25,7 @@
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";
+    "Mod+Space".action = spawn "${pkgs.anyrun}/bin/anyrun";
     "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
     "Ctrl+Alt+L".action = spawn "sh -c 'pgrep hyprlock || hyprlock'";
 
@@ -41,7 +41,7 @@
     "Mod+4".action = set-column-width "100%";
     # "Mod+Shift+F".action = fullscreen-window;
     "Mod+Shift+F".action = expand-column-to-available-width;
-    "Mod+Space".action = toggle-window-floating;
+    "Mod+D".action = toggle-window-floating;
     "Mod+W".action = toggle-column-tabbed-display;
 
     "Mod+Comma".action = consume-window-into-column;

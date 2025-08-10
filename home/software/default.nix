@@ -7,14 +7,12 @@
     # ./browsers/chromium.nix
     # ./browsers/edge.nix
     ./browsers/firefox.nix
-    # ./browsers/zen.nix
     ./gtk.nix
     ./media
   ];
 
   home.packages = with pkgs; [
     # messaging
-    telegram-desktop
     vesktop
 
     # misc
@@ -31,8 +29,7 @@
 
     fastfetch
 
-    wpsoffice
-    # gnome
+    libreoffice
     amberol
     cavalier
     (celluloid.override {youtubeSupport = true;})
@@ -41,7 +38,6 @@
     file-roller
     gnome-control-center
     gnome-text-editor
-    keypunch
     loupe
     nautilus
     (papers.override {supportNautilus = true;})
@@ -54,8 +50,6 @@
     scrcpy
     multiviewer-for-f1
 
-    swww
-    ghostty
     mods
   ];
 }

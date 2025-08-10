@@ -1,4 +1,4 @@
-{lib, ...}: {
+{lib, pkgs,...}: {
   imports = [
     ./security.nix
     ./users.nix
@@ -29,8 +29,22 @@
     rebuild.enableNg = true;
   };
 
-  time.hardwareClockInLocalTime = lib.mkDefault true;
+    i18n.inputMethod = {                                              # Install fcitx5 and unikey to type vietnamese language
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-mozc
+      fcitx5-gtk
+	    libsForQt5.fcitx5-unikey
+      kdePackages.fcitx5-qt
+	    fcitx5-unikey
+   ];
+  };
+
+  time.hardwareClockInLocalTime = lib.mkDefault false;
   time.timeZone = "Asia/Ho_Chi_Minh";
+  
+
   # compresses half the ram for use as swap
   zramSwap = {
     enable = true;

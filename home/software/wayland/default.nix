@@ -13,6 +13,8 @@
 
     # utils
     wl-clipboard
+    #wallpaper
+    swww
   ];
 
   # make stuff work on wayland

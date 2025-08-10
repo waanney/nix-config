@@ -38,17 +38,18 @@ _: {
          },
 
         color_scheme = "Gruvbox Material (Gogh)",
-        window_background_opacity = 1.0,
+        window_background_opacity = 0.90,
         warn_about_missing_glyphs = false,
         enable_scroll_bar = false,
         enable_tab_bar = false,
         scrollback_lines = 10000,
         window_padding = {
-          left = 25,
-          right = 25,
-          top = 25,
-          bottom = 25,
+          left = 2,
+          right = 2,
+          top = 2,
+          bottom = 1,
         },
+
         enable_wayland = true,
         check_for_updates = false,
         default_cursor_style = "SteadyBar",
