@@ -26,7 +26,7 @@
         sort_reverse = false;
         sort_dir_first = true;
         linemode = "none";
-        show_hidden = false;
+        show_hidden = true;
         show_symlink = true;
       };
 
