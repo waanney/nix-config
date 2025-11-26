@@ -13,5 +13,6 @@
     ./xdg.nix
     ./yazi
     ./zoxide.nix
+    ./tmux.nix
   ];
 }

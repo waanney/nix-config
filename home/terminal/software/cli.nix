@@ -15,7 +15,7 @@
       fontconfig
 
       # utils
-      du-dust
+      dust
       duf
       fd
       file
@@ -39,7 +39,7 @@
 
       gdb
     ]
-    ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
+    ++ (with inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}; [
       opencode
       toney
       bmm
@@ -51,7 +51,18 @@
 
   programs = {
     eza.enable = true;
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        host = "*";
+        forwardAgent = false;
+        compression = true;
+        controlMaster = "auto";
+        controlPath = "~/.ssh/master-%r@%h:%p";
+        controlPersist = "10m";
+      };
+    };
     dircolors = {
       enable = true;
       # enableNushellIntegration = true;

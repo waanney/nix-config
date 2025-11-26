@@ -10,13 +10,15 @@
       # normal fonts
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       adwaita-fonts
 
       # nerdfonts
       nerd-fonts.symbols-only
       nerd-fonts.zed-mono
       nerd-fonts.iosevka
+      #microsoft font
+      corefonts
     ];
 
     # causes more issues than it solves

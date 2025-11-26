@@ -23,9 +23,9 @@
     "XF86MonBrightnessDown".action = brillo "-U" "20%"; #error: cannot use
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
-    "Mod+Shift+Alt+S".action = screenshot-window;
+    "Mod+Shift+Alt+S".action.screenshot-window = {write-to-disk = true;};
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+Space".action = spawn "${pkgs.anyrun}/bin/anyrun";
+    "Mod+Space".action = spawn "${pkgs.rofi}/bin/rofi" "-show";
     "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
     "Ctrl+Alt+L".action = spawn "sh -c 'pgrep hyprlock || hyprlock'";
 
@@ -70,5 +70,18 @@
 
     "Mod+Shift+Ctrl+J".action = move-column-to-monitor-down;
     "Mod+Shift+Ctrl+K".action = move-column-to-monitor-up;
+
+    # Workspace navigation - chuyển nhanh giữa các workspace
+    # Sử dụng niri msg để focus workspace bằng tên
+    "Mod+Alt+1".action = spawn "niri" "msg" "action" "focus-workspace" "communication";
+    "Mod+Alt+2".action = spawn "niri" "msg" "action" "focus-workspace" "development";
+    "Mod+Alt+3".action = spawn "niri" "msg" "action" "focus-workspace" "browsing";
+    "Mod+Alt+4".action = spawn "niri" "msg" "action" "focus-workspace" "media";
+
+    # Di chuyển cửa sổ hiện tại sang workspace khác
+    "Mod+Shift+Alt+1".action = spawn "niri" "msg" "action" "move-column-to-workspace" "communication";
+    "Mod+Shift+Alt+2".action = spawn "niri" "msg" "action" "move-column-to-workspace" "development";
+    "Mod+Shift+Alt+3".action = spawn "niri" "msg" "action" "move-column-to-workspace" "browsing";
+    "Mod+Shift+Alt+4".action = spawn "niri" "msg" "action" "move-column-to-workspace" "media";
   };
 }

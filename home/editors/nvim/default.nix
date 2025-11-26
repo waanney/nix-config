@@ -13,7 +13,6 @@
     nodejs
     ripgrep # Thêm rigrep
     gcc
-    python312
     #LSP
     clang-tools
     lua-language-server

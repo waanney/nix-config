@@ -19,7 +19,7 @@
       id = 0;
       name = "dev-edition-default";
       # Keep all of the user's extensions.
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
         bitwarden
         sidebery
@@ -63,7 +63,7 @@
         };
         "NixOS Wiki" = {
           urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
-          iconUpdateURL = "https://nixos.wiki/favicon.png";
+          icon = "https://nixos.wiki/favicon.png";
           updateInterval = 24 * 60 * 60 * 1000; # every day
           definedAliases = ["@nw"];
         };

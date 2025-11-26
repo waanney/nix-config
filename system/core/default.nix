@@ -34,9 +34,8 @@
     fcitx5.addons = with pkgs; [
       fcitx5-mozc
       fcitx5-gtk
-	    libsForQt5.fcitx5-unikey
       kdePackages.fcitx5-qt
-	    fcitx5-unikey
+	    qt6Packages.fcitx5-unikey
    ];
   };
 

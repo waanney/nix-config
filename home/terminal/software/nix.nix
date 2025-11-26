@@ -5,11 +5,11 @@
 }:
 # nix tooling
 {
-  home.packages = with pkgs; [alejandra deadnix statix self.packages.${pkgs.system}.repl];
+  home.packages = with pkgs; [alejandra deadnix statix self.packages.${pkgs.stdenv.hostPlatform.system}.repl];
 
   programs.direnv = {
     enable = true;
-    # enableNushellIntegration = true;
+    enableNushellIntegration = true;
     nix-direnv.enable = true;
     silent = true;
   };

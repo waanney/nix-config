@@ -12,6 +12,88 @@
       clip-to-geometry = true;
       draw-border-with-background = false;
     }
+    # Workspace 1: Giao tiếp & Admin (Communication)
+    {
+      matches = [
+        {app-id = "slack";}
+        {app-id = "com.slack.Slack";}
+        {app-id = "org.telegram.desktop";}
+        {app-id = "app.drey.PaperPlane";}
+        {app-id = "com.github.zalopay.zalo";}
+        {app-id = "thunderbird";}
+        {app-id = "org.mozilla.Thunderbird";}
+        {app-id = "evolution";}
+        {app-id = "org.gnome.Evolution";}
+        {app-id = "gnome-calendar";}
+        {app-id = "org.gnome.Calendar";}
+        {app-id = "discord";}
+        {app-id = "com.discordapp.Discord";}
+      ];
+      open-on-workspace = "communication";
+    }
+    # Workspace 2: Làm việc chính (Deep Work / Dev)
+    {
+      matches = [
+        {app-id = "code";}
+        {app-id = "com.visualstudio.code";}
+        {app-id = "code-oss";}
+        {app-id = "jetbrains-idea";}
+        {app-id = "jetbrains-pycharm";}
+        {app-id = "jetbrains-clion";}
+        {app-id = "jetbrains-rubymine";}
+        {app-id = "jetbrains-webstorm";}
+        {app-id = "com.jetbrains.IntelliJ-IDEA-Community";}
+        {app-id = "com.jetbrains.PyCharm-Community";}
+        {app-id = "wezterm";}
+        {app-id = "org.wezfurlong.wezterm";}
+        {app-id = "foot";}
+        {app-id = "alacritty";}
+        {app-id = "kitty";}
+        {app-id = "obsidian";}
+        {app-id = "md.obsidian.Obsidian";}
+        {app-id = "notion-app";}
+        {app-id = "notion";}
+      ];
+      open-on-workspace = "development";
+    }
+    # Workspace 3: Tra cứu & Tham khảo (Research / Browser)
+    {
+      matches = [
+        {app-id = "firefox";}
+        {app-id = "zen";}
+        {app-id = "chromium-browser";}
+        {app-id = "chromium";}
+        {app-id = "google-chrome";}
+        {app-id = "com.google.Chrome";}
+        {app-id = "edge";}
+        {app-id = "microsoft-edge";}
+        {app-id = "brave-browser";}
+        {app-id = "com.brave.Browser";}
+      ];
+      open-on-workspace = "browsing";
+    }
+    # Workspace 4: Giải trí & Tiện ích (Media / Background)
+    {
+      matches = [
+        {app-id = "spotify";}
+        {app-id = "com.spotify.Client";}
+        {app-id = "ncspot";}
+        {app-id = "mpv";}
+        {app-id = "vlc";}
+        {app-id = "org.videolan.VLC";}
+        {app-id = "btop";}
+        {app-id = "htop";}
+        {app-id = "yazi";}
+        {app-id = "thunar";}
+        {app-id = "org.xfce.thunar";}
+        {app-id = "nautilus";}
+        {app-id = "org.gnome.Nautilus";}
+        {app-id = "dolphin";}
+        {app-id = "org.kde.dolphin";}
+        {app-id = "pcmanfm";}
+      ];
+      open-on-workspace = "media";
+    }
     {
       matches = [
         {is-floating = true;}
@@ -52,7 +134,7 @@
         {app-id = "zen";}
         {app-id = "firefox";}
         {app-id = "chromium-browser";}
-        {app-id = "xdg-desktop-portal-gtk";}
+        {app-id = "xdg-desktop-portal-wlr";}
       ];
       scroll-factor = 0.5;
     }
@@ -164,7 +246,7 @@
       open-floating = true;
     }
     {
-      matches = [{app-id = "xdg-desktop-portal-gtk";}];
+      matches = [{app-id = "xdg-desktop-portal-wlr";}];
       open-floating = true;
     }
     {

@@ -58,8 +58,6 @@
       inputs.systems.follows = "systems";
     };
 
-    anyrun.url = "github:anyrun-org/anyrun";
-
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     hm = {
@@ -68,11 +66,6 @@
     };
 
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
-
-    # quickshell = {
-    #   url = "github:ryan4yin/quickshell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     niri = {
       url = "github:sodiboo/niri-flake";

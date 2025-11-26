@@ -7,7 +7,32 @@
   makeCommand = command: {
     command = [command];
   };
+  # Named workspaces declarations
+  namedWorkspacesConfig = ''
+    workspace "communication"
+    workspace "development"
+    workspace "browsing"
+    workspace "media"
+  '';
 in {
+  # Activation script để thêm named workspaces vào config file sau khi home-manager generate
+  home.activation.addNamedWorkspaces = config.lib.dag.entryAfter ["writeBoundary"] ''
+    # Chờ config file được generate
+    NIRI_CONFIG="$HOME/.config/niri/config.kdl"
+    if [ -f "$NIRI_CONFIG" ]; then
+      # Kiểm tra xem named workspaces đã được thêm chưa
+      if ! grep -q 'workspace "communication"' "$NIRI_CONFIG"; then
+        # Prepend named workspaces vào đầu file
+        ${pkgs.coreutils}/bin/cat > "$NIRI_CONFIG.tmp" << 'EOF'
+${namedWorkspacesConfig}
+
+EOF
+        ${pkgs.coreutils}/bin/cat "$NIRI_CONFIG" >> "$NIRI_CONFIG.tmp"
+        ${pkgs.coreutils}/bin/mv "$NIRI_CONFIG.tmp" "$NIRI_CONFIG"
+      fi
+    fi
+  '';
+
   programs.niri = {
     enable = true;
     package = pkgs.niri;
@@ -25,8 +50,13 @@ in {
       spawn-at-startup = [
         (makeCommand "hyprlock")
         (makeCommand "swww-daemon")
+        {command = ["sh" "-c" "sleep 1 && swww img /etc/nixos/assets/wallpapers/tree.jpg"];}
+        (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
+        # Tạo và đặt tên cho các workspace khi niri khởi động
+        # Named workspaces sẽ luôn tồn tại, giúp window rules hoạt động đúng
+        {command = ["sh" "-c" "sleep 1 && niri msg action focus-workspace communication >/dev/null 2>&1 && niri msg action set-workspace-name communication >/dev/null 2>&1; niri msg action focus-workspace development >/dev/null 2>&1 && niri msg action set-workspace-name development >/dev/null 2>&1; niri msg action focus-workspace browsing >/dev/null 2>&1 && niri msg action set-workspace-name browsing >/dev/null 2>&1; niri msg action focus-workspace media >/dev/null 2>&1 && niri msg action set-workspace-name media >/dev/null 2>&1; niri msg action focus-workspace communication >/dev/null 2>&1"];}
       ];
       input = {
         keyboard.xkb.layout = "us";

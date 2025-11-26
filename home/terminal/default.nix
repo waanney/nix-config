@@ -1,4 +1,4 @@
-{config, ...}: let
+{config, pkgs, ...}: let
   conf = config.xdg.configHome;
   cache = config.xdg.cacheHome;
 in {
@@ -18,7 +18,6 @@ in {
 
     EDITOR = "nvim";
     DIRENV_LOG_FORMAT = "";
-
     # auto-run programs using nix-index-database
     NIX_AUTO_RUN = "1";
   };

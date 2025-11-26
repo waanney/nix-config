@@ -3,7 +3,7 @@
   ...
 }: {
   imports = [
-    ./anyrun
+    ./rofi
     # ./browsers/chromium.nix
     # ./browsers/edge.nix
     ./browsers/firefox.nix
@@ -14,7 +14,7 @@
   home.packages = with pkgs; [
     # messaging
     vesktop
-
+    (texlive.combine { inherit (texlive) scheme-full; })
     # misc
     ps_mem
     pciutils
@@ -23,8 +23,6 @@
     cliphist
     ffmpegthumbnailer
     imagemagick
-    nodejs
-    nodePackages.pnpm
     bun
 
     fastfetch
@@ -35,7 +33,6 @@
     (celluloid.override {youtubeSupport = true;})
     dconf-editor
     eyedropper
-    file-roller
     gnome-control-center
     gnome-text-editor
     loupe
@@ -44,12 +41,13 @@
     pwvucontrol
     resources
 
-    inkscape
-    gimp
-    # krita
-    scrcpy
-    multiviewer-for-f1
-
+    obsidian
     mods
+    tailscale
+    sshfs
+    slack
+
+    code-cursor
+    cursor-cli
   ];
 }

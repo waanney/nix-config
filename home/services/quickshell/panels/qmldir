@@ -1,0 +1,4 @@
+module panels
+StatusBar 1.0 statusbar.qml
+TopBar 1.0 topbar.qml
+

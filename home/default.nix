@@ -15,7 +15,6 @@
     stateVersion = "24.05";
   };
 
-
   # disable manuals as nmd fails to build often
   manual = {
     html.enable = false;
@@ -62,7 +61,6 @@
 
     targets = {
       bat.enable = true;
-      helix.enable = true;
       nixos-icons.enable = true;
       nushell.enable = true;
       qt.enable = true;
