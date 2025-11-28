@@ -1,5 +1,35 @@
 {
   "nodes": {
+    "ai-dev-template": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-SZUHUTNRjlXTsG4P3UzBMIkCxmu9y+k051gi85thlI8=",
+        "path": "./templates/ai-dev",
+        "type": "path"
+      },
+      "original": {
+        "path": "./templates/ai-dev",
+        "type": "path"
+      }
+    },
+    "game-dev-template": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-tTu+o+MKQ9nhuPm7gOS9TYlqzWGr3cka0vj2Yk4dr7c=",
+        "path": "./templates/game-dev",
+        "type": "path"
+      },
+      "original": {
+        "path": "./templates/game-dev",
+        "type": "path"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -22,6 +52,38 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1763966396,
+        "narHash": "sha256-6eeL1YPcY1MV3DDStIDIdy/zZCDKgHdkCmsrLJFiZf0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5ae3b07d8d6527c42f17c876e404993199144b6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1763966396,
+        "narHash": "sha256-6eeL1YPcY1MV3DDStIDIdy/zZCDKgHdkCmsrLJFiZf0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5ae3b07d8d6527c42f17c876e404993199144b6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1755615617,
         "narHash": "sha256-HMwfAJBdrr8wXAkbGhtcby1zGFvs+StOp19xNsbqdOg=",
         "owner": "NixOS",
@@ -36,10 +98,76 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1763966396,
+        "narHash": "sha256-6eeL1YPcY1MV3DDStIDIdy/zZCDKgHdkCmsrLJFiZf0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5ae3b07d8d6527c42f17c876e404993199144b6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1763966396,
+        "narHash": "sha256-6eeL1YPcY1MV3DDStIDIdy/zZCDKgHdkCmsrLJFiZf0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5ae3b07d8d6527c42f17c876e404993199144b6a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "ai-dev-template": "ai-dev-template",
+        "game-dev-template": "game-dev-template",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_3",
+        "rust-dev-template": "rust-dev-template",
+        "web-dev-template": "web-dev-template"
+      }
+    },
+    "rust-dev-template": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-mbsuq0kT9F6n0E09dR2IoLf6F9pYHIPJvyXzKUU/Qzo=",
+        "path": "./templates/rust-dev",
+        "type": "path"
+      },
+      "original": {
+        "path": "./templates/rust-dev",
+        "type": "path"
+      }
+    },
+    "web-dev-template": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-A3biNxS7RbVEP2FqfGhGb59y9gB/GNxjyc9DLnTI1Ug=",
+        "path": "./templates/web-dev",
+        "type": "path"
+      },
+      "original": {
+        "path": "./templates/web-dev",
+        "type": "path"
       }
     }
   },

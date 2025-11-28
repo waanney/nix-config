@@ -16,6 +16,7 @@ let
     ./services/docker.nix
     ./services/greetd.nix
     ./services/pipewire.nix
+    ./services/tailscale.nix
   ];
 
   laptop =
