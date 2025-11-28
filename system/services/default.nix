@@ -1,0 +1,31 @@
+_: {
+  services = {
+    printing.enable = true;
+
+    dbus.implementation = "broker";
+    blueman.enable = true;
+
+    # profile-sync-daemon
+    psd = {
+      enable = true;
+      resyncTimer = "10m";
+    };
+    irqbalance.enable = true;
+  };
+  programs.dconf.enable = true;
+
+  # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
+  # it to complete
+
+  services.ntp.enable = true;
+  powerManagement = {
+    enable = true;
+    powerDownCommands = ''
+      # Lock all sessions
+      loginctl lock-sessions
+
+      # Wait for lockscreen(s) to be up
+      sleep 1
+    '';
+  };
+}
