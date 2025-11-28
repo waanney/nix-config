@@ -1,11 +1,12 @@
- NixOS Configuration
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white)
+ NixOS Configuration
 ======================
 
- Overview
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white) Overview
 -----------
 This repository hosts my complete NixOS setup, including declarative system modules, Home Manager profiles, custom packages, and reusable development shells. Everything is flake-based so hosts and user environments stay in sync across machines.
 
- Layout Highlights
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white) Layout Highlights
 -------------------
 - `flake.nix` / `flake.lock` – entry point exposing system configurations, Home Manager, custom packages, and dev shells.
 - `hosts/` – per-machine profiles (e.g. `maclaurin`) that compose modules from `system/` and `home/`.
@@ -15,7 +16,7 @@ This repository hosts my complete NixOS setup, including declarative system modu
 - `nixdev/templates/` – single-file flake templates for web, AI/ML, Rust, and game development environments.
 - `assets/` – wallpapers and other static resources referenced by the configuration.
 
- Usage
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white) Usage
 -------
 1. **Build a host**  
    ```bash
@@ -30,7 +31,7 @@ This repository hosts my complete NixOS setup, including declarative system modu
    nix develop .#ai-dev
    ```
 
- Template Quickstart
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white) Template Quickstart
 ---------------------
 Each template in `nixdev/templates/` is its own flake. Initialize a new project with:
 ```bash
@@ -38,12 +39,12 @@ nix flake init -t /etc/nixos/nixdev#web-dev
 direnv allow  # if you use direnv + use flake
 ```
 
- Custom Packages
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white)Custom Packages
 -----------------
 - `pkgs/SF-Pro` and `pkgs/SF-Pro-mono` package Apple’s SF font families for system-wide use.
 - `pkgs/repl` provides a convenient `repl` script that opens `nix repl` preloaded with the system flake.
 
- Notes
+![NixOS](https://img.shields.io/badge/--5277C3?logo=nixos&logoColor=white) Notes
 -------
 - Run `nix flake update` to pull fresh inputs before rebuilding.
 - Use `sudo nix-collect-garbage -d` periodically to prune old generations.
