@@ -9,8 +9,10 @@ config = function()
   local config = require("nvim-treesitter.configs")
   config.setup({
     auto_install = true,
-    highlight ={ enable = true},
-    indent = { enable = true}
+    ensure_installed = { "lua", "python", "javascript", "typescript", "latex", "bibtex" },
+    highlight = { enable = true },
+    indent = { enable = true },
+    sync_install = false,
   })
 end
 }

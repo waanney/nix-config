@@ -13,6 +13,7 @@
     ./telescope.nix
     ./treesitter.nix
     ./animations.nix
+    ./latex.nix
 
   ];
 }

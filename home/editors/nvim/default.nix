@@ -20,6 +20,9 @@
     nil
     pyright
     typescript-language-server
+    tree-sitter
+    texlab
+    neovim-remote  # For inverse search (Ctrl+Click in PDF → jump to Neovim)
     #formater
     prettierd
   ];

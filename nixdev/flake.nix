@@ -9,9 +9,10 @@
     ai-dev-template.url = "path:./templates/ai-dev";
     rust-dev-template.url = "path:./templates/rust-dev";
     game-dev-template.url = "path:./templates/game-dev";
+    latex-dev-template.url = "path:./templates/latex-dev";
   };
 
-  outputs = {self, nixpkgs, web-dev-template, ai-dev-template, rust-dev-template, game-dev-template, ... }:
+  outputs = {self, nixpkgs, web-dev-template, ai-dev-template, rust-dev-template, game-dev-template, latex-dev-template, ... }:
   let
     system = "x86_64-linux";
     templateShell = tmpl: tmpl.devShells.${system}.default;
@@ -21,6 +22,7 @@
       ai-dev = templateShell ai-dev-template;
       rust-dev = templateShell rust-dev-template;
       game-dev = templateShell game-dev-template;
+      latex-dev = templateShell latex-dev-template;
     };
 
     templates = {
@@ -39,6 +41,10 @@
       };
       game-dev = {
         path = ./templates/game-dev;
+        description = "Game dev shell with Godot 4, Python tooling, and build deps";
+      };
+      latex-dev = {
+        path = ./templates/latex-dev;
         description = "Game dev shell with Godot 4, Python tooling, and build deps";
       };
     };
