@@ -7,8 +7,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    devShells.${system}.default = pkgs.mkShell {
+    shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         nodejs
         bun
@@ -23,6 +22,11 @@
         export SHELL=$(which nu)
         echo "Welcome to the web development environment"
       '';
+    };
+  in {
+    devShells.${system} = {
+      default = shell;
+      web-dev = shell;  -- Allow nix develop .#web-dev in template directory
     };
   };
 }

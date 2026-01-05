@@ -7,8 +7,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    devShells.${system}.default = pkgs.mkShell {
+    shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         gcc
         jellyfin-ffmpeg
@@ -33,6 +32,11 @@
         export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/
         echo "Welcome to the AI development environment"
       '';
+    };
+  in {
+    devShells.${system} = {
+      default = shell;
+      ai-dev = shell;  -- Allow nix develop .#ai-dev in template directory
     };
   };
 }

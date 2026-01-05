@@ -7,8 +7,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    devShells.${system}.default = pkgs.mkShell {
+    shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         godot
         scons
@@ -29,6 +28,11 @@
         echo "Welcome to the Game development environment"
         echo "Godot 4 and Python 3.12 are available"
       '';
+    };
+  in {
+    devShells.${system} = {
+      default = shell;
+      game-dev = shell;  -- Allow nix develop .#game-dev in template directory
     };
   };
 }

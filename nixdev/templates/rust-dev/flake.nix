@@ -7,8 +7,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    devShells.${system}.default = pkgs.mkShell {
+    shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
         rustc
         cargo
@@ -25,6 +24,11 @@
         export SHELL=$(which nu)
         echo "Welcome to the Rust development environment"
       '';
+    };
+  in {
+    devShells.${system} = {
+      default = shell;
+      rust-dev = shell;  -- Allow nix develop .#rust-dev in template directory
     };
   };
 }
