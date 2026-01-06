@@ -56,8 +56,9 @@ EOF
         (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
-        # Start XWayland for X11 apps like AnyDesk
-        {command = ["sh" "-c" "if ! pgrep -x Xwayland > /dev/null; then ${pkgs.xwayland}/bin/Xwayland :0 -nolisten tcp -retro > /tmp/xwayland.log 2>&1 & fi"];}
+        # Start XWayland cho các app X11 như AnyDesk
+        # Chạy background và redirect output để tránh window dư
+        {command = ["sh" "-c" "if ! pgrep -x Xwayland > /dev/null; then ${pkgs.xwayland}/bin/Xwayland :0 -nolisten tcp -retro > /dev/null 2>&1 & fi"];}
         # Tạo và đặt tên cho các workspace khi niri khởi động
         # Named workspaces sẽ luôn tồn tại, giúp window rules hoạt động đúng
         {command = ["sh" "-c" "sleep 1 && niri msg action focus-workspace communication >/dev/null 2>&1 && niri msg action set-workspace-name communication >/dev/null 2>&1; niri msg action focus-workspace development >/dev/null 2>&1 && niri msg action set-workspace-name development >/dev/null 2>&1; niri msg action focus-workspace browsing >/dev/null 2>&1 && niri msg action set-workspace-name browsing >/dev/null 2>&1; niri msg action focus-workspace media >/dev/null 2>&1 && niri msg action set-workspace-name media >/dev/null 2>&1; niri msg action focus-workspace communication >/dev/null 2>&1"];}
