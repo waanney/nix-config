@@ -9,6 +9,7 @@
     ./browsers/firefox.nix
     ./gtk.nix
     ./media
+    ./anydesk.nix
   ];
 
   home.packages = with pkgs; [

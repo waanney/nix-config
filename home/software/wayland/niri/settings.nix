@@ -39,11 +39,13 @@ EOF
     settings = {
       environment = {
         CLUTTER_BACKEND = "wayland";
-        DISPLAY = null;
-        GDK_BACKEND = "wayland,x11";
+        DISPLAY = ":0";
+        WAYLAND_DISPLAY = "wayland-1"; 
+        KWIN_FORCE_SW_CURSOR = "1";
+        GDK_BACKEND = "x11,wayland";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
-        QT_QPA_PLATFORM = "wayland;xcb";
+        QT_QPA_PLATFORM = "xcb;wayland";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         SDL_VIDEODRIVER = "wayland";
       };
@@ -54,6 +56,8 @@ EOF
         (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
+        # Start XWayland for X11 apps like AnyDesk
+        {command = ["sh" "-c" "if ! pgrep -x Xwayland > /dev/null; then ${pkgs.xwayland}/bin/Xwayland :0 -nolisten tcp -retro > /tmp/xwayland.log 2>&1 & fi"];}
         # Tạo và đặt tên cho các workspace khi niri khởi động
         # Named workspaces sẽ luôn tồn tại, giúp window rules hoạt động đúng
         {command = ["sh" "-c" "sleep 1 && niri msg action focus-workspace communication >/dev/null 2>&1 && niri msg action set-workspace-name communication >/dev/null 2>&1; niri msg action focus-workspace development >/dev/null 2>&1 && niri msg action set-workspace-name development >/dev/null 2>&1; niri msg action focus-workspace browsing >/dev/null 2>&1 && niri msg action set-workspace-name browsing >/dev/null 2>&1; niri msg action focus-workspace media >/dev/null 2>&1 && niri msg action set-workspace-name media >/dev/null 2>&1; niri msg action focus-workspace communication >/dev/null 2>&1"];}

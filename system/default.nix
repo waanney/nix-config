@@ -17,6 +17,7 @@ let
     ./services/greetd.nix
     ./services/pipewire.nix
     ./services/tailscale.nix
+    ./services/anydesk.nix
   ];
 
   laptop =
