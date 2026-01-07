@@ -23,6 +23,9 @@
       ripgrep
       killall
       jq
+      
+      # SSH/remote
+      mosh
 
       discordo
       fum
