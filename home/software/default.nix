@@ -50,5 +50,6 @@
 
     code-cursor
     cursor-cli
+    wpsoffice
   ];
 }

@@ -54,18 +54,29 @@
 
   programs = {
     eza.enable = true;
-    ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-      matchBlocks."*" = {
-        host = "*";
-        forwardAgent = false;
-        compression = true;
-        controlMaster = "auto";
-        controlPath = "~/.ssh/master-%r@%h:%p";
-        controlPersist = "10m";
-      };
+ssh = {
+  enable = true;
+  enableDefaultConfig = false;
+
+  matchBlocks = {
+    # Block 1: Cấu hình chung cho mọi host
+    "general" = {
+      host = "*";
+      forwardAgent = false;
+      compression = true;
+      controlMaster = "auto";
+      controlPath = "~/.ssh/master-%r@%h:%p";
+      controlPersist = "10m";
     };
+
+    # Block 2: Cấu hình riêng cho server của bạn
+    "my-server" = {
+      host = "100.104.251.17";
+      hostname = "100.104.251.17";
+      user = "ngphuoc";
+    };
+  };
+};
     dircolors = {
       enable = true;
       # enableNushellIntegration = true;
