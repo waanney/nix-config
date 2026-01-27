@@ -17,8 +17,8 @@
     ../../services/system/polkit-agent.nix
     ../../services/system/power-monitor.nix
     # ../../services/system/syncthing.nix
-    # quickshell
-    ../../services/quickshell/default.nix
+    # quickshell (old - replaced by Caelestia)
+    ../../services/shell
     # software
     ../../software
     ../../software/wayland

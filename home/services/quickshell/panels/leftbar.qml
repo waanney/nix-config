@@ -62,10 +62,10 @@ PanelWindow {
       topMargin: 0
       bottomMargin: 0
     }
-    width: 4
+    width: 8
     color: "#5a5650"
-    radius: 2
-    z: 1
+    radius: 4
+    z: 20
   }
   
   // Top corner curve connector - connects left border to top border
