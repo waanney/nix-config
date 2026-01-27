@@ -13,10 +13,17 @@ PanelWindow {
     left: true
   }
 
-  property bool isExpanded: hoverHandler.hovered
+  property bool hovered: false
+  property bool isExpanded: hovered
   
-  HoverHandler {
-    id: hoverHandler
+  MouseArea {
+      id: hoverArea
+      anchors.fill: parent
+      hoverEnabled: true
+      acceptedButtons: Qt.NoButton
+      z: 10
+      onEntered: root.hovered = true
+      onExited: root.hovered = false
   }
 
   // Animate the width
@@ -29,6 +36,13 @@ PanelWindow {
   }
 
   color: "transparent"
+
+  // Input capture layer - ensures mouse events are caught even in transparent areas
+  Rectangle {
+      anchors.fill: parent
+      color: "#01000000" // Almost transparent but opaque to input
+      z: -100 // Behind everything
+  }
 
   property var currentDate: new Date()
   Timer {
@@ -107,6 +121,9 @@ PanelWindow {
     radius: 12
     clip: true
     z: 0
+
+    opacity: isExpanded ? 1 : 0
+    Behavior on opacity { NumberAnimation { duration: 200 } }
     
     // Shadow effect
     Rectangle {
