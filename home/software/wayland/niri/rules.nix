@@ -1,5 +1,6 @@
 {...}: let
   windowRules = [
+ 
     {
       geometry-corner-radius = let
         radius = 0.0;
@@ -12,6 +13,7 @@
       clip-to-geometry = true;
       draw-border-with-background = false;
     }
+
     # Workspace 1: Giao tiếp & Admin (Communication)
     {
       matches = [
