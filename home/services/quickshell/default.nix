@@ -34,4 +34,5 @@ in {
   xdg.configFile."quickshell/panels/rightbar.qml".source = ./panels/rightbar.qml;
   xdg.configFile."quickshell/panels/topbar.qml".source = ./panels/topbar.qml;
   xdg.configFile."quickshell/panels/bottombar.qml".source = ./panels/bottombar.qml;
+  xdg.configFile."quickshell/components".source = ./components;
 }
