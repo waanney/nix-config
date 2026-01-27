@@ -10,6 +10,8 @@
     # screenshot
     grim
     slurp
+    
+    xwayland-satellite
 
     # utils
     wl-clipboard

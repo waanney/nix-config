@@ -39,10 +39,10 @@ EOF
     settings = {
       environment = {
         CLUTTER_BACKEND = "wayland";
-        DISPLAY = ":0";
-        WAYLAND_DISPLAY = "wayland-1"; 
+        # DISPLAY = ":0";
+        # WAYLAND_DISPLAY = "wayland-1"; 
         KWIN_FORCE_SW_CURSOR = "1";
-        GDK_BACKEND = "x11,wayland";
+        GDK_BACKEND = "wayland,x11";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
         QT_QPA_PLATFORM = "wayland;xcb";
