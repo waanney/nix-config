@@ -51,5 +51,6 @@
     code-cursor
     cursor-cli
     wpsoffice
+    antigravity
   ];
 }

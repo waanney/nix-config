@@ -19,7 +19,7 @@
       "ideapad_laptop.allow_v4_dytc=Y"
       # "usbcore.autosuspend=-1"
       "acpi_osi="
-      "acpi_backlight=vendor"
+      "acpi_backlight=native"
       "psmouse.synaptics_intertouch=1"
     ];
     kernel.sysctl = {

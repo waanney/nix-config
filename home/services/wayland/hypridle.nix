@@ -6,12 +6,12 @@
 }: let
   lock = "${pkgs.systemd}/bin/loginctl lock-session";
 
-  brillo = lib.getExe pkgs.brillo;
+  # Thay brillo bằng brightnessctl
+  brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
 
-  # timeout after which DPMS kicks in
+  # timeout sau 5 phút (300 giây)
   timeout = 300;
 in {
-  # screen idle
   services.hypridle = {
     enable = true;
 
@@ -20,12 +20,11 @@ in {
 
       listener = [
         {
-          timeout = timeout - 10;
-          # save the current brightness and dim the screen over a period of
-          # 500 ms
-          on-timeout = "${brillo} -O; ${brillo} -u 500000 -S 10";
-          # brighten the screen over a period of 250ms to the saved value
-          on-resume = "${brillo} -I -u 250000";
+          timeout = timeout - 10; # 290 giây
+          # Giảm độ sáng xuống 10% (brightnessctl không có -O/-I nên ta set trực tiếp)
+          on-timeout = "${brightnessctl} set 10%";
+          # Trả lại độ sáng 100% (hoặc mức bạn muốn) khi quay lại
+          on-resume = "${brightnessctl} set 100%";
         }
         {
           inherit timeout;
