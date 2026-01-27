@@ -45,7 +45,7 @@ EOF
         GDK_BACKEND = "x11,wayland";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
-        QT_QPA_PLATFORM = "xcb;wayland";
+        QT_QPA_PLATFORM = "wayland;xcb";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         SDL_VIDEODRIVER = "wayland";
       };
