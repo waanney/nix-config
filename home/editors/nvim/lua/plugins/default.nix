@@ -14,6 +14,11 @@
     ./treesitter.nix
     ./animations.nix
     ./latex.nix
-
+    ./markdown.nix
+    ./gitsigns.nix
+    ./indent-blankline.nix
+    ./which-key.nix
+    ./trouble.nix
+    ./colorizer.nix
   ];
 }

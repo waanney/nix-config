@@ -20,6 +20,9 @@
     nil
     pyright
     typescript-language-server
+    tailwindcss-language-server
+    jdt-language-server  # Java
+    rust-analyzer  # Rust
     tree-sitter
     texlab
     neovim-remote  # For inverse search (Ctrl+Click in PDF → jump to Neovim)

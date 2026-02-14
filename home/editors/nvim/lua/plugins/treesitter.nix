@@ -9,10 +9,19 @@ config = function()
   local config = require("nvim-treesitter.configs")
   config.setup({
     auto_install = true,
-    ensure_installed = { "lua", "python", "javascript", "typescript", "latex", "bibtex" },
+    ensure_installed = { "lua", "python", "javascript", "typescript", "latex", "bibtex", "java", "rust", "nix" },
     highlight = { enable = true },
     indent = { enable = true },
     sync_install = false,
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = "<CR>",
+        node_incremental = "<CR>",
+        scope_incremental = "<S-CR>",
+        node_decremental = "<BS>",
+      },
+    },
   })
 end
 }
