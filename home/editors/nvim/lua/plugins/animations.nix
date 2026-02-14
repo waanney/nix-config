@@ -4,6 +4,7 @@
   home.file.".config/nvim/lua/plugins/animations.lua".text =''
 return {
   "sphamba/smear-cursor.nvim",
+  event = "VeryLazy",  -- Load after startup for better performance
 
   opts = {
     -- Smear cursor when switching buffers or windows.

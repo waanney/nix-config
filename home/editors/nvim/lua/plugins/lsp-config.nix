@@ -8,7 +8,7 @@ return {
 			-- Configure diagnostics
 			vim.diagnostic.config({
 				virtual_text = {
-					prefix = '●',
+					prefix = "●",
 					source = "if_many",
 				},
 				signs = true,
@@ -16,27 +16,19 @@ return {
 				update_in_insert = false,
 				severity_sort = true,
 				float = {
-					border = 'rounded',
-					source = 'always',
-					header = '',
-					prefix = '',
+					border = "rounded",
+					source = "always",
+					header = "",
+					prefix = "",
 				},
 			})
 
-			-- Diagnostic signs
-			local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-			for type, icon in pairs(signs) do
-				local hl = "DiagnosticSign" .. type
-				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-			end
-
-			local lsp_config = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 			-- Format on save
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 			local on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
+				if client:supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						group = augroup,
@@ -48,16 +40,16 @@ return {
 				end
 			end
 
-			-- LSP Servers setup
-			lsp_config.clangd.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.lua_ls.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.pyright.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.nil_ls.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.ts_ls.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.tailwindcss.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.texlab.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.jdtls.setup({ capabilities = capabilities, on_attach = on_attach })
-			lsp_config.rust_analyzer.setup({
+			-- LSP Servers setup using new vim.lsp.config API
+			vim.lsp.config("clangd", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("lua_ls", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("pyright", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("nil_ls", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("ts_ls", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("tailwindcss", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("texlab", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("jdtls", { capabilities = capabilities, on_attach = on_attach })
+			vim.lsp.config("rust_analyzer", {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				settings = {
@@ -78,7 +70,7 @@ return {
 			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, {})
-			vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, {})
+			vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, {})
 			vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
 			vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
 			vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})

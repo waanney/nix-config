@@ -13,6 +13,9 @@
     nodejs
     ripgrep # Thêm rigrep
     gcc
+    tree-sitter  # For treesitter CLI
+    lua51Packages.jsregexp  # For LuaSnip transformations
+    python311Packages.latexcodec  # For render-markdown latex support
     #LSP
     clang-tools
     lua-language-server
@@ -23,7 +26,6 @@
     tailwindcss-language-server
     jdt-language-server  # Java
     rust-analyzer  # Rust
-    tree-sitter
     texlab
     neovim-remote  # For inverse search (Ctrl+Click in PDF → jump to Neovim)
     #formater
@@ -36,14 +38,6 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-    plugins = with pkgs.vimPlugins; [
-      render-markdown-nvim
-      nvim-treesitter # treesitter
-      nvim-autopairs # autoclose tag
-      nvim-ts-autotag
-      smear-cursor-nvim
-      comment-nvim
-    ];
 
   };
 
@@ -61,10 +55,19 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- local performance = { reset_packpath = false, rtp = { reset = false } }
--- require("lazy").setup(plugins, opts, performance)
 require("vim-options")
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  -- Disable luarocks on NixOS (Nix manages dependencies)
+  rocks = {
+    enabled = false,
+  },
+  performance = {
+    reset_packpath = false,  -- Don't reset packpath
+    rtp = {
+      reset = false,  -- Don't reset runtimepath
+    },
+  },
+})
 
   '';
 

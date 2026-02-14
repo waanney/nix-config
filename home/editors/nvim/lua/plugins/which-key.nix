@@ -57,8 +57,19 @@ return {
       { "<leader>tb", desc = "Toggle Blame" },
       { "<leader>td", desc = "Toggle Deleted" },
       
+      { "<leader>l", group = "LSP" },
+      { "<leader>lf", desc = "Format Document" },
+      
       { "<leader>c", group = "Code" },
       { "<leader>ca", desc = "Code Action" },
+      { "<leader>cl", desc = "LSP Definitions / Refs" },
+      { "<leader>cs", desc = "Symbols" },
+      
+      { "<leader>x", group = "Diagnostics" },
+      { "<leader>xx", desc = "Toggle Diagnostics" },
+      { "<leader>xX", desc = "Buffer Diagnostics" },
+      { "<leader>xL", desc = "Location List" },
+      { "<leader>xQ", desc = "Quickfix List" },
       
       { "<leader>r", group = "Refactor" },
       { "<leader>rn", desc = "Rename" },
