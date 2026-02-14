@@ -5,6 +5,15 @@
 return {
 {
   'nvim-telescope/telescope.nvim',
+  cmd = "Telescope",
+  keys = {
+    { '<C-p>', desc = "Find Files" },
+    { '<leader>fg', desc = "Live Grep" },
+    { '<leader>fb', desc = "Buffers" },
+    { '<leader>fh', desc = "Help Tags" },
+    { '<leader>fs', desc = "Grep String" },
+    { '<leader>fo', desc = "Old Files" },
+  },
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function()
     local builtin = require("telescope.builtin")
@@ -48,6 +57,8 @@ return {
 },
 {
   'nvim-telescope/telescope-ui-select.nvim',
+  event = "VeryLazy",
+  dependencies = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require("telescope").setup {
       extensions = {

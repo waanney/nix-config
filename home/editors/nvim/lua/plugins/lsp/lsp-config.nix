@@ -4,6 +4,10 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+		},
 		config = function()
 			-- Configure diagnostics
 			vim.diagnostic.config({
@@ -28,7 +32,7 @@ return {
 			-- Format on save
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 			local on_attach = function(client, bufnr)
-				if client:supports_method("textDocument/formatting") then
+				if client.supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						group = augroup,
@@ -40,26 +44,44 @@ return {
 				end
 			end
 
-			-- LSP Servers setup using new vim.lsp.config API
-			vim.lsp.config("clangd", { capabilities = capabilities, on_attach = on_attach })
+			-- Common LSP servers (loaded on BufReadPre/BufNewFile)
 			vim.lsp.config("lua_ls", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("pyright", { capabilities = capabilities, on_attach = on_attach })
 			vim.lsp.config("nil_ls", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("ts_ls", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("tailwindcss", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("texlab", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("jdtls", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("rust_analyzer", {
-				capabilities = capabilities,
-				on_attach = on_attach,
-				settings = {
+
+			-- Filetype-specific LSP servers (lazy-loaded)
+			local lsp_filetypes = {
+				{ ft = { "c", "cpp", "h", "hpp" }, server = "clangd" },
+				{ ft = { "python" }, server = "pyright" },
+				{ ft = { "javascript", "typescript", "javascriptreact", "typescriptreact" }, server = "ts_ls" },
+				{ ft = { "html", "css", "javascriptreact", "typescriptreact" }, server = "tailwindcss" },
+				{ ft = { "tex", "plaintex", "latex", "bib" }, server = "texlab" },
+				{ ft = { "java" }, server = "jdtls" },
+				{ ft = { "rust" }, server = "rust_analyzer", settings = {
 					['rust-analyzer'] = {
 						checkOnSave = {
 							command = "clippy"
 						},
 					},
-				},
-			})
+				}},
+			}
+
+			for _, config in ipairs(lsp_filetypes) do
+				vim.api.nvim_create_autocmd("FileType", {
+					pattern = config.ft,
+					callback = function()
+						if config.settings then
+							vim.lsp.config(config.server, {
+								capabilities = capabilities,
+								on_attach = on_attach,
+								settings = config.settings
+							})
+						else
+							vim.lsp.config(config.server, { capabilities = capabilities, on_attach = on_attach })
+						end
+						vim.cmd("LspStart " .. config.server)
+					end,
+				})
+			end
 
 			-- Keybindings
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

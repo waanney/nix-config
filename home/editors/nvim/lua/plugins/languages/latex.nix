@@ -3,15 +3,18 @@
 return {
   {
     "lervag/vimtex",
-    ft = { "tex", "plaintex", "latex" },
+    lazy = true,
+    ft = { "tex", "plaintex", "latex", "bib" },
     init = function()
-      -- Use zathura as PDF viewer
+      -- Only essential settings that MUST be set before plugin loads
       vim.g.vimtex_view_method = "zathura"
-      
-      -- Ensure zathura is found - try to find it in PATH
+      vim.g.vimtex_quickfix_mode = 0
+      vim.g.vimtex_compiler_latexmk_continuous = 1
+    end,
+    config = function()
+      -- All other settings (moved from init for faster startup)
       local zathura_path = vim.fn.exepath("zathura")
       if zathura_path == "" then
-        -- If not found, try common Nix store paths
         local paths = vim.fn.glob("/nix/store/*/bin/zathura", false, true)
         if paths and #paths > 0 then
           zathura_path = paths[1]
@@ -21,31 +24,23 @@ return {
         vim.g.vimtex_view_zathura_exe = zathura_path
       end
       
-      -- Ensure zathura can run in background (non-blocking)
       vim.g.vimtex_view_zathura_sendkeys = ""
-      
-      -- Disable quickfix window (use LSP diagnostics instead)
-      vim.g.vimtex_quickfix_mode = 0
       vim.g.vimtex_quickfix_ignore_filters = {
         "Overfull",
         "Underfull",
         "Package hyperref Warning",
       }
-      -- Don't open quickfix automatically
       vim.g.vimtex_quickfix_open_on_warning = 0
-      -- Don't show compiler messages in command line
       vim.g.vimtex_compiler_latexmk_engines = {
         _ = "-pdf",
       }
-      -- Suppress compiler output messages
       vim.g.vimtex_echo_verbose_input = 0
       
-      -- Continuous compilation with latexmk (only compile on save, not on view)
       vim.g.vimtex_compiler_latexmk = {
         continuous = 1,
         executable = "latexmk",
         callback = 1,
-        build_dir = "",  -- Build in same directory as source
+        build_dir = "",
         options = {
           "-pdf",
           "-interaction=nonstopmode",
@@ -54,18 +49,11 @@ return {
         },
       }
       
-      -- Only compile on save, disable auto-compile on other events
-      vim.g.vimtex_compiler_latexmk_continuous = 1
       vim.g.vimtex_compiler_latexmk_callback_hooks = {}
-      
-      -- Enable forward/inverse search with zathura
       vim.g.vimtex_view_zathura_options = "--synctex-forward @line:@col:@tex @pdf"
       
-      -- Configure inverse search (Ctrl+Click in PDF → jump to Neovim)
-      -- Get Neovim server name for synctex
       local nvim_server = vim.v.servername or ""
       if nvim_server ~= "" then
-        -- Configure zathura to call Neovim for inverse search using nvr
         vim.g.vimtex_view_zathura_synctex = {
           cmd = "nvr",
           args = {
@@ -76,7 +64,6 @@ return {
           }
         }
       else
-        -- Fallback: try to find any running Neovim instance
         vim.g.vimtex_view_zathura_synctex = {
           cmd = "nvr",
           args = {
@@ -87,44 +74,8 @@ return {
         }
       end
       
-      -- Configure inverse search (Ctrl+Click in PDF → jump to Neovim)
-      -- Get Neovim server name for synctex
-      local nvim_server = vim.v.servername or ""
-      if nvim_server ~= "" then
-        -- Configure zathura to call Neovim for inverse search
-        vim.g.vimtex_view_zathura_synctex = {
-          cmd = "nvr",
-          args = {
-            "--servername", nvim_server,
-            "--remote-silent",
-            "+%{line}",
-            "%{input}"
-          }
-        }
-      else
-        -- Fallback: use nvim-remote if available, or just nvim
-        vim.g.vimtex_view_zathura_synctex = {
-          cmd = "nvr",
-          args = {
-            "--remote-silent",
-            "+%{line}",
-            "%{input}"
-          }
-        }
-      end
+      vim.g.vimtex_view_automatic = 0
       
-      -- Auto-compile on save
-      vim.g.vimtex_compiler_latexmk_engines = {
-        _ = "-pdf",
-      }
-      
-      -- Auto-open PDF viewer when compilation succeeds (but wait for PDF to be created)
-      vim.g.vimtex_view_automatic = 0  -- We'll handle opening manually after PDF is ready
-      
-      -- Ensure continuous mode is enabled
-      vim.g.vimtex_compiler_latexmk_continuous = 1
-    end,
-    config = function()
       -- Key mappings for vimtex
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "tex", "plaintex", "latex" },

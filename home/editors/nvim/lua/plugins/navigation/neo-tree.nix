@@ -4,6 +4,10 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
   branch = "v3.x",
+  cmd = "Neotree",
+  keys = {
+    { '<C-n>', ':Neotree toggle<CR>', desc = "Toggle Neo-tree" },
+  },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -19,7 +23,6 @@ return {
         show_hidden = true,
 			},
 		})
-    vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>', {})
   end
 }
     '';
