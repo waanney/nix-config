@@ -109,7 +109,7 @@ _: {
         border_top_color = colors.border,
       }
 
-      config.window_decorations = "RESIZE"
+      config.window_decorations = "NONE"
 
       --[[
       ============================
@@ -175,7 +175,7 @@ _: {
         },
         {
           mods = "LEADER",
-          key = "|",
+          key = "=",
           action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
         },
         {
