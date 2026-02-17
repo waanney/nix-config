@@ -9,7 +9,7 @@
   # Bootloader.
   boot = {
     # load modules on boot
-    kernelModules = [ "v4l2loopback" "i2c-dev"];
+    kernelModules = [ "v4l2loopback" "i2c-dev" "psmouse" "i2c_hid_acpi"];
     kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
 
@@ -18,9 +18,10 @@
     kernelParams = [
       "ideapad_laptop.allow_v4_dytc=Y"
       # "usbcore.autosuspend=-1"
-      "acpi_osi="
+
       "acpi_backlight=native"
-      "psmouse.synaptics_intertouch=1"
+      # Commented out - this parameter can prevent touchpad detection on some Ideapad models
+      # "psmouse.synaptics_intertouch=1"
     ];
     kernel.sysctl = {
       "vm.swappiness" = 10;
