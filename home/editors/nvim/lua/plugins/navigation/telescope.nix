@@ -14,7 +14,10 @@ return {
     { '<leader>fs', desc = "Grep String" },
     { '<leader>fo', desc = "Old Files" },
   },
-  dependencies = { 'nvim-lua/plenary.nvim' },
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-ui-select.nvim',  -- load cùng telescope
+  },
   config = function()
     local builtin = require("telescope.builtin")
     require("telescope").setup({
@@ -45,7 +48,14 @@ return {
           hidden = true,
         },
       },
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {}
+        },
+      },
     })
+    -- Load extension ui-select
+    require("telescope").load_extension("ui-select")
     -- File navigation
     vim.keymap.set('n', '<C-p>', builtin.find_files, {})
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
@@ -57,18 +67,10 @@ return {
 },
 {
   'nvim-telescope/telescope-ui-select.nvim',
-  event = "VeryLazy",
+  -- Không dùng VeryLazy vì nó kéo telescope load sớm.
+  -- Load cùng lúc với telescope thông qua dependencies.
+  lazy = true,
   dependencies = { 'nvim-telescope/telescope.nvim' },
-  config = function()
-    require("telescope").setup {
-      extensions = {
-        ["ui-select"] = {
-          require("telescope.themes").get_dropdown {}
-        }
-      }
-    }
-    require("telescope").load_extension("ui-select")
-  end
 }
 }
   '';
