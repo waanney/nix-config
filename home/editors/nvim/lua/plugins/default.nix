@@ -34,5 +34,6 @@
     
     # Utilities
     ./utils/which-key.nix
+    ./utils/obsidian.nix
   ];
 }
