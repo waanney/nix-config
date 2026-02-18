@@ -98,19 +98,19 @@ return {
   },
   
   keys = {
-    -- Main flash jump
-    { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    -- Main flash jump (<leader>j để tránh conflict với ss/sl/sv/sj/sk/sh)
+    { "<leader>j", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash Jump" },
     
     -- Treesitter flash
-    { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    { "<leader>J", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     
-    -- Remote flash (jump to other windows)
+    -- Remote flash (operator-pending only, không conflict)
     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
     
-    -- Treesitter search
+    -- Treesitter search (operator-pending + visual only, không conflict)
     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     
-    -- Toggle flash search (disable default search behavior)
+    -- Toggle flash search trong command mode
     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
 }

@@ -58,11 +58,12 @@ return {
 				}),
 				sources = cmp.config.sources({
 					{ name = 'nvim_lsp' },
-					--{ name = 'vsnip' }, -- For vsnip users.
 					{ name = "luasnip" }, -- For luasnip users.
+					{ name = "obsidian" },       -- Obsidian wiki-link completion
+					{ name = "obsidian_new" },   -- Obsidian new note completion
+					{ name = "obsidian_tags" },  -- Obsidian tag completion
 				}, {
 					{ name = "buffer" },
-          { name = "render-markdown"},
 				}),
 			})
 		end,
