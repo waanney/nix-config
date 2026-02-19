@@ -19,15 +19,15 @@
     "XF86AudioRaiseVolume".action = set-volume "5%+";
     "XF86AudioLowerVolume".action = set-volume "5%-";
 
-    "XF86MonBrightnessUp".action = brightness "+10%";
-    "XF86MonBrightnessDown".action = brightness "10%-";
+    "XF86MonBrightnessUp".action = spawn "quickshell" "ipc" "call" "brightness" "set" "+10%";
+    "XF86MonBrightnessDown".action = spawn "quickshell" "ipc" "call" "brightness" "set" "10%-";
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action.screenshot-window = {write-to-disk = true;};
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+Space".action = spawn "${pkgs.rofi}/bin/rofi" "-show";
+    "Mod+Space".action = spawn "quickshell" "ipc" "call" "drawers" "toggle" "launcher";
     "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
-    "Ctrl+Alt+L".action = spawn "sh -c 'pgrep hyprlock || hyprlock'";
+    "Ctrl+Alt+L".action = spawn "quickshell" "ipc" "call" "lock" "lock";
 
     "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
 

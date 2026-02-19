@@ -1,4 +1,3 @@
-import qs.components.misc
 import qs.modules.controlcenter
 import qs.services
 // import Caelestia  // Module not installed
@@ -8,66 +7,7 @@ import Quickshell.Io
 Scope {
     id: root
 
-    property bool launcherInterrupted
     readonly property bool hasFullscreen: Niri.hasFullscreen
-
-    CustomShortcut {
-        name: "controlCenter"
-        description: "Open control center"
-        onPressed: WindowFactory.create()
-    }
-
-    CustomShortcut {
-        name: "showall"
-        description: "Toggle launcher, dashboard and osd"
-        onPressed: {
-            if (root.hasFullscreen)
-                return;
-            const v = Visibilities.getForActive();
-            v.launcher = v.dashboard = v.osd = v.utilities = !(v.launcher || v.dashboard || v.osd || v.utilities);
-        }
-    }
-
-    CustomShortcut {
-        name: "dashboard"
-        description: "Toggle dashboard"
-        onPressed: {
-            if (root.hasFullscreen)
-                return;
-            const visibilities = Visibilities.getForActive();
-            visibilities.dashboard = !visibilities.dashboard;
-        }
-    }
-
-    CustomShortcut {
-        name: "session"
-        description: "Toggle session menu"
-        onPressed: {
-            if (root.hasFullscreen)
-                return;
-            const visibilities = Visibilities.getForActive();
-            visibilities.session = !visibilities.session;
-        }
-    }
-
-    CustomShortcut {
-        name: "launcher"
-        description: "Toggle launcher"
-        onPressed: root.launcherInterrupted = false
-        onReleased: {
-            if (!root.launcherInterrupted && !root.hasFullscreen) {
-                const visibilities = Visibilities.getForActive();
-                visibilities.launcher = !visibilities.launcher;
-            }
-            root.launcherInterrupted = false;
-        }
-    }
-
-    CustomShortcut {
-        name: "launcherInterrupt"
-        description: "Interrupt launcher keybind"
-        onPressed: root.launcherInterrupted = true
-    }
 
     IpcHandler {
         target: "drawers"

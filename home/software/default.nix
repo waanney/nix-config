@@ -51,6 +51,7 @@
     code-cursor
     cursor-cli
     wpsoffice
+    spotify
     antigravity
   ];
 }

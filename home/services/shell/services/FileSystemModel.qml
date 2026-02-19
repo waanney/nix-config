@@ -3,7 +3,7 @@ import QtQuick
 // Stub FileSystemModel to replace Quickshell.Io.FileSystemModel
 // Returns empty entries
 
-Item {
+ListModel {
     id: root
     
     property bool recursive: false

@@ -104,14 +104,7 @@ Singleton {
         }
     }
 
-    CustomShortcut {
-        name: "clearNotifs"
-        description: "Clear all notifications"
-        onPressed: {
-            for (const notif of root.list.slice())
-                notif.close();
-        }
-    }
+
 
     IpcHandler {
         target: "notifs"

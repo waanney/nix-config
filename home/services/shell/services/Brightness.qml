@@ -86,17 +86,7 @@ Singleton {
         }
     }
 
-    CustomShortcut {
-        name: "brightnessUp"
-        description: "Increase brightness"
-        onPressed: root.increaseBrightness()
-    }
 
-    CustomShortcut {
-        name: "brightnessDown"
-        description: "Decrease brightness"
-        onPressed: root.decreaseBrightness()
-    }
 
     IpcHandler {
         target: "brightness"

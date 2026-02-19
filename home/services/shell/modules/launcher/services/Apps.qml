@@ -11,16 +11,16 @@ Searcher {
     function launch(entry: DesktopEntry): void {
         appDb.incrementFrequency(entry.id);
 
-        if (entry.runInTerminal)
-            Quickshell.execDetached({
-                command: ["app2unit", "--", ...Config.general.apps.terminal, `${Quickshell.shellDir}/assets/wrap_term_launch.sh`, ...entry.command],
-                workingDirectory: entry.workingDirectory
-            });
-        else
-            Quickshell.execDetached({
-                command: ["app2unit", "--", ...entry.command],
-                workingDirectory: entry.workingDirectory
-            });
+        if (entry.runInTerminal) {
+            var cmd = [...Config.general.apps.terminal, "-e", ...entry.command];
+        } else {
+            var cmd = [...entry.command];
+        }
+
+        Quickshell.execDetached({
+            command: cmd,
+            workingDirectory: entry.workingDirectory
+        });
     }
 
     function search(search: string): list<var> {

@@ -66,16 +66,19 @@ Variants {
             screen: scope.modelData
             name: "drawers"
             WlrLayershell.exclusionMode: ExclusionMode.Ignore
-            WlrLayershell.keyboardFocus: visibilities.launcher || visibilities.session ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
+            WlrLayershell.keyboardFocus: visibilities.launcher || visibilities.session ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
             mask: Region {
-                x: bar.implicitWidth 
-                y: Config.border.thickness 
-                width: win.width - bar.implicitWidth - Config.border.thickness 
-                height: win.height - Config.border.thickness * 2 
+                x: focusGrab.hasCurrent ? 0 : bar.implicitWidth
+                y: focusGrab.hasCurrent ? 0 : Config.border.thickness
+                width: focusGrab.hasCurrent ? win.width : (win.width - bar.implicitWidth - Config.border.thickness)
+                height: focusGrab.hasCurrent ? win.height : (win.height - Config.border.thickness * 2)
+                
+                // When active, we want full coverage.
+                // intersection: Intersection.Xor with an empty 'regions' list will result in the original rect (Xor 0 = 1).
                 intersection: Intersection.Xor
 
-                regions: regions.instances
+                regions: focusGrab.hasCurrent ? [] : regions.instances
             }
 
             anchors.top: true

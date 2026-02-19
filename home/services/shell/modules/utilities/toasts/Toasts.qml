@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import qs.components
 import qs.config
+import qs.services
 // import Caelestia  // Module not installed
 import Quickshell
 import QtQuick
