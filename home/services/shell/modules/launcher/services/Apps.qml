@@ -52,10 +52,10 @@ Searcher {
             weights = [1];
 
             if (!search.startsWith(`${prefix}t `))
-                return query(search).map(e => e.entry);
+                return query(search);
         }
 
-        const results = query(search.slice(prefix.length + 2)).map(e => e.entry);
+        const results = query(search.slice(prefix.length + 2));
         if (search.startsWith(`${prefix}t `))
             return results.filter(a => a.runInTerminal);
         return results;

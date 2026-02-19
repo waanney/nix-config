@@ -24,6 +24,14 @@ Item {
             Apps.launch(root.modelData);
             root.visibilities.launcher = false;
         }
+
+        Component.onCompleted: {
+            if (!root.modelData) {
+                console.log("AppItem: modelData is null/undefined");
+            } else {
+                console.log("AppItem: modelData =", root.modelData, "name =", root.modelData.name);
+            }
+        }
     }
 
     Item {

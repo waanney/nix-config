@@ -11,13 +11,32 @@ Singleton {
 
     // Exposed data – structured to match what Workspace.qml / ActiveWindow.qml expect:
     //   workspaces.values   – array of { id, name, output, isFocused }
-    //   toplevels.values    – array of { id, title, appId, workspaceId, isFocused }
+    //   toplevels.values    – array of { id, title, appId, workspaceId, isFocused, isFullscreen }
     //   focusedWorkspace    – one of the workspaces entries, or null
     //   focusedWindow       – { id, title, appId, workspaceId }, or null
     property var workspaces:     ({ values: [] })
     property var toplevels:      ({ values: [] })
     property var focusedWorkspace: null
     property var focusedWindow:    null
+
+    // ── keyboard state ─────────────────────────────────────────────────────
+    property bool   capsLock:       false
+    property bool   numLock:        false
+    property string kbLayoutFull:   ""   // e.g. "English (US)"
+    property string kbLayout:       ""   // e.g. "us"
+    property string defaultKbLayout: "" // first layout in the list
+    property var    _kbLayoutNames:  [] // full list of layout names from Niri
+
+    // ── fullscreen helper ──────────────────────────────────────────────────
+    // true when any window in the focused workspace is fullscreen
+    readonly property bool hasFullscreen:
+        toplevels.values.some(w => w.isFullscreen && w.workspaceId === focusedWorkspace?.id)
+
+    // ── focused screen helper ──────────────────────────────────────────────
+    // Returns true if the ShellScreen corresponds to the focused workspace output
+    function isFocusedScreen(screen: ShellScreen): bool {
+        return focusedWorkspace?.output === screen.name;
+    }
 
     // ── persistent workspace poller (shell loop, runs forever) ────────────
     // Outputs one JSON line every 100ms; SplitParser fires on each line.
@@ -51,7 +70,7 @@ Singleton {
         }
     }
 
-    // ── event-stream: for instant focused-window updates ──────────────────
+    // ── event-stream: focused-window + keyboard layout events ──────────────
     // stdbuf -oL forces line-buffered stdout so events flush immediately
     Process {
         id: eventStream
@@ -71,8 +90,33 @@ Singleton {
                             appId: w.app_id ?? "",
                             workspaceId: w.workspace_id ?? null
                         } : null;
+                    } else if (key === "KeyboardLayoutsChanged") {
+                        const data = ev[key];
+                        root._kbLayoutNames = data?.keyboard_layouts?.names ?? [];
+                        const idx = data?.keyboard_layouts?.current_idx ?? 0;
+                        root._applyKbLayout(idx);
+                    } else if (key === "KeyboardLayoutSwitched") {
+                        root._applyKbLayout(ev[key]?.idx ?? 0);
                     }
                 } catch(e) {}
+            }
+        }
+    }
+
+    // ── capsLock / numLock: poll sysfs every 500ms ─────────────────────────
+    Process {
+        id: lockKeyPoller
+        running: true
+        command: ["bash", "-c",
+            "while true; do " +
+            "  caps=$(cat /sys/class/leds/input*::capslock/brightness 2>/dev/null | head -1); " +
+            "  num=$(cat /sys/class/leds/input*::numlock/brightness 2>/dev/null | head -1); " +
+            "  echo \"${caps:-0} ${num:-0}\"; sleep 0.5; done"]
+        stdout: SplitParser {
+            onRead: line => {
+                const parts = line.trim().split(" ");
+                root.capsLock = (parts[0] === "1");
+                root.numLock  = (parts[1] === "1");
             }
         }
     }
@@ -107,12 +151,31 @@ Singleton {
 
     function _applyToplevels(data: var): void {
         const arr = (data ?? []).map(w => ({
-            id:          w.id          ?? 0,
-            title:       w.title       ?? "",
-            appId:       w.app_id      ?? "",
+            id:          w.id           ?? 0,
+            title:       w.title        ?? "",
+            appId:       w.app_id       ?? "",
             workspaceId: w.workspace_id ?? null,
-            isFocused:   !!w.is_focused
+            isFocused:   !!w.is_focused,
+            isFullscreen: !!w.is_fullscreen
         }));
         toplevels = { values: arr };
+    }
+
+    // Convert layout index to short code + full name
+    function _applyKbLayout(idx: int): void {
+        const full = root._kbLayoutNames[idx] ?? "";
+        root.kbLayoutFull = full;
+        // Extract short code: "English (US)" → "us", "Vietnamese" → "vn", etc.
+        // Niri returns names like "English (US)", "Vietnamese" – try to parse code
+        // by running setxkbmap -query as fallback.
+        // For now, use a simple slug from the first word:
+        const match = full.toLowerCase().match(/[a-z]+/);
+        const shortCode = (match && match.length > 0) ? match[0] : full;
+        root.kbLayout = shortCode;
+        if (root.defaultKbLayout === "" && root._kbLayoutNames.length > 0) {
+            const defaultFull = root._kbLayoutNames[0] ?? "";
+            const defaultMatch = defaultFull.toLowerCase().match(/[a-z]+/);
+            root.defaultKbLayout = (defaultMatch && defaultMatch.length > 0) ? defaultMatch[0] : defaultFull;
+        }
     }
 }

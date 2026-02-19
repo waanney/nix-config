@@ -7,7 +7,6 @@ import qs.config
 import qs.modules.bar
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Effects
 
@@ -41,13 +40,14 @@ Variants {
         StyledWindow {
             id: win
 
-            readonly property bool hasFullscreen: Hypr.monitorFor(screen)?.activeWorkspace?.toplevels.values.some(t => t.lastIpcObject.fullscreen === 2) ?? false
+            readonly property bool hasFullscreen: Niri.hasFullscreen
             readonly property int dragMaskPadding: {
-                if (focusGrab.active || panels.popouts.isDetached)
+                if (focusGrab.hasCurrent || panels.popouts.isDetached)
                     return 0;
 
-                const mon = Hypr.monitorFor(screen);
-                if (mon?.lastIpcObject?.specialWorkspace?.name || mon?.activeWorkspace?.lastIpcObject?.windows > 0)
+                const hasWindows = Niri.toplevels.values.some(
+                    w => w.workspaceId === Niri.focusedWorkspace?.id);
+                if (hasWindows)
                     return 0;
 
                 const thresholds = [];
@@ -99,18 +99,34 @@ Variants {
                 }
             }
 
-            HyprlandFocusGrab {
+            // Niri-compatible focus grab: transparent overlay captures clicks outside panels
+            QtObject {
                 id: focusGrab
 
-                active: (visibilities.launcher && Config.launcher.enabled) || (visibilities.session && Config.session.enabled) || (visibilities.sidebar && Config.sidebar.enabled) || (!Config.dashboard.showOnHover && visibilities.dashboard && Config.dashboard.enabled) || (panels.popouts.currentName.startsWith("traymenu") && panels.popouts.current?.depth > 1)
-                windows: [win]
-                onCleared: {
-                    visibilities.launcher = false;
-                    visibilities.session = false;
-                    visibilities.sidebar = false;
-                    visibilities.dashboard = false;
-                    panels.popouts.hasCurrent = false;
-                    bar.closeTray();
+                // mirrors the HyprlandFocusGrab.active condition
+                readonly property bool hasCurrent:
+                    (visibilities.launcher && Config.launcher.enabled) ||
+                    (visibilities.session  && Config.session.enabled)  ||
+                    (visibilities.sidebar  && Config.sidebar.enabled)  ||
+                    (!Config.dashboard.showOnHover && visibilities.dashboard && Config.dashboard.enabled) ||
+                    (panels.popouts.currentName.startsWith("traymenu") && panels.popouts.current?.depth > 1)
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                z: -1
+                enabled: focusGrab.hasCurrent
+                onClicked: event => {
+                    // Check if click is inside any panel
+                    const local = mapToItem(panels, event.x, event.y);
+                    if (!panels.childAt(local.x, local.y)) {
+                        visibilities.launcher = false;
+                        visibilities.session  = false;
+                        visibilities.sidebar  = false;
+                        visibilities.dashboard = false;
+                        panels.popouts.hasCurrent = false;
+                        bar.closeTray();
+                    }
                 }
             }
 
