@@ -10,7 +10,7 @@ return {
     local status, configs = pcall(require, "nvim-treesitter.configs")
     if status then
       configs.setup({
-        ensure_installed = { "lua", "python", "javascript", "typescript", "latex", "bibtex", "java", "rust", "nix", "html", "yaml" },
+        ensure_installed = { "lua", "python", "javascript", "typescript", "latex", "bibtex", "java", "rust", "nix", "html", "yaml", "markdown", "markdown_inline", "bash" },
         highlight = { enable = true },
         indent = { enable = true },
         sync_install = true,

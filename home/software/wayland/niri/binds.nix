@@ -71,17 +71,16 @@
     "Mod+Shift+Ctrl+J".action = move-column-to-monitor-down;
     "Mod+Shift+Ctrl+K".action = move-column-to-monitor-up;
 
-    # Workspace navigation - chuyển nhanh giữa các workspace
-    # Sử dụng niri msg để focus workspace bằng tên
-    "Mod+Alt+1".action = spawn "niri" "msg" "action" "focus-workspace" "communication";
-    "Mod+Alt+2".action = spawn "niri" "msg" "action" "focus-workspace" "development";
-    "Mod+Alt+3".action = spawn "niri" "msg" "action" "focus-workspace" "browsing";
-    "Mod+Alt+4".action = spawn "niri" "msg" "action" "focus-workspace" "media";
+    # Workspace navigation - chuyển nhanh giữa các named workspace
+    "Mod+Alt+1".action.focus-workspace = "communication";
+    "Mod+Alt+2".action.focus-workspace = "development";
+    "Mod+Alt+3".action.focus-workspace = "browsing";
+    "Mod+Alt+4".action.focus-workspace = "media";
 
     # Di chuyển cửa sổ hiện tại sang workspace khác
-    "Mod+Shift+Alt+1".action = spawn "niri" "msg" "action" "move-column-to-workspace" "communication";
-    "Mod+Shift+Alt+2".action = spawn "niri" "msg" "action" "move-column-to-workspace" "development";
-    "Mod+Shift+Alt+3".action = spawn "niri" "msg" "action" "move-column-to-workspace" "browsing";
-    "Mod+Shift+Alt+4".action = spawn "niri" "msg" "action" "move-column-to-workspace" "media";
+    "Mod+Shift+Alt+1".action.move-column-to-workspace = "communication";
+    "Mod+Shift+Alt+2".action.move-column-to-workspace = "development";
+    "Mod+Shift+Alt+3".action.move-column-to-workspace = "browsing";
+    "Mod+Shift+Alt+4".action.move-column-to-workspace = "media";
   };
 }

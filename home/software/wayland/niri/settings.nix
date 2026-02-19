@@ -7,36 +7,17 @@
   makeCommand = command: {
     command = [command];
   };
-  # Named workspaces declarations
-  namedWorkspacesConfig = ''
-    workspace "communication"
-    workspace "development"
-    workspace "browsing"
-    workspace "media"
-  '';
 in {
-  # Activation script để thêm named workspaces vào config file sau khi home-manager generate
-  home.activation.addNamedWorkspaces = config.lib.dag.entryAfter ["writeBoundary"] ''
-    # Chờ config file được generate
-    NIRI_CONFIG="$HOME/.config/niri/config.kdl"
-    if [ -f "$NIRI_CONFIG" ]; then
-      # Kiểm tra xem named workspaces đã được thêm chưa
-      if ! grep -q 'workspace "communication"' "$NIRI_CONFIG"; then
-        # Prepend named workspaces vào đầu file
-        ${pkgs.coreutils}/bin/cat > "$NIRI_CONFIG.tmp" << 'EOF'
-${namedWorkspacesConfig}
-
-EOF
-        ${pkgs.coreutils}/bin/cat "$NIRI_CONFIG" >> "$NIRI_CONFIG.tmp"
-        ${pkgs.coreutils}/bin/mv "$NIRI_CONFIG.tmp" "$NIRI_CONFIG"
-      fi
-    fi
-  '';
-
   programs.niri = {
     enable = true;
     package = pkgs.niri;
     settings = {
+      workspaces = {
+        "communication" = {};
+        "development" = {};
+        "browsing" = {};
+        "media" = {};
+      };
       environment = {
         CLUTTER_BACKEND = "wayland";
         # DISPLAY = ":0";
@@ -56,9 +37,6 @@ EOF
         (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
-        # Tạo và đặt tên cho các workspace khi niri khởi động
-        # Named workspaces sẽ luôn tồn tại, giúp window rules hoạt động đúng
-        {command = ["sh" "-c" "sleep 1 && niri msg action focus-workspace communication >/dev/null 2>&1 && niri msg action set-workspace-name communication >/dev/null 2>&1; niri msg action focus-workspace development >/dev/null 2>&1 && niri msg action set-workspace-name development >/dev/null 2>&1; niri msg action focus-workspace browsing >/dev/null 2>&1 && niri msg action set-workspace-name browsing >/dev/null 2>&1; niri msg action focus-workspace media >/dev/null 2>&1 && niri msg action set-workspace-name media >/dev/null 2>&1; niri msg action focus-workspace communication >/dev/null 2>&1"];}
       ];
       input = {
         keyboard.xkb.layout = "us";
@@ -159,9 +137,7 @@ EOF
           vec3 coords_stretch = niri_geo_to_tex_next * coords_curr_geo;
           vec3 coords_crop = niri_geo_to_tex_next * coords_next_geo;
 
-          // We can crop if the current window size is smaller than the next window
-          // size. One way to tell is by comparing to 1.0 the X and Y scaling
-          // coefficients in the current-to-next transformation matrix.
+
           bool can_crop_by_x = niri_curr_geo_to_next_geo[0][0] <= 1.0;
           bool can_crop_by_y = niri_curr_geo_to_next_geo[1][1] <= 1.0;
 
@@ -173,14 +149,6 @@ EOF
 
           vec4 color = texture2D(niri_tex_next, coords.st);
 
-          // However, when we crop, we also want to crop out anything outside the
-          // current geometry. This is because the area of the shader is unspecified
-          // and usually bigger than the current geometry, so if we don't fill pixels
-          // outside with transparency, the texture will leak out.
-          //
-          // When stretching, this is not an issue because the area outside will
-          // correspond to client-side decoration shadows, which are already supposed
-          // to be outside.
           if (can_crop_by_x && (coords_curr_geo.x < 0.0 || 1.0 < coords_curr_geo.x))
               color = vec4(0.0);
           if (can_crop_by_y && (coords_curr_geo.y < 0.0 || 1.0 < coords_curr_geo.y))

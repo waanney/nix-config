@@ -10,16 +10,16 @@ ColumnLayout {
     id: root
 
     required property int index
-    required property int activeWsId
-    required property var occupied
-    required property int groupOffset
+    required property var workspace        // NiriWorkspace object
+    required property var focusedWorkspace // NiriWorkspace object (focused)
 
     readonly property bool isWorkspace: true // Flag for finding workspace children
     // Unanimated prop for others to use as reference
-    readonly property int size: implicitHeight + (hasWindows ? Appearance.padding.small : 0)
+    readonly property real size: implicitHeight + (hasWindows ? Appearance.padding.small : 0)
 
-    readonly property int ws: groupOffset + index + 1
-    readonly property bool isOccupied: occupied[ws] ?? false
+    readonly property bool isActive: focusedWorkspace?.id === workspace?.id
+    readonly property var windowList: Niri.toplevels.values?.filter(w => w.workspaceId === workspace?.id) ?? []
+    readonly property bool isOccupied: windowList.length > 0
     readonly property bool hasWindows: isOccupied && Config.bar.workspaces.showWindows
 
     Layout.alignment: Qt.AlignHCenter
@@ -35,9 +35,8 @@ ColumnLayout {
 
         animate: true
         text: {
-            const ws = Hypr.workspaces.values.find(w => w.id === root.ws);
-            const wsName = !ws || ws.name == root.ws ? root.ws : ws.name[0];
-            let displayName = wsName.toString();
+            const name = root.workspace?.name ?? root.workspace?.id?.toString() ?? "";
+            let displayName = name.length > 0 ? name[0].toUpperCase() : "";
             if (Config.bar.workspaces.capitalisation.toLowerCase() === "upper") {
                 displayName = displayName.toUpperCase();
             } else if (Config.bar.workspaces.capitalisation.toLowerCase() === "lower") {
@@ -46,9 +45,11 @@ ColumnLayout {
             const label = Config.bar.workspaces.label || displayName;
             const occupiedLabel = Config.bar.workspaces.occupiedLabel || label;
             const activeLabel = Config.bar.workspaces.activeLabel || (root.isOccupied ? occupiedLabel : label);
-            return root.activeWsId === root.ws ? activeLabel : root.isOccupied ? occupiedLabel : label;
+            return root.isActive ? activeLabel : root.isOccupied ? occupiedLabel : label;
         }
-        color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.activeWsId === root.ws ? Colours.palette.m3onSurface : Colours.layer(Colours.palette.m3outlineVariant, 2)
+        color: Config.bar.workspaces.occupiedBg || root.isOccupied || root.isActive
+            ? Colours.palette.m3onSurface
+            : Colours.layer(Colours.palette.m3outlineVariant, 2)
         verticalAlignment: Qt.AlignVCenter
     }
 
@@ -87,14 +88,14 @@ ColumnLayout {
 
             Repeater {
                 model: ScriptModel {
-                    values: Hypr.toplevels.values.filter(c => c.workspace?.id === root.ws)
+                    values: root.windowList
                 }
 
                 MaterialIcon {
                     required property var modelData
 
                     grade: 0
-                    text: Icons.getAppCategoryIcon(modelData.lastIpcObject.class, "terminal")
+                    text: Icons.getAppCategoryIcon(modelData.appId, "terminal")
                     color: Colours.palette.m3onSurfaceVariant
                 }
             }

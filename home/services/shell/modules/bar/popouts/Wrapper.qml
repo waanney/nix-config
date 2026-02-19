@@ -7,7 +7,6 @@ import qs.modules.windowinfo
 import qs.modules.controlcenter
 import Quickshell
 import Quickshell.Wayland
-import Quickshell.Hyprland
 import QtQuick
 
 Item {
@@ -75,10 +74,14 @@ Item {
         }
     }
 
-    HyprlandFocusGrab {
-        active: root.isDetached
-        windows: [QsWindow.window]
-        onCleared: root.close()
+    // Close detached popouts when clicking outside (niri doesn't have HyprlandFocusGrab)
+    MouseArea {
+        anchors.fill: parent
+        enabled: root.isDetached
+        propagateComposedEvents: true
+        onClicked: event => {
+            event.accepted = false;
+        }
     }
 
     Binding {
@@ -109,15 +112,12 @@ Item {
         }
     }
 
-    Comp {
-        shouldBeActive: root.detachedMode === "winfo"
-        anchors.centerIn: parent
-
-        sourceComponent: WindowInfo {
-            screen: root.screen
-            client: Hypr.activeToplevel
-        }
-    }
+    // WindowInfo panel disabled: requires HyprlandToplevel (Hyprland-specific API)
+    // Comp {
+    //     shouldBeActive: root.detachedMode === "winfo"
+    //     anchors.centerIn: parent
+    //     sourceComponent: WindowInfo { screen: root.screen; client: ... }
+    // }
 
     Comp {
         shouldBeActive: root.detachedMode === "any"

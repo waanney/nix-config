@@ -13,16 +13,8 @@ StyledClippingRect {
 
     required property ShellScreen screen
 
-    readonly property bool onSpecial: (Config.bar.workspaces.perMonitorWorkspaces ? Hypr.monitorFor(screen) : Hypr.focusedMonitor)?.lastIpcObject?.specialWorkspace?.name !== ""
-    readonly property int activeWsId: Config.bar.workspaces.perMonitorWorkspaces ? (Hypr.monitorFor(screen).activeWorkspace?.id ?? 1) : Hypr.activeWsId
-
-    readonly property var occupied: Hypr.workspaces.values.reduce((acc, curr) => {
-        acc[curr.id] = curr.lastIpcObject.windows > 0;
-        return acc;
-    }, {})
-    readonly property int groupOffset: Math.floor((activeWsId - 1) / Config.bar.workspaces.shown) * Config.bar.workspaces.shown
-
-    property real blur: onSpecial ? 1 : 0
+    readonly property var focusedWorkspace: Niri.focusedWorkspace
+    readonly property var wsValues: Niri.workspaces.values ?? []
 
     implicitWidth: Config.bar.sizes.innerWidth
     implicitHeight: layout.implicitHeight + Appearance.padding.small * 2
@@ -30,108 +22,48 @@ StyledClippingRect {
     color: Colours.tPalette.m3surfaceContainer
     radius: Appearance.rounding.full
 
-    Item {
-        anchors.fill: parent
-        scale: root.onSpecial ? 0.8 : 1
-        opacity: root.onSpecial ? 0.5 : 1
+    ColumnLayout {
+        id: layout
 
-        layer.enabled: root.blur > 0
-        layer.effect: MultiEffect {
-            blurEnabled: true
-            blur: root.blur
-            blurMax: 32
-        }
+        anchors.centerIn: parent
+        spacing: Math.floor(Appearance.spacing.small / 2)
 
-        Loader {
-            active: Config.bar.workspaces.occupiedBg
+        Repeater {
+            id: workspaces
 
-            anchors.fill: parent
-            anchors.margins: Appearance.padding.small
-
-            sourceComponent: OccupiedBg {
-                workspaces: workspaces
-                occupied: root.occupied
-                groupOffset: root.groupOffset
+            model: ScriptModel {
+                values: root.wsValues
             }
-        }
 
-        ColumnLayout {
-            id: layout
+            Workspace {
+                required property var modelData
 
-            anchors.centerIn: parent
-            spacing: Math.floor(Appearance.spacing.small / 2)
-
-            Repeater {
-                id: workspaces
-
-                model: Config.bar.workspaces.shown
-
-                Workspace {
-                    activeWsId: root.activeWsId
-                    occupied: root.occupied
-                    groupOffset: root.groupOffset
-                }
+                workspace: modelData
+                focusedWorkspace: root.focusedWorkspace
             }
-        }
-
-        Loader {
-            anchors.horizontalCenter: parent.horizontalCenter
-            active: Config.bar.workspaces.activeIndicator
-
-            sourceComponent: ActiveIndicator {
-                activeWsId: root.activeWsId
-                workspaces: workspaces
-                mask: layout
-            }
-        }
-
-        MouseArea {
-            anchors.fill: layout
-            onClicked: event => {
-                const ws = layout.childAt(event.x, event.y).ws;
-                if (Hypr.activeWsId !== ws)
-                    Hypr.dispatch(`workspace ${ws}`);
-                else
-                    Hypr.dispatch("togglespecialworkspace special");
-            }
-        }
-
-        Behavior on scale {
-            Anim {}
-        }
-
-        Behavior on opacity {
-            Anim {}
         }
     }
 
     Loader {
-        id: specialWs
+        anchors.horizontalCenter: parent.horizontalCenter
+        active: Config.bar.workspaces.activeIndicator && workspaces.count > 0
 
-        anchors.fill: parent
-        anchors.margins: Appearance.padding.small
-
-        active: opacity > 0
-
-        scale: root.onSpecial ? 1 : 0.5
-        opacity: root.onSpecial ? 1 : 0
-
-        sourceComponent: SpecialWorkspaces {
-            screen: root.screen
-        }
-
-        Behavior on scale {
-            Anim {}
-        }
-
-        Behavior on opacity {
-            Anim {}
+        sourceComponent: ActiveIndicator {
+            focusedWorkspace: root.focusedWorkspace
+            workspaces: workspaces
+            mask: layout
         }
     }
 
-    Behavior on blur {
-        Anim {
-            duration: Appearance.anim.durations.small
+    MouseArea {
+        anchors.fill: layout
+        onClicked: event => {
+            const item = layout.childAt(event.x, event.y);
+            const ws = item?.workspace;
+            if (!ws) return;
+            const wsName = ws.name ?? ws.id.toString();
+            if (Niri.focusedWorkspace?.id !== ws.id)
+                Niri.focusWorkspace(wsName);
         }
     }
 }

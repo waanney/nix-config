@@ -15,6 +15,9 @@
         "nvim-telescope/telescope.nvim",
         "nvim-treesitter/nvim-treesitter",
       },
+      keys = {
+        { "<leader>on", "<cmd>ObsidianTemplate<cr>", desc = "Obsidian Template" },
+      },
       opts = {
         workspaces = {
           {

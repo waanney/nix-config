@@ -7,15 +7,17 @@ import QtQuick
 StyledRect {
     id: root
 
-    required property int activeWsId
+    required property var focusedWorkspace  // NiriWorkspace object
     required property Repeater workspaces
     required property Item mask
 
     readonly property int currentWsIdx: {
-        let i = activeWsId - 1;
-        while (i < 0)
-            i += Config.bar.workspaces.shown;
-        return i % Config.bar.workspaces.shown;
+        for (let i = 0; i < workspaces.count; i++) {
+            const item = workspaces.itemAt(i);
+            if (item?.workspace?.id === focusedWorkspace?.id)
+                return i;
+        }
+        return 0;
     }
 
     property real leading: workspaces.count > 0 ? workspaces.itemAt(currentWsIdx)?.y ?? 0 : 0
