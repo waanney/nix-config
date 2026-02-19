@@ -2,7 +2,7 @@
 {self, ...}:
  {
   programs.hyprlock = {
-    enable = true;
+    enable = false;
 
     settings = {
       general = {

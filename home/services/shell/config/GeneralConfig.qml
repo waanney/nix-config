@@ -23,8 +23,7 @@ JsonObject {
             },
             {
                 timeout: 300,
-                idleAction: "dpms off",
-                returnAction: "dpms on"
+                idleAction: "power-off-monitors"
             },
             {
                 timeout: 600,

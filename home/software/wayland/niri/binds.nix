@@ -72,15 +72,15 @@
     "Mod+Shift+Ctrl+K".action = move-column-to-monitor-up;
 
     # Workspace navigation - chuyển nhanh giữa các named workspace
-    "Mod+Alt+1".action.focus-workspace = "communication";
-    "Mod+Alt+2".action.focus-workspace = "development";
-    "Mod+Alt+3".action.focus-workspace = "browsing";
-    "Mod+Alt+4".action.focus-workspace = "media";
+    "Mod+Alt+1".action.focus-workspace = "1-communication";
+    "Mod+Alt+2".action.focus-workspace = "2-development";
+    "Mod+Alt+3".action.focus-workspace = "3-browsing";
+    "Mod+Alt+4".action.focus-workspace = "4-media";
 
     # Di chuyển cửa sổ hiện tại sang workspace khác
-    "Mod+Shift+Alt+1".action.move-column-to-workspace = "communication";
-    "Mod+Shift+Alt+2".action.move-column-to-workspace = "development";
-    "Mod+Shift+Alt+3".action.move-column-to-workspace = "browsing";
-    "Mod+Shift+Alt+4".action.move-column-to-workspace = "media";
+    "Mod+Shift+Alt+1".action.move-column-to-workspace = "1-communication";
+    "Mod+Shift+Alt+2".action.move-column-to-workspace = "2-development";
+    "Mod+Shift+Alt+3".action.move-column-to-workspace = "3-browsing";
+    "Mod+Shift+Alt+4".action.move-column-to-workspace = "4-media";
   };
 }

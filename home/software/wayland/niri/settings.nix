@@ -13,10 +13,10 @@ in {
     package = pkgs.niri;
     settings = {
       workspaces = {
-        "communication" = {};
-        "development" = {};
-        "browsing" = {};
-        "media" = {};
+        "1-communication" = {};
+        "2-development"   = {};
+        "3-browsing"      = {};
+        "4-media"         = {};
       };
       environment = {
         CLUTTER_BACKEND = "wayland";

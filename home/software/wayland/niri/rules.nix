@@ -31,7 +31,7 @@
         {app-id = "discord";}
         {app-id = "com.discordapp.Discord";}
       ];
-      open-on-workspace = "communication";
+      open-on-workspace = "1-communication";
     }
     # Workspace 2: Làm việc chính (Deep Work / Dev)
     {
@@ -56,7 +56,7 @@
         {app-id = "notion-app";}
         {app-id = "notion";}
       ];
-      open-on-workspace = "development";
+      open-on-workspace = "2-development";
     }
     # Workspace 3: Tra cứu & Tham khảo (Research / Browser)
     {
@@ -72,7 +72,7 @@
         {app-id = "brave-browser";}
         {app-id = "com.brave.Browser";}
       ];
-      open-on-workspace = "browsing";
+      open-on-workspace = "3-browsing";
     }
     # Workspace 4: Giải trí & Tiện ích (Media / Background)
     {
@@ -94,7 +94,7 @@
         {app-id = "org.kde.dolphin";}
         {app-id = "pcmanfm";}
       ];
-      open-on-workspace = "media";
+      open-on-workspace = "4-media";
     }
     {
       matches = [

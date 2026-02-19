@@ -35,7 +35,9 @@ ColumnLayout {
 
         animate: true
         text: {
-            const name = root.workspace?.name ?? root.workspace?.id?.toString() ?? "";
+            // Strip numeric prefix like "1-" from name (e.g. "1-communication" → "communication")
+            const rawName = root.workspace?.name ?? root.workspace?.id?.toString() ?? "";
+            const name = rawName.replace(/^\d+-/, "");
             let displayName = name.length > 0 ? name[0].toUpperCase() : "";
             if (Config.bar.workspaces.capitalisation.toLowerCase() === "upper") {
                 displayName = displayName.toUpperCase();
