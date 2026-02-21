@@ -47,14 +47,19 @@
         -- Note ID theo Zettelkasten
         note_id_func = function(title)
           local suffix = ""
-          if title ~= nil then
-            suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+          if title ~= nil and title ~= "" then
+            -- Chuyển thành chữ thường, thay khoảng trắng bằng gạch ngang
+            suffix = title:lower():gsub(" ", "-")
+            -- Chỉ xóa các ký tự đặc biệt nguy hiểm cho file hệ thống
+            -- nhưng GIỮ LẠI ký tự UTF-8 (tiếng Việt)
+            suffix = suffix:gsub("[%[%]%{%}%%%/\\%?%&%*]", "")
           else
-            for _ = 1, 4 do
-              suffix = suffix .. string.char(math.random(65, 90))
-            end
+            -- Nếu không có tiêu đề, dùng timestamp đến tận giây để không bao giờ trùng
+            suffix = os.date("%H%M%S")
           end
-          return tostring(os.time()) .. "-" .. suffix
+
+          -- Đổi %Y_%m_%d thành %Y%m%d nếu muốn gọn hơn
+          return os.date("%Y%m%d") .. "-" .. suffix
         end,
 
         -- Frontmatter
