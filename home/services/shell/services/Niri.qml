@@ -144,7 +144,11 @@ Singleton {
             name:      w.name ?? null,
             output:    w.output ?? "",
             isFocused: !!w.is_focused
-        }));
+        })).sort((a, b) => {
+            const na = a.name ?? String(a.id);
+            const nb = b.name ?? String(b.id);
+            return na.localeCompare(nb);
+        });
         workspaces = { values: arr };
         focusedWorkspace = arr.find(w => w.isFocused) ?? null;
     }

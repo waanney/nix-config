@@ -45,14 +45,14 @@
           code = {
             enabled = true,
             sign = true,
-            style = "full",       -- "full" | "normal" | "language" | "none"
+            style = "language",       -- "full" | "normal" | "language" | "none"
             position = "left",
             language_pad = 1,
             width = "full",
             left_pad = 2,
             right_pad = 2,
             min_width = 40,
-            border = "thin",      -- "thin" | "thick" | "none"
+            border = "thick",      -- "thin" | "thick" | "none"
             above = "▄",
             below = "▀",
             highlight = "RenderMarkdownCode",

@@ -14,7 +14,7 @@ StyledClippingRect {
     required property ShellScreen screen
 
     readonly property var focusedWorkspace: Niri.focusedWorkspace
-    readonly property var wsValues: Niri.workspaces.values ?? []
+    readonly property var wsValues: (Niri.workspaces.values ?? []).filter(w => w.name != null && w.name !== "")
 
     implicitWidth: Config.bar.sizes.innerWidth
     implicitHeight: layout.implicitHeight + Appearance.padding.small * 2
