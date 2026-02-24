@@ -43,7 +43,6 @@
     resources
 
     obsidian
-    mods
     tailscale
     sshfs
     slack
@@ -53,5 +52,10 @@
     wpsoffice
     spotify
     antigravity
+
+    # edit image
+
+    krita
+    gimp
   ];
 }
