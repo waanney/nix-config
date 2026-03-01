@@ -145,7 +145,7 @@
         "layout.css.grid-template-masonry-value.enabled" = true;
         "dom.enable_web_task_scheduling" = true;
         "layout.css.has-selector.enabled" = true;
-        "dom.security.sanitizer.enabled" = true;
+        "dom.security.sanitizer.enabled" = false;
 
         # SECUREFOX - TRACKING PROTECTION
         "browser.contentblocking.category" = "standard";
@@ -187,7 +187,7 @@
         "network.IDN_show_punycode" = true;
 
         # HTTPS-FIRST POLICY
-        "dom.security.https_first" = true;
+        "dom.security.https_first" = false;
 
         # PASSWORDS
         "signon.rememberSignons" = false;
@@ -208,7 +208,7 @@
         "extensions.postDownloadThirdPartyPrompt" = false;
 
         # HEADERS / REFERERS
-        "network.http.referer.XOriginTrimmingPolicy" = 2;
+        "network.http.referer.XOriginTrimmingPolicy" = 0;
         # Thêm domain của ChatGPT vào danh sách ngoại lệ
         "network.http.referer.userControlPolicy" = 2;
         "network.http.referer.userControlList" = "openai.com, facebook.com, messenger.com";
