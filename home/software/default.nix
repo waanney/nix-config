@@ -46,6 +46,7 @@
     tailscale
     sshfs
     slack
+    google-chrome
 
     code-cursor
     cursor-cli

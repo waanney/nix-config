@@ -148,7 +148,7 @@
         "dom.security.sanitizer.enabled" = true;
 
         # SECUREFOX - TRACKING PROTECTION
-        "browser.contentblocking.category" = "strict";
+        "browser.contentblocking.category" = "standard";
         "urlclassifier.trackingSkipURLs" = "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com";
         "urlclassifier.features.socialtracking.skipURLs" = "*.instagram.com, *.twitter.com, *.twimg.com";
         "network.cookie.sameSite.noneRequiresSecure" = true;
@@ -211,7 +211,7 @@
         "network.http.referer.XOriginTrimmingPolicy" = 2;
         # Thêm domain của ChatGPT vào danh sách ngoại lệ
         "network.http.referer.userControlPolicy" = 2;
-        "network.http.referer.userControlList" = "openai.com";
+        "network.http.referer.userControlList" = "openai.com, facebook.com, messenger.com";
 
         # CONTAINERS
         "privacy.userContext.ui.enabled" = true;
@@ -325,8 +325,8 @@
         "dom.battery.enabled" = false;
         "browser.urlbar.speculativeConnect.enabled" = false;
         "ui.key.menuAccessKeyFocuses" = false;
-        "dom.push.enabled" = false;
-        "dom.push.connection.enabled" = false;
+        "dom.push.enabled" = true;
+        "dom.push.connection.enabled" = true;
         "browser.tabs.firefox-view" = false;
       };
     };
