@@ -53,6 +53,7 @@
     spotify
     antigravity
     mysql84
+    mysql-workbench
     # edit image
 
     krita
