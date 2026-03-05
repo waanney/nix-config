@@ -18,6 +18,7 @@ let
     ./services/pipewire.nix
     ./services/tailscale.nix
     ./services/anydesk.nix
+    ./services/mysql.nix
   ];
 
   laptop =

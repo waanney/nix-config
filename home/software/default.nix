@@ -46,14 +46,13 @@
     tailscale
     sshfs
     slack
-    google-chrome
 
     code-cursor
     cursor-cli
     wpsoffice
     spotify
     antigravity
-
+    mysql84
     # edit image
 
     krita
