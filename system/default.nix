@@ -19,6 +19,7 @@ let
     ./services/tailscale.nix
     ./services/anydesk.nix
     ./services/mysql.nix
+    ./services/postgresql.nix
   ];
 
   laptop =

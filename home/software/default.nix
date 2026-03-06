@@ -54,6 +54,8 @@
     antigravity
     mysql84
     mysql-workbench
+    postgresql
+    dbeaver-bin
     # edit image
 
     krita
