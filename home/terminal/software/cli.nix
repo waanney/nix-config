@@ -44,7 +44,6 @@
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}; [
       opencode
-      toney
       bmm
       omm
       prs
