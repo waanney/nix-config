@@ -58,6 +58,7 @@
     dbeaver-bin
     # edit image
 
+    bc
     krita
     gimp
     claude-code
