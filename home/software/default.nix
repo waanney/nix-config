@@ -57,7 +57,7 @@
     postgresql
     dbeaver-bin
     # edit image
-
+    mars-mips
     bc
     krita
     gimp

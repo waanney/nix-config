@@ -55,24 +55,42 @@
     eza.enable = true;
 ssh = {
   enable = true;
-  enableDefaultConfig = false;
+  # enableDefaultConfig = false;
 
   matchBlocks = {
     # Block 1: Cấu hình chung cho mọi host
     "general" = {
       host = "*";
       forwardAgent = false;
-      compression = true;
+      compression = true; 
       controlMaster = "auto";
       controlPath = "~/.ssh/master-%r@%h:%p";
       controlPersist = "10m";
     };
 
-    # Block 2: Cấu hình riêng cho server của bạn
+    # Block 2: Cấu hình riêng cho server hiện tại
     "my-server" = {
       host = "100.104.251.17";
       hostname = "100.104.251.17";
       user = "ngphuoc";
+    };
+
+    # Block 3: Cấu hình cũ (giữ lại nếu bạn vẫn dùng)
+    "server-root-103-old" = {
+      host = "server-old";
+      hostname = "103.73.232.250";
+      user = "root";
+      port = 17022;
+      identityFile = "~/.ssh/id_rsa";
+    };
+
+    # Block 4: Cấu hình MỚI từ hình ảnh bạn gửi
+    "server-vps-247" = {
+      host = "vps247";              # Tên gợi nhớ để gõ lệnh nhanh
+      hostname = "103.73.232.247";  # IP từ ảnh
+      user = "root";                # User từ ảnh
+      port = 56107;                 # Port từ ảnh
+      identityFile = "~/.ssh/id_rsa_tho";
     };
   };
 };

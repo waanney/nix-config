@@ -11,7 +11,7 @@
   # ];
 
   virtualisation.oci-containers.backend = "docker";
-  virtualisation.oci-containers.containers = "oracle-db" = {
+  virtualisation.oci-containers.containers."oracle-db" = {
     image = "container-registry.oracle.com/database/free:latest";
     ports = [
       "1521:1521"
