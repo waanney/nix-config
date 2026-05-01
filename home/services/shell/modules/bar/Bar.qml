@@ -139,6 +139,14 @@ ColumnLayout {
                 }
             }
             DelegateChoice {
+                roleValue: "systemStatus"
+                delegate: WrappedLoader {
+                    sourceComponent: SystemStatus {
+                        bar: root
+                    }
+                }
+            }
+            DelegateChoice {
                 roleValue: "tray"
                 delegate: WrappedLoader {
                     sourceComponent: Tray {}

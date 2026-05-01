@@ -7,6 +7,7 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
+    signing.format = null;
     # signing = {
     #   key = "481EFFCF2C7B8C7B";
     #   signByDefault = true;

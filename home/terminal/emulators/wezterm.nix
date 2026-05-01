@@ -152,6 +152,22 @@ _: {
           mods = "CTRL|SHIFT",
           action = wezterm.action.CopyTo("ClipboardAndPrimarySelection"),
         },
+        -- Font zooming
+        {
+          key = "=",
+          mods = "CTRL",
+          action = wezterm.action.IncreaseFontSize,
+        },
+        {
+          key = "-",
+          mods = "CTRL",
+          action = wezterm.action.DecreaseFontSize,
+        },
+        {
+          key = "0",
+          mods = "CTRL",
+          action = wezterm.action.ResetFontSize,
+        },
         -- New leader-based keybindings
         {
           mods = "LEADER",

@@ -32,8 +32,8 @@ in {
       };
       spawn-at-startup = [
         (makeCommand "hyprlock")
-        (makeCommand "swww-daemon")
-        {command = ["sh" "-c" "sleep 1 && swww img /etc/nixos/assets/wallpapers/tree.jpg"];}
+        (makeCommand "awww-daemon")
+        {command = ["sh" "-c" "sleep 1 && awww img /etc/nixos/assets/wallpapers/tree.jpg"];}
         (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}

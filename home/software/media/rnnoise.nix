@@ -12,7 +12,7 @@ let
           "nodes" = [{
             "type" = "ladspa";
             "name" = "rnnoise";
-            "plugin" = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
+            "plugin" = "librnnoise_ladspa";
             "label" = "noise_suppressor_stereo";
             "control" = { "VAD Threshold (%)" = 70.0; };
           }];
@@ -32,5 +32,9 @@ let
 in {
   xdg.configFile."pipewire/pipewire.conf.d/99-input-denoising.conf" = {
     source = json.generate "99-input-denoising.conf" pw_rnnoise_config;
+  };
+
+  home.sessionVariables = {
+    LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa";
   };
 }

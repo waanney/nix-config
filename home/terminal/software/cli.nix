@@ -55,7 +55,7 @@
     eza.enable = true;
 ssh = {
   enable = true;
-  # enableDefaultConfig = false;
+  enableDefaultConfig = false;
 
   matchBlocks = {
     # Block 1: Cấu hình chung cho mọi host
@@ -91,6 +91,13 @@ ssh = {
       user = "root";                # User từ ảnh
       port = 56107;                 # Port từ ảnh
       identityFile = "~/.ssh/id_rsa_tho";
+    };
+
+    "server-vps-241" = {
+      host = "vps241";
+      hostname = "156.67.214.241";
+      user = "root";
+      identityFile = "~/.ssh/id_rsa";
     };
   };
 };

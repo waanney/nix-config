@@ -313,7 +313,7 @@ in {
     window-rules = windowRules;
     layer-rules = [
       {
-        matches = [{namespace = "^swww$";}];
+        matches = [{namespace = "^awww$";}];
         place-within-backdrop = true;
       }
     ];

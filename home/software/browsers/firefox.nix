@@ -1,10 +1,12 @@
 {
+  config,
   pkgs,
   inputs,
   ...
 }: {
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
     package = pkgs.wrapFirefox pkgs.firefox-devedition-unwrapped {
       # These policies are specific and should be kept as they are.
       extraPolicies = {
@@ -18,6 +20,7 @@
     profiles.default = {
       id = 0;
       name = "dev-edition-default";
+      isDefault = true;
       # Keep all of the user's extensions.
       extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
@@ -143,9 +146,13 @@
 
         # EXPERIMENTAL
         "layout.css.grid-template-masonry-value.enabled" = true;
-        "dom.enable_web_task_scheduling" = true;
+        "dom.enable_web_task_scheduling" = false; # Can cause UI lockups/freezes
         "layout.css.has-selector.enabled" = true;
         "dom.security.sanitizer.enabled" = false;
+
+        # WAYLAND WORKAROUNDS
+        "widget.wayland.opaque-region.enabled" = true;
+        "widget.use-xdg-desktop-portal.file-picker" = 1;
 
         # SECUREFOX - TRACKING PROTECTION
         "browser.contentblocking.category" = "standard";

@@ -3,7 +3,7 @@
     ./security.nix
     ./users.nix
     ../nix
-    ../programs/nushell.nix
+    ../programs/zsh.nix
   ];
 
   i18n.defaultLocale = "en_US.UTF-8";

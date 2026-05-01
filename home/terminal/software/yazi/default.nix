@@ -14,6 +14,7 @@
   # yazi file manager
   programs.yazi = {
     enable = true;
+    shellWrapperName = "y";
 
     enableBashIntegration = config.programs.bash.enable;
     enableNushellIntegration = config.programs.fish.enable;

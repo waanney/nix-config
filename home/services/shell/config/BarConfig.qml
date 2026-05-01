@@ -36,6 +36,10 @@ JsonObject {
             enabled: true
         },
         {
+            id: "systemStatus",
+            enabled: true
+        },
+        {
             id: "tray",
             enabled: true
         },
