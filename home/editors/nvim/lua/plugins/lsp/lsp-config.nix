@@ -4,7 +4,8 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile" },
+		lazy = false,
+		priority = 1000,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 		},
@@ -32,7 +33,7 @@ return {
 			-- Format on save
 			local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 			local on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
+				if client:supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						group = augroup,
@@ -44,43 +45,46 @@ return {
 				end
 			end
 
-			-- Common LSP servers (loaded on BufReadPre/BufNewFile)
-			vim.lsp.config("lua_ls", { capabilities = capabilities, on_attach = on_attach })
-			vim.lsp.config("nil_ls", { capabilities = capabilities, on_attach = on_attach })
+			-- Suppress lspconfig deprecation warnings for Neovim 0.12+
+			vim.g.lspconfig_silent = 1
 
-			-- Filetype-specific LSP servers (lazy-loaded)
-			local lsp_filetypes = {
-				{ ft = { "c", "cpp", "h", "hpp" }, server = "clangd" },
-				{ ft = { "python" }, server = "pyright" },
-				{ ft = { "javascript", "typescript", "javascriptreact", "typescriptreact" }, server = "ts_ls" },
-				{ ft = { "html", "css", "javascriptreact", "typescriptreact" }, server = "tailwindcss" },
-				{ ft = { "tex", "plaintex", "latex", "bib" }, server = "texlab" },
-				{ ft = { "java" }, server = "jdtls" },
-				{ ft = { "rust" }, server = "rust_analyzer", settings = {
-					['rust-analyzer'] = {
-						checkOnSave = {
-							command = "clippy"
-						},
-					},
-				}},
+			local lspconfig = require("lspconfig")
+
+			-- LSP servers setup
+			local servers = {
+				"lua_ls",
+				"nil_ls",
+				"clangd",
+				"pyright",
+				"ts_ls",
+				"tailwindcss",
+				"texlab",
+				"jdtls",
+				"rust_analyzer",
 			}
 
-			for _, config in ipairs(lsp_filetypes) do
-				vim.api.nvim_create_autocmd("FileType", {
-					pattern = config.ft,
-					callback = function()
-						if config.settings then
-							vim.lsp.config(config.server, {
-								capabilities = capabilities,
-								on_attach = on_attach,
-								settings = config.settings
-							})
-						else
-							vim.lsp.config(config.server, { capabilities = capabilities, on_attach = on_attach })
-						end
-						vim.cmd("LspStart " .. config.server)
-					end,
-				})
+			for _, lsp in ipairs(servers) do
+				local opts = {
+					capabilities = capabilities,
+					on_attach = on_attach,
+				}
+
+				if lsp == "rust_analyzer" then
+					opts.settings = {
+						["rust-analyzer"] = {
+							checkOnSave = {
+								command = "clippy",
+							},
+						},
+					}
+				end
+
+				-- Ultra-safe setup: index within pcall to catch __index errors
+				pcall(function()
+					if lspconfig[lsp] then
+					lspconfig[lsp].setup(opts)
+					end
+				end)
 			end
 
 			-- Keybindings
@@ -88,7 +92,7 @@ return {
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+			vim.keymap.set("n", "grr", vim.lsp.buf.references, { desc = "LSP References" })
 			vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
 			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, {})

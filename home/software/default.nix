@@ -7,6 +7,7 @@
     # ./browsers/chromium.nix
     # ./browsers/edge.nix
     ./browsers/firefox.nix
+    ./browsers/chrome.nix
     ./gtk.nix
     ./media
     ./anydesk.nix
@@ -51,7 +52,6 @@
     cursor-cli
     wpsoffice
     spotify
-    antigravity
     mysql84
     mysql-workbench
     postgresql
@@ -61,6 +61,14 @@
     bc
     krita
     gimp
-    claude-code
+
+
+    ## CLI testing 
+    cron
+
+    # Virtualization
+    virt-manager
+    quickemu
+    quickgui
   ];
 }

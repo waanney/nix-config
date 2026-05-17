@@ -4,27 +4,20 @@ let
 
   pw_rnnoise_config = {
     "context.modules" = [{
-      "name" = "libpipewire-module-filter-chain";
+      "name" = "libpipewire-module-echo-cancel";
       "args" = {
-        "node.description" = "Noise Canceling source";
-        "media.name" = "Noise Canceling source";
-        "filter.graph" = {
-          "nodes" = [{
-            "type" = "ladspa";
-            "name" = "rnnoise";
-            "plugin" = "librnnoise_ladspa";
-            "label" = "noise_suppressor_stereo";
-            "control" = { "VAD Threshold (%)" = 70.0; };
-          }];
-        };
-        "audio.position" = [ "FL" "FR" ];
-        "capture.props" = {
+        "source.props" = {
           "node.name" = "effect_input.rnnoise";
-          "node.passive" = true;
+          "node.description" = "Noise Canceling source";
         };
-        "playback.props" = {
+        "sink.props" = {
           "node.name" = "effect_output.rnnoise";
-          "media.class" = "Audio/Source";
+          "node.description" = "Noise Canceling sink";
+        };
+        "aec.method" = "webrtc";
+        "aec.args" = {
+          "webrtc.noise-suppression" = true;
+          "webrtc.echo-cancellation" = true;
         };
       };
     }];
@@ -32,9 +25,5 @@ let
 in {
   xdg.configFile."pipewire/pipewire.conf.d/99-input-denoising.conf" = {
     source = json.generate "99-input-denoising.conf" pw_rnnoise_config;
-  };
-
-  home.sessionVariables = {
-    LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa";
   };
 }

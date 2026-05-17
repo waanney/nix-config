@@ -4,6 +4,7 @@
 in {
   imports = [
     ./software
+    ./agents
     ./shell/starship.nix
     # ./shell/fish.nix
     ./shell/zsh.nix

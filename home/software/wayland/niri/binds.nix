@@ -7,6 +7,14 @@
     set-volume = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@";
     brightness = action: spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" action;
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
+    wezterm-singleton = spawn "bash" "-c" ''
+      if ${pkgs.wezterm}/bin/wezterm cli list --format json > /dev/null 2>&1; then
+        ${pkgs.wezterm}/bin/wezterm cli spawn
+        niri msg action focus-window --app-id org.wezfurlong.wezterm
+      else
+        ${pkgs.wezterm}/bin/wezterm
+      fi
+    '';
   in {
     "XF86AudioMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
     "XF86AudioMicMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
@@ -26,7 +34,7 @@
     "Mod+Shift+Alt+S".action.screenshot-window = {write-to-disk = true;};
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+Space".action = spawn "quickshell" "ipc" "call" "drawers" "toggle" "launcher";
-    "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
+    "Mod+Return".action = wezterm-singleton;
     "Ctrl+Alt+L".action = spawn "quickshell" "ipc" "call" "lock" "lock";
 
     "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";

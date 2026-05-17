@@ -1,10 +1,17 @@
-
 { config, pkgs, ... }:
+let
+  # BẠN CHỈ CẦN ĐỔI TÊN AGENT Ở ĐÂY (ví dụ: "gemini-cli", "codex-cli", "claude")
+  aiAgent = "claude";
+  aiSession = "claude_code";
+in
 {
-
   home.file.".config/nvim/lua/vim-options.lua".text =''
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+
+-- Leader key (Phải đặt ở đầu để các keymap bên dưới nhận đúng phím Space)
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 --Delete a word backwards
 keymap.set("n", "dw", "vb_d")
@@ -18,6 +25,26 @@ keymap.set("n", "sh", "<C-w>h")
 keymap.set("n", "sk", "<C-w>k")
 keymap.set("n", "sj", "<C-w>j")
 keymap.set("n", "sl", "<C-w>l")
+-- AI & Git Popups (tmux popup)
+-- AI Popup: Một session duy nhất, nhưng mỗi project là một window riêng
+keymap.set("n", "<leader>ai", function()
+  -- Lấy đường dẫn chuẩn xác
+  local path = vim.fn.expand("%:p")
+  if path == "" then path = vim.fn.getcwd() end
+  
+  -- Tìm gốc project
+  local project_root = vim.fs.root(path, { ".git", "flake.nix", "package.json" }) or vim.fs.dirname(path)
+  local project_name = vim.fn.fnamemodify(project_root, ":t")
+
+  local agents = { "claude", "antigravity", "pi-coding-agent", "gemini-cli", "codex" }
+  vim.ui.select(agents, { prompt = "Select AI Agent:" }, function(choice)
+    if not choice then return end
+    local cmd = string.format("tmux display-popup -E -w 80\\%% -h 80\\%% 'tm-ai \"%s\" \"%s\" \"%s\"'", project_name, project_root, choice)
+    vim.cmd("!" .. cmd)
+  end)
+end, { desc = "AI Coding Agent Popup" })
+-- Lazygit chạy trực tiếp trong popup của session hiện tại
+keymap.set("n", "<leader>gg", ":silent !tmux display-popup -E -w 80\\% -h 80\\% 'lazygit'<CR>", { desc = "Lazygit Popup" })
 
 -- Resize window
 keymap.set("n", "<C-w><left>", "<C-w><")
@@ -31,10 +58,6 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
-
--- Leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 -- Display settings
 vim.opt.number = true

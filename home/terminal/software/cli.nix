@@ -41,6 +41,25 @@
       television
 
       gdb
+      (pkgs.writeShellScriptBin "tm-ai" ''
+        PN="$1"
+        CWD="$2"
+        AGENT="''${3:-claude}"
+        SESSION="ai_$AGENT"
+
+        # Đảm bảo session tồn tại
+        tmux has-session -t "$SESSION" 2>/dev/null || \
+          tmux new-session -d -s "$SESSION" -c "$CWD" -n "$PN" "$AGENT"
+
+        # Tìm hoặc tạo window cho project
+        tmux select-window -t "$SESSION":"$PN" 2>/dev/null || \
+          (tmux new-window -t "$SESSION" -c "$CWD" -n "$PN" "$AGENT" && \
+           tmux set-window-option -t "$SESSION":"$PN" allow-rename off)
+
+        # Quan trọng: Unset TMUX để cho phép lồng session trong popup
+        unset TMUX
+        tmux attach-session -t "$SESSION":"$PN"
+      '')
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}; [
       opencode
@@ -98,6 +117,26 @@ ssh = {
       hostname = "156.67.214.241";
       user = "root";
       identityFile = "~/.ssh/id_rsa";
+    };
+
+    "server-vps-255" = {
+      host = "vps255";
+      hostname = "103.73.232.255";
+      user = "root";
+      port = 15894;
+      identityFile = "~/.ssh/id_rsa";
+    };
+
+    "schoolux-read" = {
+      host = "schooluxR";
+      hostname = "157.230.247.139";
+      user = "team2reader";
+    };
+
+    "schoolux-write" = {
+      host = "schooluxW";
+      hostname = "178.128.20.226";
+      user = "root";
     };
   };
 };

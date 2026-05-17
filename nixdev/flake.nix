@@ -11,9 +11,10 @@
     game-dev-template.url = "path:./templates/game-dev";
     latex-dev-template.url = "path:./templates/latex-dev";
     java-dev-template.url = "path:./templates/java-dev";
+    cybersecurity-dev-template.url = "path:./templates/cybersecurity-dev";
   };
 
-  outputs = {self, nixpkgs, web-dev-template, ai-dev-template, rust-dev-template, game-dev-template, latex-dev-template, java-dev-template, ... }:
+  outputs = {self, nixpkgs, web-dev-template, ai-dev-template, rust-dev-template, game-dev-template, latex-dev-template, java-dev-template, cybersecurity-dev-template, ... }:
   let
     system = "x86_64-linux";
     templateShell = tmpl: tmpl.devShells.${system}.default;
@@ -25,6 +26,7 @@
       game-dev = templateShell game-dev-template;
       latex-dev = templateShell latex-dev-template;
       java-dev = templateShell java-dev-template;
+      cybersecurity-dev = templateShell cybersecurity-dev-template;
     };
 
     templates = {
@@ -52,6 +54,10 @@
       java-dev = {
         path = ./templates/java-dev;
         description = "Java development shell with JDK 21, Maven, and Gradle";
+      };
+      cybersecurity-dev = {
+        path = ./templates/cybersecurity-dev;
+        description = "Cybersecurity shell with pentesting tools and Pwntools";
       };
     };
   };
