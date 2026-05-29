@@ -17,6 +17,7 @@ ShellRoot {
     property var workspacesList: []
     property string activeWindowTitle: ""
     property string activeWindowAppId: ""
+    property var runningApps: []
     property var sysInfo: {
         "wifi": "Disconnected",
         "ip_addr": "127.0.0.1",
@@ -49,7 +50,7 @@ ShellRoot {
         if (lowerApp.indexOf("code") !== -1 || lowerApp.indexOf("visualstudio") !== -1) return "󰨞";
         if (lowerApp.indexOf("wezterm") !== -1 || lowerApp.indexOf("kitty") !== -1 || lowerApp.indexOf("foot") !== -1 || lowerApp.indexOf("alacritty") !== -1) return "󰞷";
         if (lowerApp.indexOf("spotify") !== -1) return "󰓇";
-        if (lowerApp.indexOf("discord") !== -1) return "󰙯";
+        if (lowerApp.indexOf("discord") !== -1 || lowerApp.indexOf("vesktop") !== -1) return "󰙯";
         if (lowerApp.indexOf("telegram") !== -1) return "󰭹";
         if (lowerApp.indexOf("slack") !== -1) return "󰒱";
         if (lowerApp.indexOf("thunar") !== -1 || lowerApp.indexOf("nautilus") !== -1 || lowerApp.indexOf("dolphin") !== -1) return "󰉋";
@@ -65,7 +66,7 @@ ShellRoot {
         if (lower.indexOf("code") !== -1) return theme.blue;
         if (lower.indexOf("wezterm") !== -1 || lower.indexOf("kitty") !== -1 || lower.indexOf("foot") !== -1 || lower.indexOf("alacritty") !== -1) return theme.green;
         if (lower.indexOf("spotify") !== -1) return theme.green;
-        if (lower.indexOf("discord") !== -1) return theme.blue;
+        if (lower.indexOf("discord") !== -1 || lower.indexOf("vesktop") !== -1) return theme.blue;
         if (lower.indexOf("telegram") !== -1) return theme.blue;
         if (lower.indexOf("slack") !== -1) return theme.mauve;
         if (lower.indexOf("neovim") !== -1 || lower.indexOf("nvim") !== -1) return theme.green;
@@ -121,14 +122,19 @@ ShellRoot {
                 try {
                     var parsed = JSON.parse(this.text.trim());
                     var found = false;
+                    var apps = [];
                     for (var i = 0; i < parsed.length; i++) {
+                        var appId = parsed[i].app_id || "";
+                        if (appId && apps.indexOf(appId) === -1) {
+                            apps.push(appId);
+                        }
                         if (parsed[i].is_focused) {
                             activeWindowTitle = parsed[i].title || "";
-                            activeWindowAppId = parsed[i].app_id || "";
+                            activeWindowAppId = appId;
                             found = true;
-                            break;
                         }
                     }
+                    runningApps = apps;
                     if (!found) {
                         activeWindowTitle = "";
                         activeWindowAppId = "";
@@ -599,13 +605,86 @@ ShellRoot {
         // ==========================================
         // FLOATING DROPDOWN CARD (Slides down beautifully)
         // ==========================================
-        DropdownCard {
+            DropdownCard {
             id: dropdownCard
             theme: theme
             sysInfo: root.sysInfo
             activeDropdown: root.activeDropdown
             dropdownX: root.dropdownX
             parentWidth: panel.width
+        }
+    }
+
+    // ==========================================
+    // MACOS-STYLE BOTTOM DOCK (auto-hide)
+    // ==========================================
+    PanelWindow {
+        id: dockPanel
+        color: "transparent"
+        anchors {
+            bottom: true
+            left: true
+            right: true
+        }
+        implicitHeight: 76
+        exclusiveZone: 0
+
+        property bool dockRevealed: false
+
+        // Only the dock area receives input; clicks pass through everywhere else
+        Region {
+            id: dockRegion
+            Region { item: dockHitArea }
+        }
+        mask: dockRegion
+
+        // Input zone — only as wide as the dock content, centered at the bottom
+        Item {
+            id: dockHitArea
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            width: Math.max(dockContent.dockWidth, 500)
+            height: dockPanel.dockRevealed ? 76 : 8
+
+            Item {
+                anchors.fill: parent
+                clip: true
+
+                Dock {
+                    id: dockContent
+                    width: parent.width
+                    y: dockPanel.dockRevealed ? 0 : 76
+                    theme: theme
+                    runningApps: root.runningApps
+                    revealed: dockPanel.dockRevealed
+
+                    Behavior on y { NumberAnimation { duration: 350; easing.type: Easing.OutBack } }
+                }
+            }
+
+            // Auto-hide: sits on top but passes clicks through to the Dock
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                propagateComposedEvents: true
+
+                onEntered: {
+                    dockPanel.dockRevealed = true;
+                    hideTimer.stop();
+                }
+
+                onExited: {
+                    if (dockPanel.dockRevealed) {
+                        hideTimer.restart();
+                    }
+                }
+            }
+        }
+
+        Timer {
+            id: hideTimer
+            interval: 500
+            onTriggered: dockPanel.dockRevealed = false
         }
     }
 }
