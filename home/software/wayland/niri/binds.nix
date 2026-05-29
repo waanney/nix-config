@@ -7,6 +7,11 @@
     set-volume = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@";
     brightness = action: spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" action;
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
+    wezterm-singleton = spawn "bash" "-c" ''
+      if ! ${pkgs.wezterm}/bin/wezterm cli spawn 2>/dev/null; then
+        ${pkgs.wezterm}/bin/wezterm
+      fi
+    '';
   in {
     "XF86AudioMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
     "XF86AudioMicMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
@@ -19,15 +24,15 @@
     "XF86AudioRaiseVolume".action = set-volume "5%+";
     "XF86AudioLowerVolume".action = set-volume "5%-";
 
-    "XF86MonBrightnessUp".action = spawn "quickshell" "ipc" "call" "brightness" "set" "+10%";
-    "XF86MonBrightnessDown".action = spawn "quickshell" "ipc" "call" "brightness" "set" "10%-";
+    "XF86MonBrightnessUp".action = brightness "+10%";
+    "XF86MonBrightnessDown".action = brightness "10%-";
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action.screenshot-window = {write-to-disk = true;};
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+Space".action = spawn "quickshell" "ipc" "call" "drawers" "toggle" "launcher";
-    "Mod+Return".action = spawn "${pkgs.wezterm}/bin/wezterm";
-    "Ctrl+Alt+L".action = spawn "quickshell" "ipc" "call" "lock" "lock";
+    "Mod+Space".action = spawn "${pkgs.rofi}/bin/rofi" "-show" "drun";
+    "Mod+Return".action = wezterm-singleton;
+    "Ctrl+Alt+L".action = spawn "${pkgs.systemd}/bin/loginctl" "lock-session";
 
     "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
     "F7".action = spawn "sh" "/etc/nixos/home/software/wayland/niri/switch-display.sh";

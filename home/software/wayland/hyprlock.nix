@@ -1,6 +1,6 @@
 {self, ...}: {
   programs.hyprlock = {
-    enable = false;
+    enable = true;
 
     settings = {
       general = {
@@ -12,7 +12,7 @@
       background = [
         {
           monitor = "";
-          path = "${self}/assets/wallpapers/tree.jpg";
+          path = "${self}/assets/wallpapers/Wallpaper_woods_upscayl_4x_RealESRGAN_General_x4_v3(1).png";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";

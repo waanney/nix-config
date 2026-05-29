@@ -4,7 +4,7 @@
   ...
 }: {
   programs.rofi = {
-    enable = false;
+    enable = true;
     package = pkgs.rofi;
     plugins = with pkgs; [];
 
@@ -16,7 +16,7 @@
         bg-col-light = mkLiteral "#181825";
         border-col = mkLiteral "#89b4fa40";
         selected-col = mkLiteral "#313244";
-        blue = mkLiteral "#8falseb4fa";
+        blue = mkLiteral "#89b4fa";
         fg-col = mkLiteral "#cdd6f4";
         fg-col2 = mkLiteral "#bac2de";
         grey = mkLiteral "#6c7086";

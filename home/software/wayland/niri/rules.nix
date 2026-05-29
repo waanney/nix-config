@@ -312,7 +312,7 @@ in {
     window-rules = windowRules;
     layer-rules = [
       {
-        matches = [{namespace = "^awww$";}];
+        matches = [{namespace = "^awww(-daemon)?$";}];
         place-within-backdrop = true;
       }
     ];

@@ -31,9 +31,8 @@ in {
         SDL_VIDEODRIVER = "wayland";
       };
       spawn-at-startup = [
-        (makeCommand "hyprlock")
         (makeCommand "awww-daemon")
-        {command = ["sh" "-c" "sleep 1 && awww img /etc/nixos/assets/wallpapers/tree.jpg"];}
+        {command = ["sh" "-c" "sleep 1 && awww img \"/etc/nixos/assets/wallpapers/Wallpaper_woods_upscayl_4x_RealESRGAN_General_x4_v3(1).png\" --resize crop"];}
         (makeCommand "quickshell")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
@@ -92,6 +91,7 @@ in {
         theme = "${pointer.name}";
       };
       layout = {
+        background-color = "transparent";
         focus-ring.enable = false;
         border = {
           enable = true;
