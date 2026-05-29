@@ -7,7 +7,7 @@
 
       imports = [
         ./home/profiles
-        ./hosts 
+        ./hosts
         ./pkgs
       ];
 
@@ -15,7 +15,12 @@
         config,
         pkgs,
         ...
-      }: {
+      }: let
+        checks = import ./tests {
+          inherit pkgs;
+          src = ./.;
+        };
+      in {
         devShells = {
           default = pkgs.mkShell {
             packages = [pkgs.alejandra pkgs.git config.packages.repl];
@@ -25,6 +30,7 @@
         };
         # Nix Formatter
         formatter = pkgs.alejandra;
+        inherit checks;
       };
     };
 

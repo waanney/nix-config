@@ -3,8 +3,7 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = {nixpkgs, ...}:
-  let
+  outputs = {nixpkgs, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     shell = pkgs.mkShell {
@@ -32,10 +31,7 @@
   in {
     devShells.${system} = {
       default = shell;
-      game-dev = shell;  -- Allow nix develop .#game-dev in template directory
+      game-dev = shell; # Allow nix develop .#game-dev in template directory
     };
   };
 }
-
-
-

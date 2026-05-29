@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.carapace = {
     enable = true;
     enableZshIntegration = true;
@@ -59,7 +63,7 @@
       # Vi mode
       bindkey -v
       export KEYTIMEOUT=1
-      
+
       # Use fd to find directories and cd into them using sk
       fcd() {
         local dir=$(fd --type d | sk)

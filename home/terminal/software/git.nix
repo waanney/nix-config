@@ -16,7 +16,7 @@
     settings = {
       user.name = "waanne";
       user.email = "work.buiminhquan@gmail.com";
-      
+
       credential = {
         helper = "!gh auth git-credential";
       };

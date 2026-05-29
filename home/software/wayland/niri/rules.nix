@@ -1,6 +1,5 @@
 {...}: let
   windowRules = [
- 
     {
       geometry-corner-radius = let
         radius = 0.0;

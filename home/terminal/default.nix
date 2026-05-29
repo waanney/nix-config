@@ -1,4 +1,8 @@
-{config, pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   conf = config.xdg.configHome;
   cache = config.xdg.cacheHome;
 in {

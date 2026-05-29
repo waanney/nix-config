@@ -1,4 +1,9 @@
-{pkgs, config, inputs, ...}:
+{
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 # Wayland config
 {
   imports = [
@@ -10,7 +15,7 @@
     # screenshot
     grim
     slurp
-    
+
     xwayland-satellite
 
     # utils

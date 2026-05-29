@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./lua/plugins
     ./lua/vim-options.nix
@@ -7,11 +10,27 @@
 
   home.packages = with pkgs; [
     # ... giữ nguyên danh sách các package của bạn ...
-    wl-clipboard gh fd wget nodejs ripgrep gcc
-    tree-sitter lua51Packages.jsregexp python311Packages.latexcodec
-    clang-tools lua-language-server stylua nil pyright
-    typescript-language-server tailwindcss-language-server
-    jdt-language-server rust-analyzer texlab neovim-remote
+    wl-clipboard
+    gh
+    fd
+    wget
+    nodejs
+    ripgrep
+    gcc
+    tree-sitter
+    lua51Packages.jsregexp
+    python311Packages.latexcodec
+    clang-tools
+    lua-language-server
+    stylua
+    nil
+    pyright
+    typescript-language-server
+    tailwindcss-language-server
+    jdt-language-server
+    rust-analyzer
+    texlab
+    neovim-remote
     prettierd
   ];
 
@@ -53,5 +72,5 @@
   };
 
   # XOÁ HOẶC COMMENT ĐOẠN NÀY ĐI
-  # home.file.".config/nvim/init.lua".text = ... 
+  # home.file.".config/nvim/init.lua".text = ...
 }

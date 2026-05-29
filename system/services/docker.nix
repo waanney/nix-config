@@ -1,5 +1,5 @@
-{ pkgs, ... }: # Ensure pkgs is available in your arguments
-
+{pkgs, ...}:
+# Ensure pkgs is available in your arguments
 {
   virtualisation.docker.enable = true;
 

@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./rofi
     # ./browsers/chromium.nix
@@ -16,7 +13,7 @@
   home.packages = with pkgs; [
     # messaging
     vesktop
-    (texlive.combine { inherit (texlive) scheme-full; })
+    (texlive.combine {inherit (texlive) scheme-full;})
     # misc
     ps_mem
     pciutils
@@ -62,8 +59,7 @@
     krita
     gimp
 
-
-    ## CLI testing 
+    ## CLI testing
     cron
 
     # Virtualization

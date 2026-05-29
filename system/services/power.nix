@@ -9,7 +9,7 @@
         };
       };
     };
-    
+
     power-profiles-daemon.enable = true;
 
     # battery info

@@ -5,13 +5,11 @@
 }: {
   boot = {
     bootspec.enable = true;
-    
 
     initrd = {
       systemd.enable = true;
     };
     supportedFilesystems = ["ntfs"];
-
 
     consoleLogLevel = 3;
     kernelParams = [
@@ -22,7 +20,6 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-
 
     tmp = {
       useTmpfs = true;

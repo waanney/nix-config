@@ -14,14 +14,14 @@ in {
     settings = {
       workspaces = {
         "1-communication" = {};
-        "2-development"   = {};
-        "3-browsing"      = {};
-        "4-media"         = {};
+        "2-development" = {};
+        "3-browsing" = {};
+        "4-media" = {};
       };
       environment = {
         CLUTTER_BACKEND = "wayland";
         # DISPLAY = ":0";
-        # WAYLAND_DISPLAY = "wayland-1"; 
+        # WAYLAND_DISPLAY = "wayland-1";
         KWIN_FORCE_SW_CURSOR = "1";
         GDK_BACKEND = "wayland,x11";
         MOZ_ENABLE_WAYLAND = "1";
@@ -76,8 +76,8 @@ in {
           };
           scale = 1.0;
           position = {
-            x = 0;
-            y = -1080;
+            x = 2048;
+            y = 0;
           };
         };
       };

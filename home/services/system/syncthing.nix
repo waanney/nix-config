@@ -2,5 +2,4 @@
   services.syncthing = {
     enable = true;
   };
-
 }

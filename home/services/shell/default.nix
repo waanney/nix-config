@@ -7,7 +7,7 @@
 }: let
   inherit (pkgs.stdenv.hostPlatform) system;
   quickshell = inputs.quickshell.packages.${system}.default;
-  
+
   # Path to shell QML files
   shellPath = ./.;
 in {

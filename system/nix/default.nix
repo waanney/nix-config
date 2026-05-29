@@ -13,10 +13,7 @@
 
   # we need git for flakes
 
-environment.systemPackages = with pkgs; [  git];
-
-
-
+  environment.systemPackages = with pkgs; [git];
 
   nix = let
     flakeInputs = lib.filterAttrs (_: v: lib.isType "flake" v) inputs;
@@ -32,7 +29,7 @@ environment.systemPackages = with pkgs; [  git];
     settings = {
       auto-optimise-store = true;
       builders-use-substitutes = true;
-      experimental-features = ["nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
       flake-registry = "/etc/nix/registry.json";
 
       # for direnv GC roots

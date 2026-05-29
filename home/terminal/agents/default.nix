@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     # Thêm cấu hình cho các coding agent CLI vào đây. Ví dụ:
     # ./aider.nix

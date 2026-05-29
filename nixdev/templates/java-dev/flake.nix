@@ -3,16 +3,15 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = {nixpkgs, ...}:
-  let
+  outputs = {nixpkgs, ...}: let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
-        jdk21          # Java Development Kit 21 (LTS)
-        maven          # Maven build tool
-        gradle         # Gradle build tool
-        jdt-language-server  # Java language server for IDE support
+        jdk21 # Java Development Kit 21 (LTS)
+        maven # Maven build tool
+        gradle # Gradle build tool
+        jdt-language-server # Java language server for IDE support
         neovim
         nushell
         starship
@@ -28,7 +27,7 @@
   in {
     devShells.${system} = {
       default = shell;
-      java-dev = shell;  # Allow nix develop .#java-dev in template directory
+      java-dev = shell; # Allow nix develop .#java-dev in template directory
     };
   };
 }

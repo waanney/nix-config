@@ -16,7 +16,7 @@ in {
       domainname-wrapper
     ];
     serviceConfig = {
-      Type = "simple";  # Change to simple instead of forking
+      Type = "simple"; # Change to simple instead of forking
       ExecStart = "${pkgs.anydesk}/bin/anydesk --service";
       Restart = "on-failure";
       TimeoutStartSec = 30;

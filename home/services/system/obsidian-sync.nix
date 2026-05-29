@@ -4,20 +4,20 @@
   ...
 }: let
   vaultPath = "/home/waanne/Documents/01_Vault";
-  
+
   syncScript = pkgs.writeShellScript "obsidian-sync.sh" ''
     set -euo pipefail
-    
+
     # Add git to path
     export PATH="${pkgs.git}/bin:$PATH"
-    
+
     if [ ! -d "${vaultPath}" ]; then
       echo "Vault directory ${vaultPath} does not exist."
       exit 1
     fi
 
     cd "${vaultPath}"
-    
+
     if [ ! -d ".git" ]; then
       echo "Not a git repository. Skipping sync."
       exit 1

@@ -24,8 +24,6 @@
     ../../software
     ../../software/wayland
 
-
-
     # terminal emulators
     ../../terminal/emulators/wezterm.nix
   ];

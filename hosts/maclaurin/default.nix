@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot = {
     # load modules on boot
-    kernelModules = [ "v4l2loopback" "i2c-dev" "psmouse" "i2c_hid_acpi"];
+    kernelModules = ["v4l2loopback" "i2c-dev" "psmouse" "i2c_hid_acpi"];
     kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
 
@@ -35,10 +37,9 @@
       options v4l2loopback exclusive_caps=1 card_label="OBS Virtual Output"
     '';
   };
-  
+
   networking.hostName = "maclaurin";
   security.tpm2.enable = true;
-
 
   services = {
     # for SSD/NVME
@@ -46,5 +47,4 @@
     scx.enable = true;
     scx.scheduler = "scx_rusty";
   };
-
 }

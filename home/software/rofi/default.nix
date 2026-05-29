@@ -7,7 +7,7 @@
     enable = false;
     package = pkgs.rofi;
     plugins = with pkgs; [];
-    
+
     theme = let
       inherit (config.lib.formats.rasi) mkLiteral;
     in {
@@ -166,4 +166,3 @@
     };
   };
 }
-

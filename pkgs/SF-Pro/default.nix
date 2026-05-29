@@ -4,7 +4,6 @@
   fetchFromGitHub,
   unzip,
 }:
-
 stdenv.mkDerivation rec {
   pname = "SF-Pro";
   version = "v3.0.0";

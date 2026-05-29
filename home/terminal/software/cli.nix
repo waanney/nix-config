@@ -23,7 +23,7 @@
       ripgrep
       killall
       jq
-      
+
       # SSH/remote
       mosh
 
@@ -41,6 +41,16 @@
       television
 
       gdb
+      (pkgs.writeShellScriptBin "reset-touchpad" ''
+        echo "Resetting touchpad drivers..."
+        # Ignore errors if some modules are built-in or not loaded
+        sudo rmmod i2c_hid_acpi i2c_hid i2c_designware_platform i2c_designware_core 2>/dev/null || true
+        sudo modprobe i2c_designware_core 2>/dev/null || true
+        sudo modprobe i2c_designware_platform 2>/dev/null || true
+        sudo modprobe i2c_hid 2>/dev/null || true
+        sudo modprobe i2c_hid_acpi 2>/dev/null || true
+        echo "Done."
+      '')
       (pkgs.writeShellScriptBin "tm-ai" ''
         PN="$1"
         CWD="$2"
@@ -72,74 +82,55 @@
 
   programs = {
     eza.enable = true;
-ssh = {
-  enable = true;
-  enableDefaultConfig = false;
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
 
-  matchBlocks = {
-    # Block 1: Cấu hình chung cho mọi host
-    "general" = {
-      host = "*";
-      forwardAgent = false;
-      compression = true; 
-      controlMaster = "auto";
-      controlPath = "~/.ssh/master-%r@%h:%p";
-      controlPersist = "10m";
+      settings = {
+        "*" = {
+          ForwardAgent = false;
+          Compression = true;
+          ControlMaster = "auto";
+          ControlPath = "~/.ssh/master-%r@%h:%p";
+          ControlPersist = "10m";
+        };
+        "100.104.251.17" = {
+          HostName = "100.104.251.17";
+          User = "ngphuoc";
+        };
+        "server-old" = {
+          HostName = "103.73.232.250";
+          User = "root";
+          Port = 17022;
+          IdentityFile = "~/.ssh/id_rsa";
+        };
+        "vps247" = {
+          HostName = "103.73.232.247";
+          User = "root";
+          Port = 56107;
+          IdentityFile = "~/.ssh/id_rsa_tho";
+        };
+        "vps241" = {
+          HostName = "156.67.214.241";
+          User = "root";
+          IdentityFile = "~/.ssh/id_rsa";
+        };
+        "vps255" = {
+          HostName = "103.73.232.255";
+          User = "root";
+          Port = 15894;
+          IdentityFile = "~/.ssh/id_rsa";
+        };
+        "schooluxR" = {
+          HostName = "157.230.247.139";
+          User = "team2reader";
+        };
+        "schooluxW" = {
+          HostName = "178.128.20.226";
+          User = "root";
+        };
+      };
     };
-
-    # Block 2: Cấu hình riêng cho server hiện tại
-    "my-server" = {
-      host = "100.104.251.17";
-      hostname = "100.104.251.17";
-      user = "ngphuoc";
-    };
-
-    # Block 3: Cấu hình cũ (giữ lại nếu bạn vẫn dùng)
-    "server-root-103-old" = {
-      host = "server-old";
-      hostname = "103.73.232.250";
-      user = "root";
-      port = 17022;
-      identityFile = "~/.ssh/id_rsa";
-    };
-
-    # Block 4: Cấu hình MỚI từ hình ảnh bạn gửi
-    "server-vps-247" = {
-      host = "vps247";              # Tên gợi nhớ để gõ lệnh nhanh
-      hostname = "103.73.232.247";  # IP từ ảnh
-      user = "root";                # User từ ảnh
-      port = 56107;                 # Port từ ảnh
-      identityFile = "~/.ssh/id_rsa_tho";
-    };
-
-    "server-vps-241" = {
-      host = "vps241";
-      hostname = "156.67.214.241";
-      user = "root";
-      identityFile = "~/.ssh/id_rsa";
-    };
-
-    "server-vps-255" = {
-      host = "vps255";
-      hostname = "103.73.232.255";
-      user = "root";
-      port = 15894;
-      identityFile = "~/.ssh/id_rsa";
-    };
-
-    "schoolux-read" = {
-      host = "schooluxR";
-      hostname = "157.230.247.139";
-      user = "team2reader";
-    };
-
-    "schoolux-write" = {
-      host = "schooluxW";
-      hostname = "178.128.20.226";
-      user = "root";
-    };
-  };
-};
     dircolors = {
       enable = true;
       # enableNushellIntegration = true;
