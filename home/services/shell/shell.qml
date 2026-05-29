@@ -4,8 +4,13 @@ import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
+import "./components"
 
 ShellRoot {
+    id: root
+    // Instantiate modular Theme properties
+    Theme { id: theme }
+
     // ----------------------------------------------------
     // State properties
     // ----------------------------------------------------
@@ -14,36 +19,57 @@ ShellRoot {
     property string activeWindowAppId: ""
     property var sysInfo: {
         "wifi": "Disconnected",
+        "ip_addr": "127.0.0.1",
         "bat_cap": 100,
         "bat_status": "Unknown",
         "vol": 0,
         "muted": false,
         "brightness": 100,
         "ram": 0,
-        "cpu": 0
+        "ram_detail": "0G / 0G",
+        "cpu": 0,
+        "cpu_temp": 0,
+        "uptime": "0h 0m",
+        "media_title": "Nothing playing",
+        "media_artist": "Idle",
+        "media_status": "Stopped"
     }
+
+    property string activeDropdown: "" // "", "cpu_ram", "vol_bright", "wifi_bat", "clock"
+    property real dropdownX: 0
 
     // ----------------------------------------------------
     // Helper helper functions
     // ----------------------------------------------------
-    function getWorkspaceIcon(name) {
-        if (!name) return "●";
-        var lower = name.toLowerCase();
-        if (lower.indexOf("communication") !== -1) return "󰭹";
-        if (lower.indexOf("development") !== -1) return "";
-        if (lower.indexOf("browsing") !== -1) return "";
-        if (lower.indexOf("media") !== -1) return "󰎆";
-        return "●";
+    function getAppIcon(appId, title) {
+        if (!appId) return "󰣇";
+        var lowerApp = appId.toLowerCase();
+        var lowerTitle = title ? title.toLowerCase() : "";
+        if (lowerApp.indexOf("firefox") !== -1 || lowerApp.indexOf("zen") !== -1) return "󰈹";
+        if (lowerApp.indexOf("code") !== -1 || lowerApp.indexOf("visualstudio") !== -1) return "󰨞";
+        if (lowerApp.indexOf("wezterm") !== -1 || lowerApp.indexOf("kitty") !== -1 || lowerApp.indexOf("foot") !== -1 || lowerApp.indexOf("alacritty") !== -1) return "󰞷";
+        if (lowerApp.indexOf("spotify") !== -1) return "󰓇";
+        if (lowerApp.indexOf("discord") !== -1) return "󰙯";
+        if (lowerApp.indexOf("telegram") !== -1) return "󰭹";
+        if (lowerApp.indexOf("slack") !== -1) return "󰒱";
+        if (lowerApp.indexOf("thunar") !== -1 || lowerApp.indexOf("nautilus") !== -1 || lowerApp.indexOf("dolphin") !== -1) return "󰉋";
+        if (lowerApp.indexOf("neovim") !== -1 || lowerApp.indexOf("nvim") !== -1) return "";
+        return "󰣇";
     }
 
-    function getWorkspaceDisplayName(name) {
-        if (!name) return "";
-        var lower = name.toLowerCase();
-        if (lower.indexOf("communication") !== -1) return "Chat";
-        if (lower.indexOf("development") !== -1) return "Code";
-        if (lower.indexOf("browsing") !== -1) return "Web";
-        if (lower.indexOf("media") !== -1) return "Media";
-        return name;
+    function getAppIconColor(appId) {
+        if (!appId) return theme.subtext;
+        var lower = appId.toLowerCase();
+        if (lower.indexOf("firefox") !== -1) return theme.peach;
+        if (lower.indexOf("zen") !== -1) return theme.blue;
+        if (lower.indexOf("code") !== -1) return theme.blue;
+        if (lower.indexOf("wezterm") !== -1 || lower.indexOf("kitty") !== -1 || lower.indexOf("foot") !== -1 || lower.indexOf("alacritty") !== -1) return theme.green;
+        if (lower.indexOf("spotify") !== -1) return theme.green;
+        if (lower.indexOf("discord") !== -1) return theme.blue;
+        if (lower.indexOf("telegram") !== -1) return theme.blue;
+        if (lower.indexOf("slack") !== -1) return theme.mauve;
+        if (lower.indexOf("neovim") !== -1 || lower.indexOf("nvim") !== -1) return theme.green;
+        return theme.subtext;
     }
 
     // ----------------------------------------------------
@@ -118,10 +144,10 @@ ShellRoot {
     // Polling Timers
     // ----------------------------------------------------
     
-    // Fast timer (1s) for Niri workspaces and windows
+    // Ultra-fast timer (100ms) for real-time instantaneous updates
     Timer {
         id: niriTimer
-        interval: 1000
+        interval: 100
         running: true
         repeat: true
         triggeredOnStart: true
@@ -131,10 +157,10 @@ ShellRoot {
         }
     }
 
-    // Slow timer (3s) for System stats
+    // Faster timer (2s) for System stats
     Timer {
         id: sysInfoTimer
-        interval: 3000
+        interval: 2000
         running: true
         repeat: true
         triggeredOnStart: true
@@ -148,24 +174,45 @@ ShellRoot {
     // ----------------------------------------------------
     PanelWindow {
         id: panel
+        color: "transparent"
         anchors {
             top: true
             left: true
             right: true
         }
-        implicitHeight: 44
-        exclusiveZone: implicitHeight
+        implicitHeight: 440
+        exclusiveZone: 46
+
+        // Define Dynamic Input Regions to force instant Wayland clickthrough updates
+        Region {
+            id: barOnlyRegion
+            Region { item: mainBar }
+        }
+        
+        Region {
+            id: fullRegion
+            Region { item: mainBar }
+            Region {
+                item: dropdownCard
+                intersection: Intersection.Combine
+            }
+        }
+
+        mask: root.activeDropdown !== "" ? fullRegion : barOnlyRegion
 
         // Floating rounded glassmorphism bar
         Rectangle {
-            anchors.fill: parent
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
-            anchors.leftMargin: 8
-            anchors.rightMargin: 8
+            id: mainBar
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 36
+            anchors.topMargin: 5
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
             radius: 12
             color: "#e611111b" // 90% opacity Catppuccin Mocha Mantle
-            border.color: "#313244"
+            border.color: theme.border
             border.width: 1
 
             RowLayout {
@@ -178,88 +225,59 @@ ShellRoot {
                 // LEFT: Workspaces & Window Title
                 // ==========================================
                 RowLayout {
-                    spacing: 10
+                    spacing: 12
                     Layout.alignment: Qt.AlignVCenter
 
-                    // Workspaces List
-                    Row {
-                        spacing: 6
-                        Layout.alignment: Qt.AlignVCenter
-
-                        Repeater {
-                            model: workspacesList
-                            delegate: Rectangle {
-                                width: modelData.is_focused ? 80 : 28
-                                height: 26
-                                radius: 13
-                                Behavior on width { NumberAnimation { duration: 150 } }
-                                
-                                color: modelData.is_focused ? "#cba6f7" : (modelData.active_window_id ? "#313244" : "transparent")
-                                border.color: modelData.is_focused ? "transparent" : (modelData.active_window_id ? "#45475a" : "#313244")
-                                border.width: 1
-
-                                // Label for focused workspace (Icon + Name)
-                                RowLayout {
-                                    anchors.centerIn: parent
-                                    spacing: 4
-                                    visible: modelData.is_focused
-
-                                    Text {
-                                        text: getWorkspaceIcon(modelData.name)
-                                        color: "#11111b"
-                                        font.pixelSize: 13
-                                        font.family: "Iosevka NF"
-                                    }
-                                    Text {
-                                        text: getWorkspaceDisplayName(modelData.name)
-                                        color: "#11111b"
-                                        font.pixelSize: 11
-                                        font.bold: true
-                                        font.family: "Iosevka NF"
-                                    }
-                                }
-
-                                // Icon for inactive workspace
-                                Text {
-                                    anchors.centerIn: parent
-                                    visible: !modelData.is_focused
-                                    text: getWorkspaceIcon(modelData.name)
-                                    color: modelData.active_window_id ? "#cdd6f4" : "#585b70"
-                                    font.pixelSize: 12
-                                    font.family: "Iosevka NF"
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    onClicked: {
-                                        Quickshell.execDetached({
-                                            command: ["niri", "msg", "action", "focus-workspace", modelData.name || modelData.idx.toString()]
-                                        });
-                                    }
-                                }
-                            }
-                        }
+                    // Modular Workspaces List component
+                    WorkspaceList {
+                        workspaces: root.workspacesList
+                        theme: theme
                     }
 
                     // Separator line
                     Rectangle {
                         width: 1
                         height: 14
-                        color: "#45475a"
+                        color: theme.surface
                         Layout.alignment: Qt.AlignVCenter
                         visible: activeWindowTitle !== ""
                     }
 
-                    // Active Window Title
-                    Text {
-                        text: activeWindowTitle
-                        color: "#a6adc8"
-                        font.pixelSize: 12
-                        font.family: "Iosevka NF"
-                        elide: Text.ElideRight
-                        Layout.maximumWidth: 200
+                    // Active Window Title capsule
+                    Rectangle {
+                        height: 26
+                        implicitWidth: activeWindowRow.width + 16
+                        radius: 13
+                        color: "#181825"
+                        border.color: theme.surface
+                        border.width: 1
                         visible: activeWindowTitle !== ""
                         Layout.alignment: Qt.AlignVCenter
+                        Layout.maximumWidth: 250
+
+                        RowLayout {
+                            id: activeWindowRow
+                            anchors.centerIn: parent
+                            spacing: 6
+                            anchors.leftMargin: 8
+                            anchors.rightMargin: 8
+
+                            Text {
+                                text: getAppIcon(activeWindowAppId, activeWindowTitle)
+                                color: getAppIconColor(activeWindowAppId)
+                                font.pixelSize: 13
+                                font.family: theme.fontFamily
+                            }
+
+                            Text {
+                                text: activeWindowTitle
+                                color: theme.subtext
+                                font.pixelSize: 11
+                                font.family: theme.fontFamily
+                                elide: Text.ElideRight
+                                Layout.maximumWidth: 180
+                            }
+                        }
                     }
                 }
 
@@ -267,45 +285,19 @@ ShellRoot {
                 Item { Layout.fillWidth: true }
 
                 // ==========================================
-                // CENTER: Clock & Date
+                // CENTER: Clock & Date Widget
                 // ==========================================
-                RowLayout {
-                    spacing: 6
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-
-                    Text {
-                        id: clockLabel
-                        color: "#cdd6f4"
-                        font.pixelSize: 13
-                        font.bold: true
-                        font.family: "Iosevka NF"
-                        text: Qt.formatDateTime(new Date(), "HH:mm")
-                        
-                        Timer {
-                            interval: 1000
-                            running: true
-                            repeat: true
-                            onTriggered: {
-                                clockLabel.text = Qt.formatDateTime(new Date(), "HH:mm");
-                                dateLabel.text = Qt.formatDateTime(new Date(), "ddd, MMM d");
-                            }
+                ClockWidget {
+                    id: clockPill
+                    theme: theme
+                    sysInfo: root.sysInfo
+                    onPillClicked: (xCoord, type) => {
+                        if (activeDropdown === type) {
+                            activeDropdown = "";
+                        } else {
+                            dropdownX = xCoord;
+                            activeDropdown = type;
                         }
-                    }
-
-                    Rectangle {
-                        width: 4
-                        height: 4
-                        radius: 2
-                        color: "#45475a"
-                        Layout.alignment: Qt.AlignVCenter
-                    }
-
-                    Text {
-                        id: dateLabel
-                        color: "#a6adc8"
-                        font.pixelSize: 12
-                        font.family: "Iosevka NF"
-                        text: Qt.formatDateTime(new Date(), "ddd, MMM d")
                     }
                 }
 
@@ -316,157 +308,208 @@ ShellRoot {
                 // RIGHT: System Stats & System Tray
                 // ==========================================
                 RowLayout {
-                    spacing: 8
+                    spacing: 10
                     Layout.alignment: Qt.AlignVCenter
 
-                    // CPU & RAM usage pill
+                    // CPU & RAM usage pill (triggers dropdown)
                     Rectangle {
+                        id: cpuRamPill
                         height: 26
                         implicitWidth: cpuRamRow.width + 16
                         radius: 13
                         color: "#181825"
-                        border.color: "#313244"
+                        border.color: cpuRamMouse.hovered ? theme.overlay : theme.surface
                         border.width: 1
+                        
+                        Behavior on border.color { ColorAnimation { duration: 150 } }
 
                         RowLayout {
                             id: cpuRamRow
                             anchors.centerIn: parent
                             spacing: 8
 
-                            // CPU
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: "󰍛"
-                                    color: "#f38ba8" // Red
+                                    color: theme.red
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.cpu + "%"
-                                    color: "#cdd6f4"
+                                    color: theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                             }
 
-                            // RAM
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: "󰘚"
-                                    color: "#fab387" // Peach
+                                    color: theme.peach
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.ram + "%"
-                                    color: "#cdd6f4"
+                                    color: theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            id: cpuRamMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            
+                            onClicked: {
+                                if (activeDropdown === "cpu_ram") {
+                                    activeDropdown = "";
+                                } else {
+                                    var pos = parent.mapToItem(null, 0, 0);
+                                    dropdownX = pos.x + parent.width / 2;
+                                    activeDropdown = "cpu_ram";
                                 }
                             }
                         }
                     }
 
-                    // Volume & Brightness pill
+                    // Volume & Brightness pill (triggers dropdown)
                     Rectangle {
+                        id: volBrightPill
                         height: 26
                         implicitWidth: volBrightRow.width + 16
                         radius: 13
                         color: "#181825"
-                        border.color: "#313244"
+                        border.color: volBrightMouse.hovered ? theme.overlay : theme.surface
                         border.width: 1
+                        
+                        Behavior on border.color { ColorAnimation { duration: 150 } }
 
                         RowLayout {
                             id: volBrightRow
                             anchors.centerIn: parent
                             spacing: 8
 
-                            // Volume
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: sysInfo.muted ? "󰝟" : (sysInfo.vol > 66 ? "󰕾" : (sysInfo.vol > 33 ? "󰖀" : "󰕿"))
-                                    color: sysInfo.muted ? "#585b70" : "#f9e2af" // Yellow
+                                    color: sysInfo.muted ? theme.overlay : theme.yellow
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.vol + "%"
-                                    color: sysInfo.muted ? "#585b70" : "#cdd6f4"
+                                    color: sysInfo.muted ? theme.overlay : theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                             }
 
-                            // Brightness
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: "󰃠"
-                                    color: "#b4befe" // Lavender
+                                    color: theme.lavender
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.brightness + "%"
-                                    color: "#cdd6f4"
+                                    color: theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            id: volBrightMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            
+                            onClicked: {
+                                if (activeDropdown === "vol_bright") {
+                                    activeDropdown = "";
+                                } else {
+                                    var pos = parent.mapToItem(null, 0, 0);
+                                    dropdownX = pos.x + parent.width / 2;
+                                    activeDropdown = "vol_bright";
                                 }
                             }
                         }
                     }
 
-                    // WiFi & Battery pill
+                    // WiFi & Battery pill (triggers dropdown)
                     Rectangle {
+                        id: wifiBatPill
                         height: 26
                         implicitWidth: wifiBatRow.width + 16
                         radius: 13
                         color: "#181825"
-                        border.color: "#313244"
+                        border.color: wifiBatMouse.hovered ? theme.overlay : theme.surface
                         border.width: 1
+                        
+                        Behavior on border.color { ColorAnimation { duration: 150 } }
 
                         RowLayout {
                             id: wifiBatRow
                             anchors.centerIn: parent
                             spacing: 8
 
-                            // WiFi
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: "󰖩"
-                                    color: "#89b4fa" // Blue
+                                    color: theme.blue
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.wifi
-                                    color: "#cdd6f4"
+                                    color: theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                     elide: Text.ElideRight
                                     Layout.maximumWidth: 80
                                     Layout.alignment: Qt.AlignVCenter
                                 }
                             }
 
-                            // Battery
                             RowLayout {
                                 spacing: 4
                                 Text {
                                     text: sysInfo.bat_status === "Charging" ? "󰂄" : (sysInfo.bat_cap > 80 ? "󰁹" : (sysInfo.bat_cap > 50 ? "󰁾" : (sysInfo.bat_cap > 20 ? "󰁼" : "󰁺")))
-                                    color: "#a6e3a1" // Green
+                                    color: theme.green
                                     font.pixelSize: 13
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
                                 }
                                 Text {
                                     text: sysInfo.bat_cap + "%"
-                                    color: "#cdd6f4"
+                                    color: theme.text
                                     font.pixelSize: 11
-                                    font.family: "Iosevka NF"
+                                    font.family: theme.fontFamily
+                                }
+                            }
+                        }
+
+                        MouseArea {
+                            id: wifiBatMouse
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            
+                            onClicked: {
+                                if (activeDropdown === "wifi_bat") {
+                                    activeDropdown = "";
+                                } else {
+                                    var pos = parent.mapToItem(null, 0, 0);
+                                    dropdownX = pos.x + parent.width / 2;
+                                    activeDropdown = "wifi_bat";
                                 }
                             }
                         }
@@ -480,9 +523,14 @@ ShellRoot {
                         Repeater {
                             model: SystemTray.items
                             delegate: MouseArea {
+                                id: trayItemMouse
                                 width: 24
                                 height: 24
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
+                                hoverEnabled: true
+                                property bool hovered: false
+                                onEntered: hovered = true
+                                onExited: hovered = false
 
                                 QsMenuAnchor {
                                     id: menuAnchor
@@ -493,6 +541,11 @@ ShellRoot {
                                     anchors.fill: parent
                                     source: modelData.icon
                                     implicitSize: 18
+                                    opacity: trayItemMouse.hovered ? 1.0 : 0.8
+                                    scale: trayItemMouse.hovered ? 1.1 : 1.0
+                                    
+                                    Behavior on opacity { NumberAnimation { duration: 100 } }
+                                    Behavior on scale { NumberAnimation { duration: 100; easing.type: Easing.OutQuad } }
                                 }
 
                                 onClicked: (mouse) => {
@@ -507,6 +560,29 @@ ShellRoot {
                     }
                 }
             }
+        }
+
+        // ==========================================
+        // BACKDROP MOUSEAREA (Click away to close)
+        // ==========================================
+        MouseArea {
+            anchors.fill: parent
+            visible: root.activeDropdown !== ""
+            onClicked: {
+                root.activeDropdown = "";
+            }
+        }
+
+        // ==========================================
+        // FLOATING DROPDOWN CARD (Slides down beautifully)
+        // ==========================================
+        DropdownCard {
+            id: dropdownCard
+            theme: theme
+            sysInfo: root.sysInfo
+            activeDropdown: root.activeDropdown
+            dropdownX: root.dropdownX
+            parentWidth: panel.width
         }
     }
 }

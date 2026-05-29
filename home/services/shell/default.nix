@@ -14,6 +14,7 @@ in {
   ];
 
   xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
+  xdg.configFile."quickshell/components".source = ./components;
   xdg.configFile."quickshell/sysinfo.sh" = {
     source = ./sysinfo.sh;
     executable = true;
