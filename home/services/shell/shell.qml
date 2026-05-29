@@ -42,7 +42,7 @@ ShellRoot {
     // Helper helper functions
     // ----------------------------------------------------
     function getAppIcon(appId, title) {
-        if (!appId) return "󰣇";
+        if (!appId) return "";
         var lowerApp = appId.toLowerCase();
         var lowerTitle = title ? title.toLowerCase() : "";
         if (lowerApp.indexOf("firefox") !== -1 || lowerApp.indexOf("zen") !== -1) return "󰈹";
@@ -54,7 +54,7 @@ ShellRoot {
         if (lowerApp.indexOf("slack") !== -1) return "󰒱";
         if (lowerApp.indexOf("thunar") !== -1 || lowerApp.indexOf("nautilus") !== -1 || lowerApp.indexOf("dolphin") !== -1) return "󰉋";
         if (lowerApp.indexOf("neovim") !== -1 || lowerApp.indexOf("nvim") !== -1) return "";
-        return "󰣇";
+        return "";
     }
 
     function getAppIconColor(appId) {
@@ -180,7 +180,7 @@ ShellRoot {
             left: true
             right: true
         }
-        implicitHeight: 440
+        implicitHeight: 620
         exclusiveZone: 46
 
         // Define Dynamic Input Regions to force instant Wayland clickthrough updates
@@ -291,6 +291,11 @@ ShellRoot {
                     id: clockPill
                     theme: theme
                     sysInfo: root.sysInfo
+                    onPillEntered: {
+                        var pos = clockPill.mapToItem(null, 0, 0);
+                        dropdownX = pos.x + clockPill.width / 2;
+                        activeDropdown = "clock";
+                    }
                     onPillClicked: (xCoord, type) => {
                         if (activeDropdown === type) {
                             activeDropdown = "";
@@ -366,6 +371,12 @@ ShellRoot {
                             anchors.fill: parent
                             hoverEnabled: true
                             
+                            onEntered: {
+                                var pos = parent.mapToItem(null, 0, 0);
+                                dropdownX = pos.x + parent.width / 2;
+                                activeDropdown = "cpu_ram";
+                            }
+                            
                             onClicked: {
                                 if (activeDropdown === "cpu_ram") {
                                     activeDropdown = "";
@@ -432,6 +443,12 @@ ShellRoot {
                             id: volBrightMouse
                             anchors.fill: parent
                             hoverEnabled: true
+                            
+                            onEntered: {
+                                var pos = parent.mapToItem(null, 0, 0);
+                                dropdownX = pos.x + parent.width / 2;
+                                activeDropdown = "vol_bright";
+                            }
                             
                             onClicked: {
                                 if (activeDropdown === "vol_bright") {
@@ -502,6 +519,12 @@ ShellRoot {
                             id: wifiBatMouse
                             anchors.fill: parent
                             hoverEnabled: true
+                            
+                            onEntered: {
+                                var pos = parent.mapToItem(null, 0, 0);
+                                dropdownX = pos.x + parent.width / 2;
+                                activeDropdown = "wifi_bat";
+                            }
                             
                             onClicked: {
                                 if (activeDropdown === "wifi_bat") {
