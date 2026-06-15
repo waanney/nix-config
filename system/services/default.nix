@@ -26,21 +26,29 @@
 
       # Wait for lockscreen(s) to be up
       sleep 1
+
+      # Unload touchpad driver BEFORE sleep to prevent I2C state corruption
+      ${pkgs.kmod}/bin/modprobe -r i2c_hid_acpi
+    '';
+    resumeCommands = ''
+      # Give the I2C bus time to wake up, then load the driver
+      sleep 1
+      ${pkgs.kmod}/bin/modprobe i2c_hid_acpi
     '';
   };
 
-  systemd.services.reload-touchpad = {
-    description = "Reload Touchpad Driver on Boot and Resume";
-    wantedBy = ["multi-user.target" "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target"];
-    after = ["multi-user.target" "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target"];
+  systemd.services.reload-touchpad-boot = {
+    description = "Reload Touchpad Driver on Boot";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "multi-user.target" ];
     script = ''
-      sleep 2
       ${pkgs.kmod}/bin/modprobe -r i2c_hid_acpi
       sleep 1
       ${pkgs.kmod}/bin/modprobe i2c_hid_acpi
     '';
     serviceConfig = {
       Type = "oneshot";
+      RemainAfterExit = true;
     };
   };
 }

@@ -51,25 +51,7 @@
         sudo modprobe i2c_hid_acpi 2>/dev/null || true
         echo "Done."
       '')
-      (pkgs.writeShellScriptBin "tm-ai" ''
-        PN="$1"
-        CWD="$2"
-        AGENT="''${3:-claude}"
-        SESSION="ai_$AGENT"
 
-        # Đảm bảo session tồn tại
-        tmux has-session -t "$SESSION" 2>/dev/null || \
-          tmux new-session -d -s "$SESSION" -c "$CWD" -n "$PN" "$AGENT"
-
-        # Tìm hoặc tạo window cho project
-        tmux select-window -t "$SESSION":"$PN" 2>/dev/null || \
-          (tmux new-window -t "$SESSION" -c "$CWD" -n "$PN" "$AGENT" && \
-           tmux set-window-option -t "$SESSION":"$PN" allow-rename off)
-
-        # Quan trọng: Unset TMUX để cho phép lồng session trong popup
-        unset TMUX
-        tmux attach-session -t "$SESSION":"$PN"
-      '')
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}; [
       opencode

@@ -2,11 +2,7 @@
   config,
   pkgs,
   ...
-}: let
-  # BẠN CHỈ CẦN ĐỔI TÊN AGENT Ở ĐÂY (ví dụ: "gemini-cli", "codex-cli", "claude")
-  aiAgent = "claude";
-  aiSession = "claude_code";
-in {
+}: {
   home.file.".config/nvim/lua/vim-options.lua".text = ''
     local keymap = vim.keymap
     local opts = { noremap = true, silent = true }
@@ -36,12 +32,11 @@ in {
 
       -- Tìm gốc project
       local project_root = vim.fs.root(path, { ".git", "flake.nix", "package.json" }) or vim.fs.dirname(path)
-      local project_name = vim.fn.fnamemodify(project_root, ":t")
 
       local agents = { "claude", "antigravity", "pi-coding-agent", "gemini-cli", "codex" }
       vim.ui.select(agents, { prompt = "Select AI Agent:" }, function(choice)
         if not choice then return end
-        local cmd = string.format("tmux display-popup -E -w 80\\%% -h 80\\%% 'tm-ai \"%s\" \"%s\" \"%s\"'", project_name, project_root, choice)
+        local cmd = string.format("tmux display-popup -E -w 80\\%% -h 80\\%% 'tm-ai \"%s\" \"%s\"'", project_root, choice)
         vim.cmd("!" .. cmd)
       end)
     end, { desc = "AI Coding Agent Popup" })

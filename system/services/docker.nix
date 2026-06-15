@@ -1,6 +1,10 @@
-{pkgs, ...}:
+{pkgs, config, ...}:
 # Ensure pkgs is available in your arguments
 {
+  age.secrets.oracle-pwd = {
+    file = ../../secrets/oracle-pwd.age;
+  };
+
   virtualisation.docker.enable = true;
 
   # programs.adb.enable = true; # REMOVE OR DELETE THIS LINE
@@ -18,8 +22,12 @@
       "5500:5500"
     ];
     environment = {
-      ORACLE_PWD = "MatKhauBaoMatCuaBan123";
+      ORACLE_PWD_FILE = "/run/secrets/oracle-pwd";
     };
-    autoStart = true;
+    volumes = [
+      "${config.age.secrets.oracle-pwd.path}:/run/secrets/oracle-pwd:ro"
+    ];
+    autoStart = false;
   };
 }
+
