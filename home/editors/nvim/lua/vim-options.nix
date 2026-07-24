@@ -33,7 +33,7 @@
       -- Tìm gốc project
       local project_root = vim.fs.root(path, { ".git", "flake.nix", "package.json" }) or vim.fs.dirname(path)
 
-      local agents = { "claude", "antigravity", "pi-coding-agent", "gemini-cli", "codex" }
+      local agents = { "claude", "antigravity", "pi-coding-agent", "gemini-cli", "codex", "opencode" }
       vim.ui.select(agents, { prompt = "Select AI Agent:" }, function(choice)
         if not choice then return end
         local cmd = string.format("tmux display-popup -E -w 80\\%% -h 80\\%% 'tm-ai \"%s\" \"%s\"'", project_root, choice)

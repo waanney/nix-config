@@ -62,6 +62,7 @@
         pi-coding-agent) printf '🟠' ;;
         gemini-cli)      printf '🟢' ;;
         codex)           printf '⚪' ;;
+        opencode)        printf '🔶' ;;
         *)               printf '⬜' ;;
       esac
     }
@@ -155,6 +156,9 @@ in {
     pi-coding-agent
     gemini-cli
     codex
+
+    # Dependencies
+    fzf
 
     # Session manager scripts
     tmAi

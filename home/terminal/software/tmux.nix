@@ -15,7 +15,8 @@
         "Antigravity"      a "run-shell \"tm-ai '#{pane_current_path}' 'antigravity'     '#{window_id}'\"" \
         "PI Coding Agent"  p "run-shell \"tm-ai '#{pane_current_path}' 'pi-coding-agent' '#{window_id}'\"" \
         "Gemini"           g "run-shell \"tm-ai '#{pane_current_path}' 'gemini-cli'      '#{window_id}'\"" \
-        "Codex"            x "run-shell \"tm-ai '#{pane_current_path}' 'codex'           '#{window_id}'\""
+        "Codex"            x "run-shell \"tm-ai '#{pane_current_path}' 'codex'           '#{window_id}'\"" \
+        "OpenCode"         o "run-shell \"tm-ai '#{pane_current_path}' 'opencode'        '#{window_id}'\""
 
       # Mở AI session picker (prefix + u) — fzf picker with live preview
       bind-key u run-shell "tm-ai-list '#{client_name}'"
