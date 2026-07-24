@@ -9,6 +9,7 @@
   imports = [
     ./niri
     ./hyprlock.nix
+    ./mako.nix
   ];
 
   home.packages = with pkgs; [
