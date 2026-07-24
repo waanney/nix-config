@@ -4,6 +4,7 @@
     ./home-manager.nix
     ./xdg.nix
     ./qt.nix
+    ./steam.nix
   ];
 
   programs = {

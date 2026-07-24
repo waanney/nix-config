@@ -1,6 +1,6 @@
 {inputs, ...}: {
   programs.gamemode = {
-    enable = false;
+    enable = true;
     settings = {
       general = {
         softrealtime = "auto";
