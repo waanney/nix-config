@@ -14,6 +14,7 @@
     # messaging
     vesktop
     (texlive.combine {inherit (texlive) scheme-full;})
+    tor-browser
     # misc
     ps_mem
     pciutils
