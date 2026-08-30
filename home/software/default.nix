@@ -13,22 +13,6 @@
   home.packages = with pkgs; [
     # messaging
     vesktop
-    (texliveSmall.withPackages (ps:
-      with ps; [
-        collection-latexrecommended
-        collection-mathscience
-        collection-fontsrecommended
-        vntex
-        babel-vietnamese
-        titlesec
-        enumitem
-        float
-        caption
-        wrapfig
-        tcolorbox
-        pgf
-        tikz-cd
-      ]))
     tor-browser
     # misc
     ps_mem

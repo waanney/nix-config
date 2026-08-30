@@ -1,5 +1,5 @@
 {
-  description = "LaTeX editing shell with TeX Live, latexmk, and TexLab";
+  description = "LaTeX editing shell with TeX Live, Vietnamese support, latexmk, and TexLab";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -8,23 +8,41 @@
     pkgs = nixpkgs.legacyPackages.${system};
     shell = pkgs.mkShell {
       nativeBuildInputs = with pkgs; [
-        (texlive.combine {
-          inherit (texlive) scheme-small latexmk biblatex biber fontspec xetex luatex;
-        })
+        (texliveSmall.withPackages (ps:
+          with ps; [
+            collection-latexrecommended
+            collection-mathscience
+            collection-fontsrecommended
+            latexmk
+            biblatex
+            biber
+            fontspec
+            xetex
+            luatex
+            vntex
+            babel-vietnamese
+            titlesec
+            enumitem
+            float
+            caption
+            wrapfig
+            tcolorbox
+            pgf
+            tikz-cd
+          ]))
         texlab
         zathura
         ghostscript
         python312Packages.pygments
       ];
       shellHook = ''
-        export SHELL=$(which nu)
-        echo "LaTeX environment ready (texlab, latexmk, zathura)"
+        echo "LaTeX development environment ready (TeX Live with Vietnamese support, latexmk, texlab)"
       '';
     };
   in {
     devShells.${system} = {
       default = shell;
-      latex-dev = shell; # Allow nix develop .#latex-dev in template directory
+      latex-dev = shell;
     };
   };
 }

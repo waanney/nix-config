@@ -1,32 +1,25 @@
 {
-  description = "A Nix flake for web and AI development with shared Home Manager";
+  description = "A Nix flake for reusable development shells and project templates";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    web-dev-template.url = "path:./templates/web-dev";
-    ai-dev-template.url = "path:./templates/ai-dev";
-    rust-dev-template.url = "path:./templates/rust-dev";
-    game-dev-template.url = "path:./templates/game-dev";
-    latex-dev-template.url = "path:./templates/latex-dev";
-    java-dev-template.url = "path:./templates/java-dev";
-    cybersecurity-dev-template.url = "path:./templates/cybersecurity-dev";
   };
 
-  outputs = {self, nixpkgs, web-dev-template, ai-dev-template, rust-dev-template, game-dev-template, latex-dev-template, java-dev-template, cybersecurity-dev-template, ... }:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+  }: let
     system = "x86_64-linux";
-    templateShell = tmpl: tmpl.devShells.${system}.default;
+    callTmpl = path: (import "${path}/flake.nix").outputs {inherit nixpkgs;};
   in {
     devShells.${system} = {
-      web-dev = templateShell web-dev-template;
-      ai-dev = templateShell ai-dev-template;
-      rust-dev = templateShell rust-dev-template;
-      game-dev = templateShell game-dev-template;
-      latex-dev = templateShell latex-dev-template;
-      java-dev = templateShell java-dev-template;
-      cybersecurity-dev = templateShell cybersecurity-dev-template;
+      web-dev = (callTmpl ./templates/web-dev).devShells.${system}.default;
+      ai-dev = (callTmpl ./templates/ai-dev).devShells.${system}.default;
+      rust-dev = (callTmpl ./templates/rust-dev).devShells.${system}.default;
+      game-dev = (callTmpl ./templates/game-dev).devShells.${system}.default;
+      latex-dev = (callTmpl ./templates/latex-dev).devShells.${system}.default;
+      java-dev = (callTmpl ./templates/java-dev).devShells.${system}.default;
+      cybersecurity-dev = (callTmpl ./templates/cybersecurity-dev).devShells.${system}.default;
     };
 
     templates = {
@@ -62,4 +55,3 @@
     };
   };
 }
-
