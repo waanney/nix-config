@@ -60,8 +60,6 @@
     sshfs
     slack
 
-    code-cursor
-    cursor-cli
     antigravity-ide
     wpsoffice
     spotify

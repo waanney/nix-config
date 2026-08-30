@@ -2,7 +2,6 @@
   imports = [
     # editors
     ../../editors/nvim
-    ../../editors/vscode
 
     # ../../editors/zed
 

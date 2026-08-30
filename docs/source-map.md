@@ -32,7 +32,6 @@ This document replaces the per-folder README files. It gives a grouped map of th
 - `home/editors/` - editor modules.
 - `home/editors/nvim/` - Neovim configuration, packages, Lazy.nvim bootstrap, options, and plugins.
 - `home/editors/nvim/lua/plugins/` - plugin modules grouped by editing, git, language, LSP, navigation, UI, and utility concerns.
-- `home/editors/vscode/` - VS Code enablement.
 
 ## Terminal
 
