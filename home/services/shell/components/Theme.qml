@@ -20,5 +20,5 @@ QtObject {
     readonly property color peach: "#fab387"
     readonly property color yellow: "#f9e2af"
 
-    readonly property string fontFamily: "Iosevka NF"
+    readonly property string fontFamily: "JetBrainsMono Nerd Font"
 }

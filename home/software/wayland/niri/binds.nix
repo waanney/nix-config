@@ -8,9 +8,10 @@
     brightness = action: spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" action;
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
     wezterm-singleton = spawn "bash" "-c" ''
-      if ! ${pkgs.wezterm}/bin/wezterm cli spawn 2>/dev/null; then
-        ${pkgs.wezterm}/bin/wezterm
+      if ${pkgs.procps}/bin/pgrep -x wezterm-gui >/dev/null && ${pkgs.wezterm}/bin/wezterm cli spawn 2>/dev/null; then
+        exit 0
       fi
+      exec ${pkgs.wezterm}/bin/wezterm
     '';
   in {
     "XF86AudioMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";

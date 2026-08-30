@@ -15,7 +15,9 @@ _: {
         config = wezterm.config_builder()
       end
 
-      -- max fps
+      -- max fps & rendering
+      config.front_end = "OpenGL"
+      config.webgpu_power_preference = "HighPerformance"
       config.max_fps = 240
       config.animation_fps = 240
 
@@ -42,10 +44,10 @@ _: {
         return wezterm.font_with_fallback(names, params)
       end
 
-      local font_name = "Iosevka Nerd Font"
+      local font_name = "JetBrainsMono Nerd Font"
 
       config.font = font_with_fallback(font_name)
-      config.font_size = 10
+      config.font_size = 11
       config.font_rules = {
         {
           italic = true,

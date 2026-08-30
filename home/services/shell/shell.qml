@@ -150,10 +150,10 @@ ShellRoot {
     // Polling Timers
     // ----------------------------------------------------
     
-    // Ultra-fast timer (100ms) for real-time instantaneous updates
+    // Fast timer (200ms) for responsive workspace updates
     Timer {
         id: niriTimer
-        interval: 100
+        interval: 200
         running: true
         repeat: true
         triggeredOnStart: true
