@@ -44,7 +44,6 @@
     sshfs
     slack
 
-    antigravity-ide
     wpsoffice
     spotify
     mysql-workbench
