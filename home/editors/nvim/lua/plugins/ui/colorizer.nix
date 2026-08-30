@@ -5,7 +5,7 @@
       event = "VeryLazy",
       config = function()
         require('colorizer').setup({
-          filetypes = { "*" },
+          filetypes = { "css", "scss", "html", "javascriptreact", "typescriptreact" },
           user_default_options = {
             RGB      = true,
             RRGGBB   = true,

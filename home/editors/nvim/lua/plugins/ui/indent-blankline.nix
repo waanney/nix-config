@@ -11,10 +11,7 @@
             tab_char = "│",
           },
           scope = {
-            enabled = true,
-            show_start = true,
-            show_end = false,
-            highlight = { "Function", "Label" },
+            enabled = false,
           },
           exclude = {
             filetypes = {

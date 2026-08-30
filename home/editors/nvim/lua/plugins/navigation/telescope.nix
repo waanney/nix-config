@@ -6,12 +6,12 @@
       'nvim-telescope/telescope.nvim',
       cmd = "Telescope",
       keys = {
-        { '<C-p>', desc = "Find Files" },
-        { '<leader>fg', desc = "Live Grep" },
-        { '<leader>fb', desc = "Buffers" },
-        { '<leader>fh', desc = "Help Tags" },
-        { '<leader>fs', desc = "Grep String" },
-        { '<leader>fo', desc = "Old Files" },
+        { '<C-p>', '<cmd>Telescope find_files<cr>', desc = "Find Files" },
+        { '<leader>fg', '<cmd>Telescope live_grep<cr>', desc = "Live Grep" },
+        { '<leader>fb', '<cmd>Telescope buffers<cr>', desc = "Buffers" },
+        { '<leader>fh', '<cmd>Telescope help_tags<cr>', desc = "Help Tags" },
+        { '<leader>fs', '<cmd>Telescope grep_string<cr>', desc = "Grep String" },
+        { '<leader>fo', '<cmd>Telescope oldfiles<cr>', desc = "Old Files" },
       },
       dependencies = {
         'nvim-lua/plenary.nvim',

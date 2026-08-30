@@ -6,17 +6,18 @@
     ./ui/bufferline.nix
     ./ui/indent-blankline.nix
     ./ui/colorizer.nix
-    ./ui/animations.nix
+    # ./ui/animations.nix # Tắt để tối ưu CPU & tránh lag con trỏ
+
 
     # Navigation & Search
     ./navigation/telescope.nix
-    ./navigation/neo-tree.nix
+    ./navigation/oil.nix
     ./navigation/flash.nix
 
     # LSP & Diagnostics
     ./lsp/lsp-config.nix
     ./lsp/trouble.nix
-    ./lsp/none-ls.nix
+    ./lsp/conform.nix
 
     # Editing & Completion
     ./editing/completions.nix

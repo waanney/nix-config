@@ -18,6 +18,8 @@
     ripgrep
     gcc
     tree-sitter
+    cargo
+    rustc
     lua51Packages.jsregexp
     python311Packages.latexcodec
     clang-tools
@@ -30,6 +32,7 @@
     jdt-language-server
     rust-analyzer
     texlab
+    zathura
     neovim-remote
     prettierd
   ];
