@@ -1,32 +1,26 @@
 # Agent Shell Map
 
-The shell under `home/services/shell/` is a Quickshell/Caelestia desktop shell.
+The desktop shell under `home/services/shell/` is a lightweight Quickshell-based desktop interface for Niri / Wayland.
 
 ## Top-Level Structure
 
-- `default.nix` installs Quickshell dependencies and links shell files into the user's Quickshell config.
-- `shell.qml` is the main QML entrypoint.
-- `modules/` contains visible shell surfaces.
-- `components/` contains reusable QML UI primitives.
-- `services/` contains shared QML state and command wrappers.
-- `config/` contains typed configuration objects.
-- `utils/` contains QML and JavaScript helpers.
-- `assets/` contains images, PAM snippets, shaders, and scripts.
-- `plugin/` contains native C++ Qt/QML plugin code.
-- `nix/` contains packaged shell derivations and Home Manager module support.
+- `default.nix` - installs Quickshell dependencies and symlinks shell files into `~/.config/quickshell/`.
+- `shell.qml` - main QML layout containing topbar panel, workspace pills, status widgets, dropdown backdrop, and the floating bottom dock.
+- `components/` - modular QML widgets and components:
+  - `Dock.qml` - auto-hiding floating application dock with launch/focus logic.
+  - `ClockWidget.qml` - date and time display widget with live tooltip/popup support.
+  - `DashboardTab.qml` - system overview tab inside dropdown cards.
+  - `MediaTab.qml` - active MPRIS player controller and position slider.
+  - `PerformanceTab.qml` - CPU, RAM, temperature, and hardware stats visualizer.
+  - `WorkspaceList.qml` - dynamic Niri workspace switcher pills.
+  - `DropdownCard.qml` - expandable popup card container.
+  - `Theme.qml` - shared color scheme and font variables matching Stylix/Catppuccin.
+- `sysinfo.sh` - fast asynchronous metric collection script returning JSON data (WiFi, IP, battery, volume, brightness, RAM, CPU, temperature, media, and weather).
 
 ## Editing Rules
 
-- Put reusable UI controls in `components/controls/`.
-- Put surface-specific UI in `modules/`.
-- Put shared state in `services/`.
-- Put static settings shapes in `config/`.
-- Put native QML-exposed behavior in `plugin/src/Caelestia/`.
-- Keep bar popouts and control center panes consistent when they expose the same device or service.
-
-## Common Risk Areas
-
-- Display and compositor commands must match the exact compositor CLI syntax.
-- Lock screen changes may involve PAM snippets in `assets/pam.d/`.
-- Native plugin changes may require CMake and Nix package updates.
-- Shell file moves may require `home/services/shell/default.nix` and package source sets to stay aligned.
+- Keep UI widgets self-contained inside `components/`.
+- Access system metrics via the `sysInfo` object bound to `sysinfo.sh` execution.
+- Maintain fast execution in `sysinfo.sh` (< 0.2s) without blocking loops or heavy synchronous network calls.
+- Keep polling intervals reasonable (`niriTimer` >= 200ms, `sysInfoTimer` >= 2000ms) to avoid CPU churn.
+- Ensure compositor actions use correct Niri IPC syntax (`niri msg action ...` or `niri msg -j ...`).

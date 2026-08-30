@@ -11,21 +11,21 @@
 
 - Keep human Markdown under `docs/`.
 - Keep agent Markdown under `.agents/`.
-- Prefer ASCII Markdown.
-- Check that no Markdown files exist outside `docs/` and `.agents/`.
+- Maintain ASCII Markdown formatting.
+- Check that no Markdown files exist outside `docs/`, `.agents/`, and `tests/`.
 - Verify no code files changed unless the task asked for code changes.
 
 ## Nix Change
 
-- Follow existing module style.
+- Follow existing module style and single-responsibility layout.
 - Keep reusable logic in shared modules instead of host-specific files when possible.
 - Run `nix fmt` after edits.
-- Prefer `sudo nixos-rebuild build --flake .#maclaurin` before switching.
+- Run `nix flake check --no-build` to verify syntax and flake schema compliance.
+- Recommend `nh os switch /etc/nixos` (or `sudo nixos-rebuild build --flake .#maclaurin`) for building/switching.
 
-## Shell Change
+## Shell & UI Change
 
-- Keep reusable UI in `components/`.
-- Keep visible surfaces in `modules/`.
-- Keep shared state in `services/`.
-- Check QML imports when moving files.
-- Verify compositor or shell IPC commands against the command syntax used by the target tool.
+- Keep reusable UI widgets in `components/`.
+- Keep lightweight, non-blocking metrics in `sysinfo.sh`.
+- Avoid polling intervals below 200ms in QML Timers.
+- Verify compositor or shell IPC commands against Niri syntax (`niri msg action ...`).

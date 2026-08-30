@@ -2,32 +2,33 @@
 
 ## Root Flow
 
-- `flake.nix` is the root flake.
+- `flake.nix` is the root flake using `flake-parts`.
 - The root flake imports `home/profiles`, `hosts`, and `pkgs`.
 - `hosts/default.nix` exposes `nixosConfigurations.maclaurin`.
 - `system/default.nix` defines reusable `desktop` and `laptop` module lists.
-- `home/profiles/default.nix` exposes Home Manager imports for `waanne@maclaurin`.
+- `home/profiles/default.nix` exposes `homeConfigurations` outputs and Home Manager imports for `waanne@maclaurin`.
 
 ## System Side
 
 - `system/core/` handles boot, users, security, locale, timezone, input methods, and zram.
 - `system/hardware/` handles graphics, firmware updates, and Bluetooth.
 - `system/network/` handles NetworkManager and Avahi.
-- `system/nix/` handles Nix daemon behavior, nixpkgs settings, caches, and `nh`.
-- `system/programs/` handles system-level programs such as fonts, Qt, XDG portals, Zsh, and GameMode.
-- `system/services/` handles system services such as PipeWire, Docker, greetd, databases, virtualization, and power services.
+- `system/nix/` handles Nix daemon behavior, nixpkgs settings, substituters, and `nh`.
+- `system/programs/` handles system-level programs such as fonts, Qt, XDG portals, Zsh, and Home Manager.
+- `system/services/` handles system services such as PipeWire, Docker, greetd, MySQL, PostgreSQL, Tailscale, and power services.
 
 ## Home Manager Side
 
 - `home/default.nix` defines the base user, state version, manuals, nix-index, and Stylix configuration.
-- `home/profiles/maclaurin/default.nix` composes editors, user services, shell, desktop software, Wayland settings, and terminal emulator settings.
-- `home/terminal/` handles CLI tools, shells, prompt, terminal emulators, Yazi, Git, GPG, tmux, and agent tooling.
+- `home/profiles/maclaurin/default.nix` composes editors (`nvim`), user services, shell, desktop software, Wayland settings, and terminal emulator settings (`wezterm`).
+- `home/terminal/` handles CLI tools, shells, prompt, WezTerm, Yazi, Git, GPG, tmux, and AI agent tooling.
 - `home/software/` handles graphical applications, browsers, media tools, Rofi, GTK, and Wayland applications.
-- `home/services/` handles user services and the shell.
+- `home/services/` handles user systemd services and the Quickshell desktop topbar and dock.
 
-## Custom Packages and Templates
+## Custom Packages, Tests, and Templates
 
 - `pkgs/default.nix` exports `repl`, `SF-Pro`, and `SF-Pro-mono`.
+- `tests/` contains automated test scripts for Neovim LSP, completion, formatting, navigation, and LaTeX compilation.
 - `nixdev/flake.nix` exports development shells and flake templates from `nixdev/templates/`.
 
 ## Documentation

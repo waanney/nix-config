@@ -14,7 +14,7 @@ The shell includes formatting tools and the custom `repl` helper.
 
 ## Formatting
 
-Format Nix files:
+Format Nix files using Alejandra:
 
 ```bash
 nix fmt
@@ -28,34 +28,72 @@ Run the root flake check:
 nix flake check
 ```
 
+## Building & Switching Configuration
+
+### Using `nh` (Recommended Helper)
+
+Rebuild and switch the live system:
+
+```bash
+nh os switch /etc/nixos
+```
+
+Build the system without switching (dry-build):
+
+```bash
+nh os build /etc/nixos
+```
+
+### Using Standard `nixos-rebuild`
+
 Build the host without switching:
 
 ```bash
 sudo nixos-rebuild build --flake .#maclaurin
 ```
 
-Switch the live system only after the build is acceptable:
+Switch the live system:
 
 ```bash
 sudo nixos-rebuild switch --flake .#maclaurin
 ```
 
+## Home Manager Standalone
+
+Switch Home Manager configuration independently:
+
+```bash
+home-manager switch --flake .#waanne@maclaurin
+```
+
 ## Updating Inputs
 
-Update flake inputs:
+Update all flake inputs:
 
 ```bash
 nix flake update
 ```
 
+Update a single input (e.g. `nixpkgs`):
+
+```bash
+nix flake lock --update-input nixpkgs
+```
+
 Review `flake.lock` before committing lock file changes.
 
-## Cleanup
+## Cleanup & Garbage Collection
 
-Remove old generations and unused store paths:
+Using `nh`:
+
+```bash
+nh clean all
+```
+
+Or using native nix-collect-garbage:
 
 ```bash
 sudo nix-collect-garbage -d
 ```
 
-Use cleanup commands carefully because they affect rollback options.
+Use cleanup commands carefully because they remove previous generation rollbacks.
