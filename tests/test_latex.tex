@@ -1,0 +1,61 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\geometry{a4paper, margin=1in}
+
+\title{\textbf{\Huge Thử nghiệm Live Preview \LaTeX\ trên Neovim}}
+\author{\textbf{Waanne} -- NixOS Environment}
+\date{\today}
+
+\newtheorem{theorem}{Định lý}
+
+\begin{document}
+
+\maketitle
+
+\section{Giới thiệu tính năng Live Preview}
+Test autolive tren
+\subsection{Các phím tắt quan trọng trong Neovim}
+\begin{itemize}
+	\item \texttt{<leader>lk} (Space + l + k): Dừng tiến trình biên dịch nền (\textit{Stop compiler}).
+	\item \texttt{<leader>lc} (Space + l + c): Dọn dẹp các file rác sinh ra trong quá trình build (\textit{Clean auxiliary files}).
+\end{itemize}
+
+\section{Công thức Toán học \& Định lý mẫu}
+
+Dưới đây là một số công thức toán học đẹp mắt để kiểm tra khả năng hiển thị của \LaTeX:
+
+\begin{theorem}[Đẳng thức Euler kỳ diệu]
+	Đẳng thức liên kết 5 hằng số cơ bản nhất của toán học:
+	\begin{equation}
+		e^{i\pi} + 1 = 0
+	\end{equation}
+\end{theorem}
+
+\subsection{Tích phân Gaussian và Ma trận}
+Tích phân suy rộng nổi tiếng của hàm Gaussian:
+\begin{equation}
+	\int_{-\infty}^{+\infty} e^{-x^2} \, dx = \sqrt{\pi}
+\end{equation}
+
+Ma trận xoay trong không gian 2D với góc quay $\theta$:
+\begin{equation}
+	R(\theta) = \begin{pmatrix}
+		\cos\theta & -\sin\theta \\
+		\sin\theta & \cos\theta
+	\end{pmatrix}
+\end{equation}
+
+\subsection{Thử nghiệm chỉnh sửa trực tiếp}
+Hãy thử sửa dòng chữ này hoặc thêm công thức mới:
+\begin{equation}
+	f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x - a)^n
+\end{equation}
+Sau khi sửa, bạn chỉ cần bấm \textbf{\texttt{:w}} và quan sát cửa sổ Zathura tự động làm mới!
+
+\end{document}
