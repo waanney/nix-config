@@ -49,7 +49,7 @@
       };
       latex-dev = {
         path = ./templates/latex-dev;
-        description = "Game dev shell with Godot 4, Python tooling, and build deps";
+        description = "LaTeX document writing shell with TeX Live and TexLab";
       };
       java-dev = {
         path = ./templates/java-dev;
