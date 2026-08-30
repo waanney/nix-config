@@ -15,7 +15,7 @@ This repository is a personal NixOS configuration centered on the `maclaurin` ho
 - `system/` contains NixOS modules that require system-level privileges.
 - `home/` contains user-level Home Manager modules.
 - `home/services/shell/` contains the custom Quickshell topbar and dock interface.
-- `pkgs/` contains custom packages exported by the flake (`repl`, `SF-Pro`, `SF-Pro-mono`).
+- `pkgs/` contains custom packages exported by the flake (`repl`).
 - `tests/` contains automated test suites for Neovim LSP, formatting, completion, and LaTeX compilation.
 - `nixdev/` contains reusable development shells and templates.
 - `assets/` stores static resources such as wallpapers.

@@ -27,7 +27,7 @@
 
 ## Custom Packages, Tests, and Templates
 
-- `pkgs/default.nix` exports `repl`, `SF-Pro`, and `SF-Pro-mono`.
+- `pkgs/default.nix` exports `repl`.
 - `tests/` contains automated test scripts for Neovim LSP, completion, formatting, navigation, and LaTeX compilation.
 - `nixdev/flake.nix` exports development shells and flake templates from `nixdev/templates/`.
 

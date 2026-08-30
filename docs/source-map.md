@@ -64,7 +64,7 @@ This document replaces the per-folder README files. It gives a grouped map of th
 
 ## Packages, Templates, Tests, Assets, And Helpers
 
-- `pkgs/` - custom package outputs for `repl`, `SF-Pro`, and `SF-Pro-mono`.
+- `pkgs/` - custom package outputs for `repl`.
 - `lib/` - reusable flake helper logic, currently the REPL helper.
 - `tests/` - test suite for Neovim LSP, completion, formatting, navigation, and LaTeX compilation.
 - `nixdev/` - reusable development shell templates.
