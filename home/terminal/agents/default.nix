@@ -28,16 +28,21 @@
     ${helpersScript}
 
     path="''${1:-$PWD}"
-    agent="''${2:-claude}"
+    agent="''${2:-agy}"
+
+    case "$agent" in
+      antigravity|antigravity-cli|agy) agent_cmd="agy" ;;
+      *) agent_cmd="$agent" ;;
+    esac
 
     prefix="$(get_tmux_option @ai_session_prefix 'ai-')"
     w="$(get_tmux_option @ai_popup_width '90%')"
     h="$(get_tmux_option @ai_popup_height '90%')"
 
-    session="''${prefix}''${agent}-$(session_hash "$path")"
+    session="''${prefix}''${agent_cmd}-$(session_hash "$path")"
 
     tmux has-session -t "$session" 2>/dev/null \
-      || tmux new-session -d -s "$session" -c "$path" "$agent"
+      || tmux new-session -d -s "$session" -c "$path" "$agent_cmd"
 
     # Stash origin window + agent type on the session for the picker
     tmux set-option -t "$session" @ai_origin "''${3:-}" 2>/dev/null

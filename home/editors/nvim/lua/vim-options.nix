@@ -23,25 +23,66 @@
     keymap.set("n", "sk", "<C-w>k")
     keymap.set("n", "sj", "<C-w>j")
     keymap.set("n", "sl", "<C-w>l")
-    -- AI & Git Popups (tmux popup)
-    -- AI Popup: Một session duy nhất, nhưng mỗi project là một window riêng
+    -- Floating Terminal Helper (tự động dùng popup trong Neovim khi không chạy trong Tmux)
+    local function open_floating_terminal(cmd, title)
+      local width = math.floor(vim.o.columns * 0.85)
+      local height = math.floor(vim.o.lines * 0.85)
+      local col = math.floor((vim.o.columns - width) / 2)
+      local row = math.floor((vim.o.lines - height) / 2)
+
+      local buf = vim.api.nvim_create_buf(false, true)
+      local win = vim.api.nvim_open_win(buf, true, {
+        relative = "editor",
+        width = width,
+        height = height,
+        col = col,
+        row = row,
+        style = "minimal",
+        border = "rounded",
+        title = " " .. (title or "Terminal") .. " ",
+        title_pos = "center",
+      })
+
+      vim.fn.termopen(cmd, {
+        on_exit = function()
+          if vim.api.nvim_win_is_valid(win) then
+            vim.api.nvim_win_close(win, true)
+          end
+          if vim.api.nvim_buf_is_valid(buf) then
+            vim.api.nvim_buf_delete(buf, { force = true })
+          end
+        end,
+      })
+      vim.cmd("startinsert")
+    end
+
+    -- AI & Git Popups
     keymap.set("n", "<leader>ai", function()
-      -- Lấy đường dẫn chuẩn xác
       local path = vim.fn.expand("%:p")
       if path == "" then path = vim.fn.getcwd() end
-
-      -- Tìm gốc project
       local project_root = vim.fs.root(path, { ".git", "flake.nix", "package.json" }) or vim.fs.dirname(path)
 
-      local agents = { "claude", "antigravity", "antigravity-cli", "pi-coding-agent", "codex", "opencode" }
+      local agents = { "agy", "claude", "pi-coding-agent", "codex", "opencode" }
       vim.ui.select(agents, { prompt = "Select AI Agent:" }, function(choice)
         if not choice then return end
-        local cmd = string.format("tmux display-popup -E -w 80\\%% -h 80\\%% 'tm-ai \"%s\" \"%s\"'", project_root, choice)
-        vim.cmd("!" .. cmd)
+
+        if vim.env.TMUX and vim.env.TMUX ~= "" then
+          local cmd = string.format("tmux display-popup -E -w 85\\%% -h 85\\%% 'tm-ai \"%s\" \"%s\"'", project_root, choice)
+          vim.cmd("!" .. cmd)
+        else
+          open_floating_terminal(choice, "AI Agent: " .. choice)
+        end
       end)
     end, { desc = "AI Coding Agent Popup" })
-    -- Lazygit chạy trực tiếp trong popup của session hiện tại
-    keymap.set("n", "<leader>gg", ":silent !tmux display-popup -E -w 80\\% -h 80\\% 'lazygit'<CR>", { desc = "Lazygit Popup" })
+
+    -- Lazygit popup (hỗ trợ cả trong lẫn ngoài tmux)
+    keymap.set("n", "<leader>gg", function()
+      if vim.env.TMUX and vim.env.TMUX ~= "" then
+        vim.cmd("silent !tmux display-popup -E -w 85\\% -h 85\\% 'lazygit'")
+      else
+        open_floating_terminal("lazygit", "Lazygit")
+      end
+    end, { desc = "Lazygit Popup" })
 
     -- Resize window
     keymap.set("n", "<C-w><left>", "<C-w><")
