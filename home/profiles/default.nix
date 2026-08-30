@@ -20,8 +20,16 @@ in {
   _module.args = {inherit homeImports;};
 
   flake = {
-    homeConfiguration = {
+    homeConfigurations = {
+      "waanne@maclaurin" = homeManagerConfiguration {
+        modules = homeImports."waanne@maclaurin";
+        inherit pkgs extraSpecialArgs;
+      };
       "waanne_maclaurin" = homeManagerConfiguration {
+        modules = homeImports."waanne@maclaurin";
+        inherit pkgs extraSpecialArgs;
+      };
+      "waanne" = homeManagerConfiguration {
         modules = homeImports."waanne@maclaurin";
         inherit pkgs extraSpecialArgs;
       };
