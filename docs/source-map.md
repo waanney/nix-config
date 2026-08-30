@@ -18,7 +18,7 @@ This document replaces the per-folder README files. It gives a grouped map of th
 - `system/network/` - NetworkManager and Avahi.
 - `system/nix/` - Nix daemon behavior, nixpkgs settings, substituters, and `nh`.
 - `system/programs/` - system-level program integrations such as fonts, Qt, XDG portals, Zsh, Home Manager, and GameMode.
-- `system/services/` - services such as PipeWire, Docker, greetd, databases, virtualization, Tailscale, power, and backlight handling.
+- `system/services/` - services such as PipeWire, Docker, greetd, databases, Tailscale, power, and backlight handling.
 
 ## Home Manager Configuration
 

@@ -5,7 +5,6 @@
     extraGroups = [
       "adbusers"
       "input"
-      "libvirtd"
       "networkmanager"
       "plugdev"
       "transmission"

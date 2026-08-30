@@ -72,10 +72,5 @@
 
     ## CLI testing
     cron
-
-    # Virtualization
-    virt-manager
-    quickemu
-    quickgui
   ];
 }

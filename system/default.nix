@@ -20,7 +20,6 @@ let
     ./services/anydesk.nix
     ./services/mysql.nix
     ./services/postgresql.nix
-    ./services/virt.nix
   ];
 
   laptop =
