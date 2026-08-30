@@ -6,15 +6,15 @@
 
       # normal fonts
       noto-fonts
-      noto-fonts-cjk-sans
       noto-fonts-color-emoji
       adwaita-fonts
+      inter
 
       # nerdfonts
       nerd-fonts.symbols-only
-      nerd-fonts.zed-mono
-      nerd-fonts.iosevka
-      #microsoft font
+      nerd-fonts.jetbrains-mono
+
+      # microsoft font compatibility
       corefonts
     ];
 
@@ -37,9 +37,9 @@
         addAll = builtins.mapAttrs (_: v: ["Symbols Nerd Font"] ++ v ++ ["Noto Color Emoji"]);
       in
         addAll {
-          serif = ["Noto Sans Serif"];
-          sansSerif = ["Adwaita Sans"];
-          monospace = ["Adwaita Mono"];
+          serif = ["Noto Serif" "Noto Sans Serif"];
+          sansSerif = ["Inter" "Adwaita Sans"];
+          monospace = ["JetBrainsMono Nerd Font" "Adwaita Mono"];
           emoji = ["Noto Color Emoji"];
         };
     };

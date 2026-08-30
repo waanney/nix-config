@@ -117,9 +117,5 @@
       enable = true;
       # enableNushellIntegration = true;
     };
-    autojump = {
-      enable = true;
-      # enableNushellIntegration = true;
-    };
   };
 }

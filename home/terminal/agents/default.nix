@@ -57,9 +57,9 @@
     # ── Agent → icon mapping ──
     agent_icon() {
       case "$1" in
-        claude)          printf '🟣' ;;
-        antigravity)     printf '🔵' ;;
-        pi-coding-agent) printf '🟠' ;;
+        claude)                            printf '🟣' ;;
+        antigravity|antigravity-cli|agy)   printf '🔵' ;;
+        pi-coding-agent)                   printf '🟠' ;;
         gemini-cli)      printf '🟢' ;;
         codex)           printf '⚪' ;;
         opencode)        printf '🔶' ;;
@@ -151,10 +151,9 @@
 in {
   home.packages = with pkgs; [
     # AI CLI agents
-    antigravity
+    antigravity-cli
     claude-code
     pi-coding-agent
-    gemini-cli
     codex
 
     # Dependencies

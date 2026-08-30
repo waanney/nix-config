@@ -13,7 +13,22 @@
   home.packages = with pkgs; [
     # messaging
     vesktop
-    (texlive.combine {inherit (texlive) scheme-full;})
+    (texliveSmall.withPackages (ps:
+      with ps; [
+        collection-latexrecommended
+        collection-mathscience
+        collection-fontsrecommended
+        vntex
+        babel-vietnamese
+        titlesec
+        enumitem
+        float
+        caption
+        wrapfig
+        tcolorbox
+        pgf
+        tikz-cd
+      ]))
     tor-browser
     # misc
     ps_mem
@@ -27,7 +42,6 @@
 
     fastfetch
 
-    libreoffice
     amberol
     cavalier
     (celluloid.override {youtubeSupport = true;})
@@ -48,16 +62,14 @@
 
     code-cursor
     cursor-cli
+    antigravity-ide
     wpsoffice
     spotify
-    mysql84
     mysql-workbench
-    postgresql
     dbeaver-bin
     # edit image
     mars-mips
     bc
-    krita
     gimp
 
     ## CLI testing

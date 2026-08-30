@@ -11,9 +11,15 @@
       resyncTimer = "10m";
     };
     irqbalance.enable = true;
-  };
-  programs.dconf.enable = true;
 
+    # Protect system from freeze on high RAM pressure
+    earlyoom = {
+      enable = true;
+      enableNotifications = true;
+      freeMemThreshold = 4;
+      freeSwapThreshold = 5;
+    };
+  };
   # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
   # it to complete
 

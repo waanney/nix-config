@@ -47,10 +47,11 @@
   time.hardwareClockInLocalTime = lib.mkDefault false;
   time.timeZone = "Asia/Ho_Chi_Minh";
 
-  # compresses half the ram for use as swap
+  # compresses half the ram for use as fast in-memory swap
   zramSwap = {
     enable = true;
     algorithm = "zstd";
-    memoryPercent = 25;
+    memoryPercent = 50;
+    priority = 100;
   };
 }
