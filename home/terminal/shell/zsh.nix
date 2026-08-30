@@ -81,6 +81,27 @@
         fi
         rm -f -- "$tmp"
       }
+
+      # Nix development templates helper
+      dev() {
+        if [ "$1" = "list" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+          echo "Available templates: web-dev, ai-dev, rust-dev, game-dev, latex-dev, java-dev, cybersecurity-dev"
+          return 0
+        fi
+        local tmpl="''${1:-web-dev}"
+        shift 2>/dev/null || true
+        nix develop "dev#$tmpl" "$@"
+      }
+
+      devinit() {
+        if [ "$1" = "list" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+          echo "Available templates: web-dev, ai-dev, rust-dev, game-dev, latex-dev, java-dev, cybersecurity-dev"
+          return 0
+        fi
+        local tmpl="''${1:-web-dev}"
+        echo "Initializing project from template: dev#$tmpl"
+        nix flake init -t "dev#$tmpl"
+      }
     '';
   };
 }

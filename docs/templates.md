@@ -1,6 +1,6 @@
 # Development Templates
 
-The `nixdev/` directory provides reusable development shells and flake templates.
+The `nixdev/` directory provides reusable development shells and flake templates registered under `dev#`.
 
 ## Available Templates
 
@@ -8,25 +8,43 @@ The `nixdev/` directory provides reusable development shells and flake templates
 - `ai-dev` - Python, JupyterLab, FFmpeg, and AI tooling.
 - `rust-dev` - Rust, rust-analyzer, clippy, and native build dependencies.
 - `game-dev` - Godot and game development dependencies.
-- `latex-dev` - TeX Live, latexmk, and TexLab.
+- `latex-dev` - TeX Live (with Vietnamese support), latexmk, and TexLab.
 - `java-dev` - JDK, Maven, and Gradle.
 - `cybersecurity-dev` - pentesting tools and Pwntools.
 
-## Enter a Template Shell
+## Quick Usage with Zsh Helper
+
+List all templates:
 
 ```bash
-nix develop ./nixdev#web-dev
-nix develop ./nixdev#ai-dev
+dev list
 ```
 
-## Initialize a New Project
+Enter any development shell:
 
 ```bash
-nix flake init -t /etc/nixos/nixdev#web-dev
+dev latex-dev
+dev rust-dev
+dev web-dev
 ```
 
-After initialization, enter the new project's shell with:
+Initialize a new project from a template:
 
 ```bash
-nix develop
+mkdir my-project && cd my-project
+devinit latex-dev
+```
+
+## Native Nix Commands (via `dev#` Registry)
+
+Enter a development shell:
+
+```bash
+nix develop dev#latex-dev
+```
+
+Initialize a project from a template:
+
+```bash
+nix flake init -t dev#latex-dev
 ```

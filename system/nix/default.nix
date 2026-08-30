@@ -21,7 +21,14 @@
     package = pkgs.lix;
 
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
-    registry = lib.mapAttrs (_: v: {flake = v;}) flakeInputs;
+    registry =
+      (lib.mapAttrs (_: v: {flake = v;}) flakeInputs)
+      // {
+        dev.to = {
+          type = "path";
+          path = "/etc/nixos/nixdev";
+        };
+      };
 
     # set the path for channels compat
     nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
