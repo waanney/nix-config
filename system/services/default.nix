@@ -5,11 +5,6 @@
     dbus.implementation = "broker";
     blueman.enable = true;
 
-    # profile-sync-daemon
-    psd = {
-      enable = true;
-      resyncTimer = "10m";
-    };
     irqbalance.enable = true;
 
     # Protect system from freeze on high RAM pressure
