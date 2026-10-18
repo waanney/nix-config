@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./rofi
     # ./browsers/chromium.nix
@@ -8,6 +8,7 @@
     ./gtk.nix
     ./media
     ./anydesk.nix
+    ./virtualbox.nix
   ];
 
   home.packages = with pkgs; [
@@ -28,14 +29,14 @@
 
     amberol
     cavalier
-    (celluloid.override {youtubeSupport = true;})
+    (celluloid.override { youtubeSupport = true; })
     dconf-editor
     eyedropper
     gnome-control-center
     gnome-text-editor
     loupe
     nautilus
-    (papers.override {supportNautilus = true;})
+    (papers.override { supportNautilus = true; })
     pwvucontrol
     resources
 

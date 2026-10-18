@@ -215,6 +215,22 @@
       open-floating = true;
     }
     {
+      matches = [
+        {app-id = "VirtualBox Manager";}
+        {app-id = "VirtualBox";}
+        {app-id = "virtualbox";}
+        {app-id = "VirtualBoxVM";}
+        {title = ".*VirtualBox.*";}
+      ];
+      open-floating = true;
+    }
+    {
+      matches = [{app-id = "vault-ai";}];
+      open-floating = true;
+      default-column-width = {fixed = 1050;};
+      default-window-height = {fixed = 750;};
+    }
+    {
       matches = [{app-id = "dialog";}];
       open-floating = true;
     }

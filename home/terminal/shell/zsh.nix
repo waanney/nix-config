@@ -52,6 +52,10 @@
       # systemctl
       us = "systemctl --user";
       rs = "sudo systemctl";
+
+      # virtualbox
+      virtualbox = "QT_QPA_PLATFORM=xcb VirtualBox";
+      VirtualBox = "QT_QPA_PLATFORM=xcb VirtualBox";
     };
 
     history = {

@@ -12,6 +12,7 @@
       "wheel"
       "kvm"
       "docker"
+      "vboxusers"
     ];
   };
 }

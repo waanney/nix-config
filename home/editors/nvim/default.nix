@@ -2,13 +2,15 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./lua/plugins
     ./lua/vim-options.nix
   ];
 
   home.packages = with pkgs; [
+    antigravity-ide
     # ... giữ nguyên danh sách các package của bạn ...
     wl-clipboard
     gh

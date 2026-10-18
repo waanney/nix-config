@@ -63,7 +63,7 @@
             if lsp == "rust_analyzer" then
               opts.settings = {
                 ["rust-analyzer"] = {
-                  checkOnSave = {
+                  check = {
                     command = "clippy",
                   },
                 },

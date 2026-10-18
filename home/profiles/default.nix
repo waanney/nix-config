@@ -11,6 +11,11 @@
       ../.
       ./maclaurin
     ];
+
+    "waanne@newton" = [
+      ../.
+      ./newton
+    ];
   };
 
   inherit (inputs.hm.lib) homeManagerConfiguration;
@@ -31,6 +36,11 @@ in {
       };
       "waanne" = homeManagerConfiguration {
         modules = homeImports."waanne@maclaurin";
+        inherit pkgs extraSpecialArgs;
+      };
+
+      "waanne@newton" = homeManagerConfiguration {
+        modules = homeImports."waanne@newton";
         inherit pkgs extraSpecialArgs;
       };
     };

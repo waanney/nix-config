@@ -33,6 +33,8 @@
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+Space".action = spawn "${pkgs.rofi}/bin/rofi" "-show" "drun";
     "Mod+Return".action = wezterm-singleton;
+    "Mod+A".action = spawn "bash" "/etc/nixos/home/software/wayland/niri/vault-ai.sh";
+    "Mod+Shift+A".action = spawn "bash" "/etc/nixos/home/software/wayland/niri/vault-ai.sh" "--menu";
     "Ctrl+Alt+L".action = spawn "${pkgs.systemd}/bin/loginctl" "lock-session";
 
     "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";

@@ -83,6 +83,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
