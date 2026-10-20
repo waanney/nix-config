@@ -41,7 +41,7 @@
   systemd.services.reload-touchpad-boot = {
     description = "Reload Touchpad Driver on Boot";
     wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
+    before = [ "display-manager.service" ];
     script = ''
       ${pkgs.kmod}/bin/modprobe -r i2c_hid_acpi
       sleep 1

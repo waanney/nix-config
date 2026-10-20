@@ -1,6 +1,5 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
-    ./rofi
     # ./browsers/chromium.nix
     # ./browsers/edge.nix
     ./browsers/firefox.nix
@@ -28,15 +27,15 @@
     fastfetch
 
     amberol
-    cavalier
-    (celluloid.override { youtubeSupport = true; })
+    cavasik
+    (celluloid.override {youtubeSupport = true;})
     dconf-editor
     eyedropper
     gnome-control-center
     gnome-text-editor
     loupe
     nautilus
-    (papers.override { supportNautilus = true; })
+    (papers.override {supportNautilus = true;})
     pwvucontrol
     resources
 

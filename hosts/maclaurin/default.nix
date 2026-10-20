@@ -12,7 +12,7 @@
   boot = {
     # load modules on boot
     kernelModules = ["v4l2loopback" "i2c-dev" "psmouse" "i2c_hid_acpi"];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
 
     loader.systemd-boot.enable = true;

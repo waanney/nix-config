@@ -31,7 +31,6 @@
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action.screenshot-window = {write-to-disk = true;};
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+Space".action = spawn "${pkgs.rofi}/bin/rofi" "-show" "drun";
     "Mod+Return".action = wezterm-singleton;
     "Mod+A".action = spawn "bash" "/etc/nixos/home/software/wayland/niri/vault-ai.sh";
     "Mod+Shift+A".action = spawn "bash" "/etc/nixos/home/software/wayland/niri/vault-ai.sh" "--menu";

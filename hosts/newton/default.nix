@@ -38,16 +38,16 @@
 
     kernel.sysctl = {
       # Desktop: swappiness thấp (32GB RAM, NVMe nhanh)
-      "vm.swappiness"             = 10;
-      "vm.vfs_cache_pressure"     = 50;
-      "vm.dirty_ratio"            = 15;
+      "vm.swappiness" = 10;
+      "vm.vfs_cache_pressure" = 50;
+      "vm.dirty_ratio" = 15;
       "vm.dirty_background_ratio" = 5;
 
       # Tăng buffer mạng — hữu ích cho ROS DDS
-      "net.core.rmem_max"         = 2147483647;
-      "net.core.wmem_max"         = 2147483647;
-      "net.core.rmem_default"     = 1048576;
-      "net.core.wmem_default"     = 1048576;
+      "net.core.rmem_max" = 2147483647;
+      "net.core.wmem_max" = 2147483647;
+      "net.core.rmem_default" = 1048576;
+      "net.core.wmem_default" = 1048576;
     };
 
     extraModprobeConfig = ''
@@ -68,12 +68,8 @@
     fstrim.enable = true;
 
     # CPU scheduler tối ưu cho desktop (latency-aware, tốt hơn scx_rusty trên desktop)
-    scx.enable    = true;
+    scx.enable = true;
     scx.scheduler = "scx_lavd";
-
-    # GNOME Desktop + GDM
-    displayManager.gdm.enable   = true;
-    desktopManager.gnome.enable = true;
 
     # Udev rules cho các thiết bị engineering (KiCad, v.v.)
     udev.packages = with pkgs; [
@@ -100,15 +96,5 @@
     pciutils
     usbutils
     hw-probe
-  ];
-
-  # ─── GNOME extras ───────────────────────────────────────────────────────────
-  # Bỏ các GNOME apps không cần thiết
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour
-    gnome-music
-    gnome-contacts
-    epiphany # GNOME browser, dùng Firefox thay
-    geary    # GNOME mail client
   ];
 }

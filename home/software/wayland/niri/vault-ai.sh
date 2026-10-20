@@ -41,7 +41,7 @@ if [ "$MODE" != "--menu" ] && [ -n "$WINDOW_ID" ]; then
     exit 0
 fi
 
-# Hiển thị menu Rofi để chọn công cụ AI
+# Hiển thị menu để chọn công cụ AI
 last_tool=""
 if [ -f "$STATE_FILE" ]; then
     last_tool=$(cat "$STATE_FILE" 2>/dev/null || true)
@@ -79,7 +79,16 @@ for item in "${FILTERED_TOOLS[@]}"; do
 done
 
 MENU_INPUT=$(printf "%s\n" "${SORTED_LABELS[@]}")
-CHOSEN_LABEL=$(echo "$MENU_INPUT" | rofi -dmenu -i -p "󰚩 Chọn AI Assistant" 2>/dev/null || true)
+if command -v fuzzel >/dev/null 2>&1; then
+    CHOSEN_LABEL=$(printf "%s\n" "$MENU_INPUT" | fuzzel --dmenu --prompt="󰚩 Chọn AI Assistant: " 2>/dev/null || true)
+elif command -v wofi >/dev/null 2>&1; then
+    CHOSEN_LABEL=$(printf "%s\n" "$MENU_INPUT" | wofi --dmenu --prompt "󰚩 Chọn AI Assistant" 2>/dev/null || true)
+elif command -v zenity >/dev/null 2>&1; then
+    CHOSEN_LABEL=$(printf "%s\n" "$MENU_INPUT" | zenity --list --title="Vault AI" --column="AI Assistant" 2>/dev/null || true)
+else
+    notify-send "Vault AI" "Cần fuzzel, wofi hoặc zenity để mở menu chọn công cụ." -u critical 2>/dev/null || true
+    exit 1
+fi
 
 if [ -z "$CHOSEN_LABEL" ]; then
     exit 0

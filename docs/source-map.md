@@ -47,7 +47,6 @@ This document replaces the per-folder README files. It gives a grouped map of th
 - `home/software/` - user-level graphical and desktop applications.
 - `home/software/browsers/` - Firefox and Chrome modules.
 - `home/software/media/` - MPV, OBS, and RNNoise/PipeWire media configuration.
-- `home/software/rofi/` - Rofi launcher configuration.
 - `home/software/wayland/` - Wayland packages and session variables.
 - `home/software/wayland/niri/` - Niri settings, keybinds, window rules, and display switching helper.
 

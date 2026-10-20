@@ -1,8 +1,16 @@
 {pkgs, ...}: {
   services = {
-    # needed for GNOME services outside of GNOME Desktop
+    displayManager = {
+      gdm.enable = true;
+      autoLogin = {
+        enable = true;
+        user = "waanne";
+      };
+    };
+    desktopManager.gnome.enable = true;
+
     dbus.packages = with pkgs; [
-      gcr
+      gcr_4
       gnome-settings-daemon
       libsecret
     ];
@@ -11,4 +19,12 @@
 
     gvfs.enable = true;
   };
+
+  environment.gnome.excludePackages = with pkgs; [
+    gnome-tour
+    gnome-music
+    gnome-contacts
+    epiphany
+    geary
+  ];
 }
