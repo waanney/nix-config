@@ -45,6 +45,10 @@
   networking.hostName = "maclaurin";
   security.tpm2.enable = true;
 
+  # RDP client for accessing newton's GNOME desktop over Tailscale.
+  # The laptop only initiates connections; no incoming RDP ports are needed.
+  environment.systemPackages = [pkgs.gnome-connections];
+
   services = {
     oracleDatabase.enable = true;
 

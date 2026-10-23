@@ -58,6 +58,10 @@
   # ─── Network ────────────────────────────────────────────────────────────────
   networking.hostName = "newton";
 
+  # Reach GNOME RDP over the private Tailscale network, not public/LAN ports.
+  # 3389 is Remote Login; Desktop Sharing can use 3390 when both are enabled.
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [3389 3390];
+
   # ─── Time / Clock ───────────────────────────────────────────────────────────
   # Chỉ NixOS, không dual boot Windows → dùng UTC chuẩn
   time.hardwareClockInLocalTime = lib.mkForce false;
@@ -76,6 +80,10 @@
   };
 
   services = {
+    # Keep GNOME/Wayland. Configure TLS and credentials in GNOME Settings;
+    # never put remote-access passwords in the world-readable Nix store.
+    gnome.gnome-remote-desktop.enable = true;
+
     # This host has no identity for the laptop's encrypted Oracle password.
     oracleDatabase.enable = false;
 
@@ -92,6 +100,10 @@
       platformio-core
     ];
   };
+
+  # Make Remote Login available after boot, including at the GDM login screen.
+  # RDP itself stays disabled until explicitly configured in GNOME Settings.
+  systemd.services.gnome-remote-desktop.wantedBy = ["graphical.target"];
 
   # ─── Packages ───────────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
