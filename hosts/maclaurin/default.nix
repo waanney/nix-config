@@ -46,6 +46,8 @@
   security.tpm2.enable = true;
 
   services = {
+    oracleDatabase.enable = true;
+
     # for SSD/NVME
     fstrim.enable = true;
     scx.enable = true;

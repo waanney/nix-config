@@ -49,12 +49,11 @@ _: {
       -- Gruvbox Material, with enough contrast for long terminal sessions.
       local colors = {
         background = "#131313",
-        surface = "#1d2021",
-        surface_alt = "#282828",
+        surface = "#202020",
+        surface_alt = "#363636",
         foreground = "#d4be98",
-        muted = "#a89984",
+        muted = "#a0a0a0",
         green = "#89b482",
-        purple = "#d3869b",
       }
 
       config.color_scheme = "Gruvbox Material (Gogh)"
@@ -62,7 +61,9 @@ _: {
         background = colors.background,
         tab_bar = {
           background = colors.surface,
-          inactive_tab_edge = colors.surface_alt,
+          inactive_tab_edge = colors.surface,
+          new_tab = { bg_color = colors.surface, fg_color = colors.muted },
+          new_tab_hover = { bg_color = colors.surface_alt, fg_color = "#eeeeee" },
         },
       }
       config.window_background_opacity = 0.96
@@ -70,16 +71,19 @@ _: {
       -- Window
       config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
       config.integrated_title_button_style = "Gnome"
+      config.integrated_title_buttons = { "Hide", "Maximize", "Close" }
+      config.integrated_title_button_alignment = "Right"
       config.window_frame = {
         active_titlebar_bg = colors.surface,
         inactive_titlebar_bg = colors.surface,
-        border_left_width = "0.15cell",
-        border_right_width = "0.15cell",
-        border_bottom_height = "0.1cell",
+        border_left_width = "3px",
+        border_right_width = "3px",
+        border_bottom_height = "3px",
         border_top_height = "0cell",
-        border_left_color = colors.green,
-        border_right_color = colors.green,
-        border_bottom_color = colors.green,
+        -- Keep a resize hit area without a contrasting outline.
+        border_left_color = colors.surface,
+        border_right_color = colors.surface,
+        border_bottom_color = colors.surface,
       }
       config.window_padding = {
         left = 10,
@@ -102,10 +106,11 @@ _: {
       config.exit_behavior = "CloseOnCleanExit"
       config.audible_bell = "Disabled"
 
-      -- Tabs are shown from 1 so both the label and Alt+number feel natural.
+      -- Keep the title/tab bar visible even with a single tab for window controls.
       config.hide_tab_bar_if_only_one_tab = false
-      config.tab_bar_at_bottom = true
-      config.use_fancy_tab_bar = false
+      -- A top title/tab bar provides window buttons and a mouse drag area.
+      config.tab_bar_at_bottom = false
+      config.use_fancy_tab_bar = true
       config.tab_and_split_indices_are_zero_based = false
       config.show_new_tab_button_in_tab_bar = true
       config.show_tab_index_in_tab_bar = false
@@ -118,22 +123,23 @@ _: {
         return wezterm.truncate_right(title, 28)
       end
 
-      wezterm.on("format-tab-title", function(tab)
-        local background = colors.surface_alt
+      wezterm.on("format-tab-title", function(tab, tabs, panes, cfg, hover)
+        local background = colors.surface
         local foreground = colors.muted
-        local marker = "  "
 
         if tab.is_active then
-          background = colors.purple
-          foreground = colors.surface
-          marker = "● "
+          background = colors.surface_alt
+          foreground = "#eeeeee"
+        elseif hover then
+          background = "#2a2a2a"
+          foreground = "#d0d0d0"
         end
 
         return {
           { Background = { Color = background } },
           { Foreground = { Color = foreground } },
-          { Attribute = { Intensity = tab.is_active and "Bold" or "Normal" } },
-          { Text = " " .. marker .. (tab.tab_index + 1) .. ": " .. tab_title(tab) .. " " },
+          { Attribute = { Intensity = "Normal" } },
+          { Text = "  " .. tab_title(tab) .. "  " },
         }
       end)
 
@@ -151,10 +157,7 @@ _: {
           window:set_left_status("")
         end
 
-        window:set_right_status(wezterm.format({
-          { Foreground = { Color = colors.muted } },
-          { Text = "  " .. window:active_workspace() .. "  " .. wezterm.strftime("%H:%M") .. "  " },
-        }))
+        window:set_right_status("")
       end)
 
       -- Keep WezTerm's familiar defaults and add discoverable shortcuts.

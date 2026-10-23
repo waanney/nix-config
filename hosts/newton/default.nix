@@ -63,7 +63,22 @@
   time.hardwareClockInLocalTime = lib.mkForce false;
 
   # ─── Services ───────────────────────────────────────────────────────────────
+  # Restore GPU memory correctly on manual suspend/resume. Driver 595+ with
+  # nvidia-open supports kernel notifications instead of the legacy services.
+  # Keep this host-specific; the laptop has a separate power policy.
+  hardware.nvidia = {
+    powerManagement = {
+      enable = lib.mkForce true;
+      kernelSuspendNotifier = true;
+    };
+    # The RTX 5080 has 16 GiB VRAM: use the SSD, not the small /tmp tmpfs.
+    moduleParams.nvidia.NVreg_TemporaryFilePath = "/var/tmp";
+  };
+
   services = {
+    # This host has no identity for the laptop's encrypted Oracle password.
+    oracleDatabase.enable = false;
+
     # NVMe TRIM (TeamGroup NV5000)
     fstrim.enable = true;
 
@@ -81,7 +96,41 @@
   # ─── Packages ───────────────────────────────────────────────────────────────
   nixpkgs.config.allowUnfree = true;
 
+  system.build.isaacsimUnwrapped = pkgs.callPackage "${inputs.isaac-sim}/isaacsim/isaacsim.nix" {
+    extraLibs = with pkgs; [zlib libuuid libxcrypt-legacy libnsl libtirpc];
+    # The standalone Kit/Python executables also need the NixOS ELF loader,
+    # before upstream wraps them with the simulator's environment.
+    patchExtra = [
+      "kit/kit"
+      "kit/kit-gcov"
+      "kit/python/python"
+      "kit/python/python3"
+      "kit/python/bin/python3"
+      "kit/python/bin/python3.12"
+    ];
+  };
+
+  system.build.isaacsim = pkgs.symlinkJoin {
+    name = "isaacsim-${config.system.build.isaacsimUnwrapped.version}-with-ca";
+    paths = [config.system.build.isaacsimUnwrapped];
+    nativeBuildInputs = [pkgs.makeWrapper];
+    inherit (config.system.build.isaacsimUnwrapped) version meta;
+    # Kit's bundled Python/OpenSSL otherwise looks for /etc/ssl/cert.pem,
+    # which is not the NixOS CA bundle location. Wrap only the entry points
+    # so certificate fixes do not recopy the large simulator installation.
+    postBuild = ''
+      for executable in isaacsim isaacsim-kit isaacsim-python; do
+        wrapProgram "$out/bin/$executable" \
+          --set-default SSL_CERT_FILE ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
+          --set-default CURL_CA_BUNDLE ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
+          --set-default REQUESTS_CA_BUNDLE ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+      done
+    '';
+  };
+
   environment.systemPackages = with pkgs; [
+    config.system.build.isaacsim
+
     # ── 3D / CAD / Engineering ──────────────────────────────────────────────
     blender
     freecad-wayland

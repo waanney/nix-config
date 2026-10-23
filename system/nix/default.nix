@@ -36,6 +36,10 @@
     settings = {
       auto-optimise-store = true;
       builders-use-substitutes = true;
+      # Keep local builds within available memory. Large Nix derivations can
+      # otherwise start one compiler per CPU and trigger the OOM killer.
+      max-jobs = 2;
+      cores = 2;
       experimental-features = ["nix-command" "flakes"];
       flake-registry = "/etc/nix/registry.json";
 

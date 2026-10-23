@@ -1,6 +1,4 @@
-# ⚠️  TEMPLATE — Cần thay UUID thật bằng cách chạy:
-#    nixos-generate-config --root /mnt   (khi cài fresh)
-#    hoặc: blkid                          (trên hệ thống đã cài)
+# Hardware configuration for the current newton system.
 {
   config,
   lib,
@@ -25,15 +23,15 @@
   boot.extraModulePackages   = [];
 
   # ── File Systems ──────────────────────────────────────────────────────────
-  # ⚠️  REPLACE với UUID thật từ `blkid` hoặc `nixos-generate-config`
+  # UUIDs from the existing installed system.
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/REPLACE-ROOT-UUID";
+    device = "/dev/disk/by-uuid/4b3cb437-923a-48a0-a6c5-14a28e0ca484";
     fsType = "ext4";
     options = ["noatime" "nodiratime"]; # tối ưu NVMe
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/REPLACE-BOOT-UUID";
+    device = "/dev/disk/by-uuid/65D1-B44A";
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
   };

@@ -71,6 +71,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Consume only the standalone simulator package, without Isaac Lab inputs.
+    isaac-sim = {
+      url = "github:urban-prah/isaac-flake";
+      flake = false;
+    };
+
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
 
     nix-index-db = {

@@ -331,6 +331,22 @@
         "type": "github"
       }
     },
+    "isaac-sim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791550133,
+        "narHash": "sha256-ABOYKVGZUKVNTOev9XYD6CAKNbm0qYbiRWFMUiistoM=",
+        "owner": "urban-prah",
+        "repo": "isaac-flake",
+        "rev": "2442b0cd32f577fe49e3460ab7efec21757b07c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "urban-prah",
+        "repo": "isaac-flake",
+        "type": "github"
+      }
+    },
     "mynixpkgs": {
       "inputs": {
         "nixpkgs": "nixpkgs_2",
@@ -486,6 +502,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "hm": "hm",
+        "isaac-sim": "isaac-sim",
         "mynixpkgs": "mynixpkgs",
         "nix-index-db": "nix-index-db",
         "nix-ros-overlay": "nix-ros-overlay",
