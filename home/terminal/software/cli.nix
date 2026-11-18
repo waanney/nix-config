@@ -41,17 +41,39 @@
       television
 
       gdb
-      (pkgs.writeShellScriptBin "reset-touchpad" ''
-        echo "Resetting touchpad drivers..."
-        # Ignore errors if some modules are built-in or not loaded
-        sudo rmmod i2c_hid_acpi i2c_hid i2c_designware_platform i2c_designware_core 2>/dev/null || true
-        sudo modprobe i2c_designware_core 2>/dev/null || true
-        sudo modprobe i2c_designware_platform 2>/dev/null || true
-        sudo modprobe i2c_hid 2>/dev/null || true
-        sudo modprobe i2c_hid_acpi 2>/dev/null || true
-        echo "Done."
-      '')
+      (let
+        resetTouchpad = pkgs.writeShellScript "reset-ideapad-touchpad" ''
+          set -eu
+          touchpad=/sys/bus/i2c/devices/i2c-CMPL0001:00
+          driver=/sys/bus/i2c/drivers/i2c_hid_acpi
+          controller=/sys/bus/platform/devices/i2c_designware.0
+          pci=/sys/bus/pci/devices/0000:00:15.0
 
+          if [ ! -d "$touchpad" ] || [ ! -d "$driver" ]; then
+            echo "IdeaPad CMPL0001:00 touchpad not found." >&2
+            exit 1
+          fi
+
+          # Wake the controller before reprobe; leave unrelated I2C devices alone.
+          printf 'on\n' > "$pci/power/control"
+          printf 'on\n' > "$controller/power/control"
+          if [ -L "$touchpad/driver" ]; then
+            if [ "$(${pkgs.coreutils}/bin/readlink -f "$touchpad/driver")" != "$driver" ]; then
+              echo "Unexpected touchpad driver; refusing to unbind it." >&2
+              exit 1
+            fi
+            printf 'i2c-CMPL0001:00\n' > "$driver/unbind"
+          fi
+          ${pkgs.coreutils}/bin/sleep 1
+          printf 'i2c-CMPL0001:00\n' > "$driver/bind"
+          ${pkgs.systemd}/bin/udevadm settle --timeout=10
+          test -L "$touchpad/driver"
+          echo "Touchpad reinitialized."
+        '';
+      in
+        pkgs.writeShellScriptBin "reset-touchpad" ''
+          exec /run/wrappers/bin/sudo ${resetTouchpad}
+        '')
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}; [
       opencode

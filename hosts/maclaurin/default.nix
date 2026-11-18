@@ -47,10 +47,23 @@
 
   # RDP client for accessing newton's GNOME desktop over Tailscale.
   # The laptop only initiates connections; no incoming RDP ports are needed.
-  environment.systemPackages = [pkgs.gnome-connections];
+  environment.systemPackages = [
+    pkgs.gnome-connections
+    # Installer is not fetchable: add it to the store first with
+    # nix-store --add-fixed sha256 CiscoPacketTracer_901_Ubuntu_64bit.deb
+    pkgs.cisco-packet-tracer_9
+  ];
 
   services = {
     oracleDatabase.enable = true;
+
+    # CMPL0001:00 (06CB:CEFE) occasionally loses its DesignWare I2C bus.
+    # Keep only this controller and its PCI parent out of runtime suspend;
+    # normal system suspend is still available.
+    udev.extraRules = ''
+      ACTION=="add|bind|change", SUBSYSTEM=="pci", KERNEL=="0000:00:15.0", ATTR{vendor}=="0x8086", ATTR{device}=="0x7e78", TEST=="power/control", ATTR{power/control}="on"
+      ACTION=="add|bind|change", SUBSYSTEM=="platform", KERNEL=="i2c_designware.0", TEST=="power/control", ATTR{power/control}="on"
+    '';
 
     # for SSD/NVME
     fstrim.enable = true;
