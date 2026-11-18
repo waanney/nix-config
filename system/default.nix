@@ -20,6 +20,7 @@ let
     ./services/mysql.nix
     ./services/postgresql.nix
     ./services/virtualbox.nix
+    ./services/gns3.nix
   ];
 
   # Desktop thông thường (Intel/AMD integrated graphics)

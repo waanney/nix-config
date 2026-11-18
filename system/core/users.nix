@@ -13,6 +13,8 @@
       "kvm"
       "docker"
       "vboxusers"
+      "wireshark"
+      "ubridge"
     ];
   };
 }

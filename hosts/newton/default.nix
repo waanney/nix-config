@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./ros2.nix
+    ../../system/services/gns3-server.nix
   ];
 
   # ─── Bootloader & Kernel ────────────────────────────────────────────────────
